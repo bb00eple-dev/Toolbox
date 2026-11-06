@@ -10,7 +10,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" href="./icons/pwa-192.png">
-  <title>P. Toolbox v35</title>
+  <title>P. Toolbox v36</title>
   <style>
     :root {
       color-scheme: light;
@@ -1015,7 +1015,7 @@
     }
 
 
-    /* P. Toolbox v35: pair archive, pair card below the existing destinations. */
+    /* P. Toolbox v36: pair archive, pair card below the existing destinations. */
     .pair-destination { grid-column: 1 / -1; }
     .pair-graphic { display:flex; align-items:center; justify-content:center; gap:12px; background:linear-gradient(135deg,#f4e9ee,#e8d9e0); }
     .pair-preview-frame { position:relative; width:84px; height:106px; display:grid; place-items:end center; border:6px solid #fff; background:linear-gradient(150deg,#c5b6c1,#e8d2dc 55%,#9c899c); box-shadow:2px 3px 6px rgba(60,40,55,.2); }
@@ -1104,6 +1104,74 @@
       .pair-preview-caption { font-size:6px; }
     }
 
+
+
+    /* v36 visual alignment: screenshots 2, 3 and 5 follow the existing Prompt Backup layout */
+    .photo-archive-section { max-width:none; width:100%; margin:0; }
+    .photo-archive-home-header { margin-bottom:0; }
+    .photo-archive-title { margin-top:3px; font:bold 34px/1 Georgia,serif; letter-spacing:1px; text-shadow:1px 1px #fff; }
+    .photo-archive-title i { color:#a56f90; font-weight:normal; }
+    .photo-archive-subtitle { margin-top:5px; font:italic 10px Georgia,serif; letter-spacing:.7px; }
+    .photo-archive-toolbar { display:block; margin:9px 0 12px; padding:7px; border:1px dotted var(--bp-line); background:#fffdf9; }
+    .photo-archive-toolbar .backup-search-row { display:grid; grid-template-columns:minmax(0,1fr) 155px; gap:6px; }
+    .photo-archive-toolbar .backup-search-row input,
+    .photo-archive-toolbar .backup-search-row select { width:100%; min-width:0; min-height:29px; padding:4px 7px; border:1px solid var(--bp-line); background:#fff; color:#55434f; font-size:11px; }
+    .photo-archive-toolbar .backup-home-toolbar-bottom { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:7px; }
+    .photo-archive-toolbar .backup-filter-shortcuts { display:flex; align-items:center; flex-wrap:wrap; gap:7px; }
+    .photo-archive-toolbar .backup-hint { color:#877080; font:10px Tahoma,sans-serif; }
+    .photo-archive-toolbar .primary { min-height:31px; }
+
+    .pair-site { max-width:820px; margin:0 auto; }
+    .pair-home-header { margin-bottom:0; }
+    .pair-toolbar { display:block; margin:9px 0 12px; padding:7px; border:1px dotted var(--bp-line); background:#fffdf9; }
+    .pair-search-row { display:grid; grid-template-columns:minmax(0,1fr); }
+    .pair-search-row input { width:100%; min-width:0; min-height:29px; padding:4px 7px; border:1px solid var(--bp-line); background:#fff; color:#55434f; font-size:11px; }
+    .pair-toolbar .backup-home-toolbar-bottom { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:7px; }
+    .pair-toolbar .backup-filter-shortcuts { display:flex; align-items:center; flex-wrap:wrap; gap:7px; }
+    .pair-toolbar .backup-hint { color:#877080; font:10px Tahoma,sans-serif; }
+    .pair-card-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+    .pair-gallery-card { min-width:0; padding:5px; border:1px solid var(--bp-line); background:#fff; box-shadow:1px 1px 0 rgba(80,50,65,.13); cursor:pointer; transition:transform .16s ease, box-shadow .16s ease; }
+    .pair-gallery-card:hover { transform:translateY(-2px); box-shadow:2px 3px 0 rgba(80,50,65,.18); }
+    .pair-card-members { gap:4px; }
+    .pair-card-photo { border:1px solid #d8c5ce; background:#f0e7eb; }
+    .pair-card-caption { padding:6px 2px 2px; }
+    .pair-card-title { color:#624a5a; font:bold 11px Georgia,serif; }
+    .pair-card-note { color:#917c88; font:9px/1.4 Tahoma,sans-serif; }
+    .pair-card-tags { color:#a18494; }
+
+    .pair-sub-toolbar, .pair-sub-toolbar strong,
+    .photo-archive-detail-toolbar, .photo-archive-detail-toolbar strong { color:var(--bp-ink); }
+    .pair-form-card, .photo-archive-compose-card { padding:10px; border:1px solid var(--bp-line); background:#fffdf9; }
+    .pair-form-card .field-label, .photo-archive-compose-card .field-label { margin:9px 0 5px; color:var(--bp-ink); font-size:9px; letter-spacing:1px; }
+    .pair-form-card input[type="text"], .pair-form-card textarea,
+    .photo-archive-compose-card input[type="text"], .photo-archive-compose-card textarea { border:1px solid var(--bp-line); background:#fff; color:#55434f; font-size:11px; }
+    .pair-form-card .backup-full, .photo-archive-compose-card .backup-full { width:100%; min-width:0; }
+    .pair-character-edit-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin:10px 0; }
+    .pair-character-edit-card { min-width:0; padding:8px; border:1px dashed var(--bp-line); background:#fff8f8; }
+    .pair-character-edit-label { margin:0 0 8px; padding-bottom:6px; border-bottom:1px dotted var(--bp-line); color:var(--bp-ink); font:bold 9px Tahoma,sans-serif; letter-spacing:1px; }
+    .pair-character-edit-card .field-label { margin:7px 0 4px; color:var(--bp-ink); font-size:9px; letter-spacing:.4px; }
+    .pair-character-edit-card input[type="text"] { width:100%; min-width:0; height:29px; margin:0; padding:4px 7px; border:1px solid var(--bp-line); background:#fff; color:#55434f; font-size:11px; }
+    .pair-character-edit-card input[type="file"] { display:block; width:100%; min-width:0; min-height:27px; margin:0; padding:3px; border:1px solid var(--bp-line); background:#fff; font-size:9px; }
+    .pair-draft-photo { width:100%; max-width:124px; aspect-ratio:3/4; margin:8px auto 2px; overflow:hidden; display:grid; place-items:center; border:2px solid #fff; outline:1px solid var(--bp-line); background:#f0e7eb; color:#a48c99; font:10px Georgia,serif; }
+    .pair-draft-photo img { display:block; width:100%; height:100%; object-fit:cover; }
+    .pair-form-card .backup-form-actions { display:flex; justify-content:flex-end; gap:6px; margin-top:10px; }
+    .pair-form-card .backup-form-actions button { min-height:29px; }
+    .pair-photo-compose-view .pair-form-card { padding:10px; }
+    .pair-photo-preview-item { border:1px solid var(--bp-line); background:#fff; }
+    .pair-chat-editor { min-height:240px; border:1px solid var(--bp-line); background:#fff; color:#55434f; }
+
+    @media(max-width:600px) {
+      .photo-archive-toolbar .backup-search-row { grid-template-columns:minmax(0,1fr) 112px; }
+      .pair-site { max-width:100%; }
+      .pair-card-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
+      .pair-toolbar .backup-home-toolbar-bottom { gap:6px; }
+      .pair-toolbar .primary { padding-left:8px; padding-right:8px; }
+      .pair-character-edit-grid { gap:6px; }
+      .pair-character-edit-card { padding:6px; }
+      .pair-draft-photo { max-width:104px; }
+      .pair-form-card, .photo-archive-compose-card { padding:8px; }
+    }
+
 </style>
 </head>
 <body>
@@ -1184,7 +1252,7 @@
         <div class="start-page">
           <div class="start-page-top">
             <span>✦ WELCOME TO YOUR P. SPACE ✦</span>
-            <span>PERSONAL TOOLBOX / 35</span>
+            <span>PERSONAL TOOLBOX / 36</span>
           </div>
           <div class="start-brand">
             <div class="start-brand-mark">P.</div>
@@ -1508,19 +1576,25 @@
           </div>
 
           <section id="photoGallerySection" class="photo-archive-section hidden">
-            <header class="photo-archive-header">
-              <div class="photo-archive-kicker">PERSONAL IMAGE LIBRARY</div>
-              <div class="photo-archive-title">PHOTO <i>GALLERY</i></div>
-              <div class="photo-archive-subtitle">사진과 작은 기록을 모아두는 곳</div>
-              <div class="photo-archive-meta"><span id="photoArchiveCount">0 PHOTOS</span><button class="primary" id="photoArchiveNew" type="button">＋ ADD PHOTOS</button></div>
+            <header class="backup-home-header photo-archive-home-header">
+              <div class="backup-home-topline"><span>✦ PERSONAL IMAGE ARCHIVE ✦</span><span id="photoArchiveCount">0 PHOTO SETS</span></div>
+              <div class="backup-home-title">PHOTO <i>GALLERY</i></div>
+              <div class="backup-home-subtitle">사진과 작은 기록을 모아두는 곳</div>
+              <div class="backup-home-decoration">｡ﾟ･ ୨♡୧ ･ﾟ｡　✧　｡ﾟ･ ୨♡୧ ･ﾟ｡</div>
             </header>
 
-            <div id="photoArchiveToolbar" class="photo-archive-toolbar">
-              <input id="photoArchiveSearch" type="search" placeholder="⌕ 제목 · 태그 · 메모 검색">
-              <select id="photoArchiveRatioFilter" aria-label="사진 비율 필터">
-                <option value="">ALL RATIOS</option>
-                <option value="3/4">3:4</option><option value="2/3">2:3</option><option value="1/1">1:1</option><option value="4/3">4:3</option><option value="16/9">16:9</option>
-              </select>
+            <div id="photoArchiveToolbar" class="backup-home-toolbar photo-archive-toolbar">
+              <div class="backup-search-row">
+                <input id="photoArchiveSearch" type="search" placeholder="⌕ 제목 · 태그 · 메모 검색">
+                <select id="photoArchiveRatioFilter" aria-label="사진 비율 필터">
+                  <option value="">ALL RATIOS</option>
+                  <option value="3/4">3:4</option><option value="2/3">2:3</option><option value="1/1">1:1</option><option value="4/3">4:3</option><option value="16/9">16:9</option>
+                </select>
+              </div>
+              <div class="backup-home-toolbar-bottom">
+                <div class="backup-filter-shortcuts"><span class="backup-hint">ALL PHOTOS</span><span class="backup-hint" id="photoArchiveResultCount">0 items</span></div>
+                <button class="primary" id="photoArchiveNew" type="button">＋ ADD PHOTOS</button>
+              </div>
             </div>
 
             <section id="photoArchiveGridView" class="photo-archive-view">
@@ -1544,8 +1618,8 @@
             </section>
 
             <section id="photoArchiveComposeView" class="photo-archive-view hidden">
-              <div class="photo-archive-detail-toolbar"><button class="small" id="photoArchiveCancel" type="button">◂ BACK</button><strong id="photoArchiveComposeTitle">NEW PHOTO SET</strong><span></span></div>
-              <div class="photo-archive-compose-card">
+              <div class="backup-compose-toolbar photo-archive-detail-toolbar"><button class="small" id="photoArchiveCancel" type="button">◂ BACK</button><strong id="photoArchiveComposeTitle">NEW PHOTO SET</strong><span></span></div>
+              <div class="backup-compose-card photo-archive-compose-card">
                 <label class="field-label" for="photoArchiveTitleInput">TITLE <span class="backup-optional">OPTIONAL</span></label>
                 <input class="backup-full" id="photoArchiveTitleInput" type="text" maxlength="100" placeholder="사진 묶음의 제목">
                 <label class="field-label" for="photoArchiveNoteInput">NOTE</label>
@@ -1566,7 +1640,7 @@
       </section>
 
       <section class="tab-panel" id="pairPanel">
-        <div class="pair-site">
+        <div class="backup-site pair-site">
           <header class="backup-home-header pair-home-header">
             <div class="backup-home-topline"><span>♡ TWO CHARACTERS / ONE ARCHIVE ♡</span><span id="pairCount">0 PAIRS</span></div>
             <div class="backup-home-title">PAIR <i>BOARD</i></div>
@@ -1575,10 +1649,16 @@
           </header>
 
           <section id="pairGalleryView" class="pair-view">
-            <div class="pair-toolbar">
-              <input id="pairSearch" type="search" placeholder="⌕ 페어명 · 캐릭터 · 태그 검색">
-              <button class="primary" id="pairNewButton" type="button">＋ NEW PAIR</button>
+            <div class="backup-home-toolbar pair-toolbar">
+              <div class="backup-search-row pair-search-row">
+                <input id="pairSearch" type="search" placeholder="⌕ 페어명 · 캐릭터 · 태그 검색">
+              </div>
+              <div class="backup-home-toolbar-bottom">
+                <div class="backup-filter-shortcuts"><span class="backup-hint">ALL PAIRS</span><span class="backup-hint" id="pairGalleryCount">0 items</span></div>
+                <button class="primary" id="pairNewButton" type="button">＋ NEW PAIR</button>
+              </div>
             </div>
+            <div class="backup-gallery-heading"><span>♡ PAIR ARCHIVE</span><span class="backup-gallery-rule"></span><span class="backup-gallery-sort">RECENT FIRST</span></div>
             <div id="pairCards" class="pair-card-grid"><div class="backup-empty">아직 등록된 페어가 없습니다.</div></div>
           </section>
 
@@ -1609,8 +1689,8 @@
           </section>
 
           <section id="pairComposeView" class="pair-view hidden">
-            <div class="pair-sub-toolbar"><button class="small" id="pairComposeCancel" type="button">◂ BACK</button><strong id="pairComposeHeading">NEW PAIR</strong><span></span></div>
-            <div class="pair-form-card">
+            <div class="backup-compose-toolbar pair-sub-toolbar"><button class="small" id="pairComposeCancel" type="button">◂ BACK</button><strong id="pairComposeHeading">NEW PAIR</strong><span></span></div>
+            <div class="backup-compose-card pair-form-card">
               <label class="field-label" for="pairNameInput">PAIR NAME <span class="backup-optional">OPTIONAL</span></label>
               <input class="backup-full" id="pairNameInput" type="text" maxlength="100" placeholder="페어 이름">
               <div class="pair-character-edit-grid">
@@ -1640,8 +1720,8 @@
           </section>
 
           <section id="pairPhotoComposeView" class="pair-view hidden">
-            <div class="pair-sub-toolbar"><button class="small" id="pairPhotoCancel" type="button">◂ BACK</button><strong>ADD TO PAIR GALLERY</strong><span></span></div>
-            <div class="pair-form-card">
+            <div class="backup-compose-toolbar pair-sub-toolbar"><button class="small" id="pairPhotoCancel" type="button">◂ BACK</button><strong>ADD TO PAIR GALLERY</strong><span></span></div>
+            <div class="backup-compose-card pair-form-card">
               <label class="field-label" for="pairPhotoTitleInput">TITLE <span class="backup-optional">OPTIONAL</span></label>
               <input class="backup-full" id="pairPhotoTitleInput" type="text" maxlength="100" placeholder="사진 묶음 제목">
               <label class="field-label" for="pairPhotoNoteInput">NOTE</label>
@@ -1654,8 +1734,8 @@
           </section>
 
           <section id="pairLogComposeView" class="pair-view hidden">
-            <div class="pair-sub-toolbar"><button class="small" id="pairLogCancel" type="button">◂ BACK</button><strong id="pairLogComposeHeading">NEW CHAT LOG</strong><span></span></div>
-            <div class="pair-form-card">
+            <div class="backup-compose-toolbar pair-sub-toolbar"><button class="small" id="pairLogCancel" type="button">◂ BACK</button><strong id="pairLogComposeHeading">NEW CHAT LOG</strong><span></span></div>
+            <div class="backup-compose-card pair-form-card">
               <label class="field-label" for="pairLogTitleInput">TITLE</label>
               <input class="backup-full" id="pairLogTitleInput" type="text" maxlength="100" placeholder="로그 제목 또는 날짜">
               <label class="field-label" for="pairLogContentInput">CHAT LOG</label>
@@ -1818,7 +1898,7 @@
 
   <script>
 (() => {
-  // P. Toolbox v35: pair archive, JSON backup, and installable PWA.
+  // P. Toolbox v36: pair archive, JSON backup, and installable PWA.
   const ROOMS_KEY = 'promptToolbox.rooms.v28';
   const RESET_KEY = 'promptToolbox.v28.roomResetDone';
   const REMEMBERED_ROOM_KEY = 'promptToolbox.v30.rememberedRoom';
@@ -6150,6 +6230,7 @@ function applyBackupTemplate(template) {
       grid.replaceChildren();
       const entries = getPhotoArchiveEntries();
       document.getElementById('photoArchiveCount').textContent = `${backupEntriesData.filter(entry => entry.kind === 'photo').length} PHOTO SETS`;
+      document.getElementById('photoArchiveResultCount').textContent = `${entries.length} items`;
       if (!entries.length) {
         const empty = document.createElement('div');
         empty.className = 'backup-empty';
@@ -6413,6 +6494,7 @@ function applyBackupTemplate(template) {
       const all = pairRecords().sort((a,b)=>String(b.updatedAt||'').localeCompare(String(a.updatedAt||'')));
       const items = all.filter(pair => !query || [pair.title, pair.description, ...(pair.tags||[]), ...(pair.members||[]).map(member=>member.name)].join(' ').toLowerCase().includes(query));
       document.getElementById('pairCount').textContent = `${all.length} PAIRS`;
+      document.getElementById('pairGalleryCount').textContent = `${items.length} items`;
       if (!items.length) {
         const empty = document.createElement('div'); empty.className='backup-empty';
         empty.textContent = all.length ? '검색 결과가 없습니다.' : '아직 등록된 페어가 없습니다.';

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'p-toolbox-shell-v35';
+const CACHE_NAME = 'p-toolbox-shell-v36';
 const SHELL_FILES = ['./', './index.html', './manifest.webmanifest', './icons/pwa-192.png', './icons/pwa-512.png', './icons/pwa-512-maskable.png'];
 
 self.addEventListener('install', event => {
