@@ -1,10 +1,20 @@
-const CACHE_NAME = 'p-toolbox-shell-v36';
-const SHELL_FILES = ['./', './index.html', './manifest.webmanifest', './icons/pwa-192.png', './icons/pwa-512.png', './icons/pwa-512-maskable.png'];
+const CACHE_NAME = 'p-toolbox-shell-v37';
+const SHELL_FILES = [
+  './',
+  './index.html',
+  './manifest.webmanifest',
+  './p-toolbox-192.png',
+  './p-toolbox-512.png',
+  './p-toolbox-512-maskable.png'
+];
 
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME);
-    await cache.addAll(SHELL_FILES);
+    // If one optional shell URL fails, keep install alive and cache the remaining files.
+    await Promise.all(SHELL_FILES.map(async path => {
+      try { await cache.add(path); } catch (error) { console.warn('PWA shell asset was not cached:', path, error); }
+    }));
     await self.skipWaiting();
   })());
 });

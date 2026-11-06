@@ -9,8 +9,9 @@
   <meta name="apple-mobile-web-app-title" content="P. Toolbox">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="apple-touch-icon" href="./icons/pwa-192.png">
-  <title>P. Toolbox v36</title>
+  <link rel="apple-touch-icon" sizes="192x192" href="./p-toolbox-192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="./p-toolbox-192.png">
+  <title>P. Toolbox v37</title>
   <style>
     :root {
       color-scheme: light;
@@ -1172,6 +1173,74 @@
       .pair-form-card, .photo-archive-compose-card { padding:8px; }
     }
 
+
+    /* v37: photo pages, not stacked image columns */
+    .photo-page-viewer { display:grid; grid-template-columns:34px minmax(0,1fr) 34px; align-items:center; justify-content:center; gap:7px; width:100%; max-width:660px; margin:0 auto; padding:8px; border:1px solid #d7c4ce; background:#eee7ea; }
+    .photo-page-frame { width:100%; max-width:460px; min-width:0; aspect-ratio:3/4; margin:0 auto; display:grid; place-items:center; overflow:hidden; background:#ded5d9; border:5px solid #fff; outline:1px solid #c8adb9; box-shadow:2px 3px 0 rgba(80,50,65,.14); }
+    .photo-page-frame img { display:block; width:100%; height:100%; object-fit:cover; }
+    .photo-page-arrow { width:32px; min-width:32px; height:48px; padding:0; border:1px solid #b99aaa; background:#fffafc; color:#76596d; font:27px/1 Georgia,serif; }
+    .photo-page-arrow:disabled { opacity:.28; cursor:default; }
+    .photo-page-footer { display:flex; justify-content:center; align-items:center; gap:12px; margin:8px 0 3px; color:#8b7181; font:10px Georgia,serif; }
+    .photo-page-footer button { min-height:22px; padding:2px 8px; border:1px solid #cbb7c1; background:#fff; color:#76596d; font:8px Tahoma,sans-serif; }
+    .photo-archive-detail-images { display:block; }
+    .photo-archive-detail-item { display:none; }
+    .photo-archive-detail-frame { aspect-ratio:3/4; }
+
+    /* Pair board uses the same portrait-card grammar as Prompt Backup */
+    .pair-gallery-card { padding:6px; border:1px solid var(--bp-line); background:#fffdfb; box-shadow:1px 2px 0 rgba(80,50,65,.12); }
+    .pair-card-members { position:relative; gap:7px; padding:4px; border:1px dotted #d5bfca; background:#fff8fa; }
+    .pair-card-photo { position:relative; aspect-ratio:3/4; border:4px solid #fff; outline:1px solid #d4c0ca; box-shadow:1px 2px 3px rgba(60,40,55,.12); }
+    .pair-card-photo-name { position:absolute; left:2px; right:2px; bottom:2px; padding:4px 3px; background:rgba(255,250,248,.92); color:#654d5d; font:bold 9px Georgia,serif; text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .pair-card-join { position:absolute; z-index:2; left:50%; top:50%; transform:translate(-50%,-50%); width:23px; height:23px; display:grid; place-items:center; border:1px solid #c4a6b5; border-radius:50%; background:#fff8fa; color:#9a7188; font:14px Georgia,serif; box-shadow:0 1px 3px rgba(0,0,0,.12); }
+    .pair-card-caption { padding:8px 3px 3px; text-align:center; }
+    .pair-card-title { color:#624a5a; font:bold 13px Georgia,serif; }
+    .pair-card-note { color:#917c88; }
+    .pair-card-tags { text-align:center; }
+    .pair-detail-card { padding:9px; border:1px solid var(--bp-line); background:#fffdfb; }
+    .pair-detail-heading { margin:0 0 9px; padding:12px 8px 13px; border:1px dotted #d3bac6; background:linear-gradient(135deg,#f8eaf0,#f2e2e9); }
+    .pair-detail-heading h2 { font: bold 21px Georgia,serif; letter-spacing:.3px; }
+    .pair-members-grid { display:grid; grid-template-columns:minmax(0,1fr) 34px minmax(0,1fr); gap:8px; align-items:center; max-width:590px; margin:0 auto 17px; padding:9px; border:1px dotted var(--bp-line); background:#fff9fb; }
+    .pair-member-card { min-width:0; padding:6px; border:1px solid #d9c5cf; background:#fff; text-align:center; box-shadow:1px 2px 0 rgba(80,50,65,.1); }
+    .pair-member-photo { width:100%; max-width:210px; aspect-ratio:3/4; margin:0 auto; overflow:hidden; border:4px solid #fff; outline:1px solid #d4bfca; background:#eee5e9; }
+    .pair-member-name { padding:7px 3px 1px; font:bold 13px Georgia,serif; color:#624a5a; }
+    .pair-member-label { padding:2px 0 3px; color:#a18494; font:8px Tahoma,sans-serif; letter-spacing:1px; }
+    .pair-link-mark { width:30px; height:30px; display:grid; place-items:center; border:1px solid #cdb4c1; border-radius:50%; background:#fff; color:#98748a; font:17px Georgia,serif; }
+    .pair-subarchive { margin-top:14px; padding:11px 7px 4px; border-top:1px dotted #c8b2be; }
+    .pair-subarchive-heading { padding:3px 2px 7px; }
+    .pair-subarchive-heading h3 { font-size:16px; }
+    .pair-photo-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; }
+    .pair-photo-post { min-width:0; padding:5px; border:1px solid var(--bp-line); background:#fff; cursor:pointer; transition:transform .15s ease; }
+    .pair-photo-post:hover { transform:translateY(-2px); }
+    .pair-photo-post-cover { width:100%; aspect-ratio:3/4; overflow:hidden; border:4px solid #fff; outline:1px solid #d8c4ce; background:#eee5e9; }
+    .pair-photo-post-cover img { display:block; width:100%; height:100%; object-fit:cover; }
+    .pair-photo-post-title { padding:6px 2px 2px; color:#735a6a; font:bold 10px Tahoma,sans-serif; }
+    .pair-photo-post-note { padding:2px; color:#98828f; font:9px/1.4 Tahoma,sans-serif; }
+    .pair-photo-post-meta { padding:3px 2px 1px; color:#a38c98; font:8px Tahoma,sans-serif; }
+    .pair-photo-detail-card { padding:10px; border:1px solid var(--bp-line); background:#fffdfb; }
+    .pair-photo-detail-heading { padding:7px 3px 12px; text-align:center; }
+    .pair-photo-detail-heading h3 { margin:5px 0; color:#624a5a; font:bold 16px Georgia,serif; }
+    .pair-photo-detail-heading p { margin:4px auto 0; max-width:580px; color:#88727f; font:10px/1.5 Tahoma,sans-serif; white-space:pre-wrap; }
+    .pair-photo-page-frame { max-width:440px; }
+    .pair-photo-preview-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .pair-photo-preview-item { padding:5px; }
+    .pair-photo-preview-frame { width:100%; aspect-ratio:3/4; overflow:hidden; border:3px solid #fff; outline:1px solid #d7c4ce; background:#eee5e9; }
+    .pair-photo-preview-frame img { width:100%; height:100%; object-fit:cover; }
+    .pair-photo-preview-actions { display:flex; flex-wrap:wrap; gap:4px; margin-top:5px; }
+    .pair-photo-preview-actions button, .pair-photo-preview-actions select { flex:1; min-width:0; min-height:22px; padding:2px 4px; border:1px solid #cbb7c1; background:#fff; color:#76596d; font-size:8px; }
+    .pair-profile-adjust { display:block; width:100%; max-width:124px; margin:5px auto 0; min-height:21px; padding:2px 5px; border:1px solid #cbb7c1; background:#fff; color:#76596d; font-size:8px; }
+    .pair-profile-adjust[hidden] { display:none !important; }
+    @media(max-width:600px) {
+      .photo-page-viewer { grid-template-columns:28px minmax(0,1fr) 28px; gap:4px; padding:5px; }
+      .photo-page-arrow { width:27px; min-width:27px; height:42px; font-size:23px; }
+      .photo-page-frame { max-width:100%; }
+      .pair-members-grid { grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr); gap:5px; padding:6px; }
+      .pair-member-card { padding:4px; }
+      .pair-member-name { font-size:11px; }
+      .pair-link-mark { width:22px; height:22px; font-size:13px; }
+      .pair-photo-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
+      .pair-photo-preview-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+
 </style>
 </head>
 <body>
@@ -1577,7 +1646,7 @@
 
           <section id="photoGallerySection" class="photo-archive-section hidden">
             <header class="backup-home-header photo-archive-home-header">
-              <div class="backup-home-topline"><span>✦ PERSONAL IMAGE ARCHIVE ✦</span><span id="photoArchiveCount">0 PHOTO SETS</span></div>
+              <div class="backup-home-topline"><span>✦ PERSONAL IMAGE ARCHIVE ✦</span><span id="photoArchiveCount">0 POSTS</span></div>
               <div class="backup-home-title">PHOTO <i>GALLERY</i></div>
               <div class="backup-home-subtitle">사진과 작은 기록을 모아두는 곳</div>
               <div class="backup-home-decoration">｡ﾟ･ ୨♡୧ ･ﾟ｡　✧　｡ﾟ･ ୨♡୧ ･ﾟ｡</div>
@@ -1613,15 +1682,20 @@
                   <p id="photoArchiveDetailNote"></p>
                   <div id="photoArchiveDetailTags" class="photo-archive-tags"></div>
                 </div>
-                <div id="photoArchiveDetailImages" class="photo-archive-detail-images"></div>
+                <div class="photo-page-viewer" aria-label="사진 페이지">
+                  <button class="photo-page-arrow" id="photoArchivePrevImage" type="button" aria-label="이전 사진">‹</button>
+                  <div class="photo-page-frame" id="photoArchivePageFrame"><img id="photoArchivePageImage" alt="현재 사진"></div>
+                  <button class="photo-page-arrow" id="photoArchiveNextImage" type="button" aria-label="다음 사진">›</button>
+                </div>
+                <div class="photo-page-footer"><span id="photoArchivePageCount">1 / 1</span><button class="small" id="photoArchiveAdjustCurrent" type="button">ADJUST</button></div>
               </article>
             </section>
 
             <section id="photoArchiveComposeView" class="photo-archive-view hidden">
-              <div class="backup-compose-toolbar photo-archive-detail-toolbar"><button class="small" id="photoArchiveCancel" type="button">◂ BACK</button><strong id="photoArchiveComposeTitle">NEW PHOTO SET</strong><span></span></div>
+              <div class="backup-compose-toolbar photo-archive-detail-toolbar"><button class="small" id="photoArchiveCancel" type="button">◂ BACK</button><strong id="photoArchiveComposeTitle">NEW PHOTO POST</strong><span></span></div>
               <div class="backup-compose-card photo-archive-compose-card">
                 <label class="field-label" for="photoArchiveTitleInput">TITLE <span class="backup-optional">OPTIONAL</span></label>
-                <input class="backup-full" id="photoArchiveTitleInput" type="text" maxlength="100" placeholder="사진 묶음의 제목">
+                <input class="backup-full" id="photoArchiveTitleInput" type="text" maxlength="100" placeholder="사진 게시글 제목">
                 <label class="field-label" for="photoArchiveNoteInput">NOTE</label>
                 <textarea class="backup-description" id="photoArchiveNoteInput" rows="3" placeholder="사진에 대한 짧은 기록"></textarea>
                 <label class="field-label" for="photoArchiveTagsInput">TAGS</label>
@@ -1701,6 +1775,7 @@
                   <label class="field-label" for="pairAImageInput">사진</label>
                   <input class="backup-full" id="pairAImageInput" type="file" accept="image/*">
                   <div class="pair-draft-photo" id="pairAPreview"><span>NO IMAGE</span></div>
+                  <button class="pair-profile-adjust" id="pairAAdjust" type="button" hidden>ADJUST PHOTO</button>
                 </section>
                 <section class="pair-character-edit-card">
                   <div class="pair-character-edit-label">CHARACTER B</div>
@@ -1709,6 +1784,7 @@
                   <label class="field-label" for="pairBImageInput">사진</label>
                   <input class="backup-full" id="pairBImageInput" type="file" accept="image/*">
                   <div class="pair-draft-photo" id="pairBPreview"><span>NO IMAGE</span></div>
+                  <button class="pair-profile-adjust" id="pairBAdjust" type="button" hidden>ADJUST PHOTO</button>
                 </section>
               </div>
               <label class="field-label" for="pairDescriptionInput">NOTE</label>
@@ -1723,7 +1799,7 @@
             <div class="backup-compose-toolbar pair-sub-toolbar"><button class="small" id="pairPhotoCancel" type="button">◂ BACK</button><strong>ADD TO PAIR GALLERY</strong><span></span></div>
             <div class="backup-compose-card pair-form-card">
               <label class="field-label" for="pairPhotoTitleInput">TITLE <span class="backup-optional">OPTIONAL</span></label>
-              <input class="backup-full" id="pairPhotoTitleInput" type="text" maxlength="100" placeholder="사진 묶음 제목">
+              <input class="backup-full" id="pairPhotoTitleInput" type="text" maxlength="100" placeholder="사진 게시글 제목">
               <label class="field-label" for="pairPhotoNoteInput">NOTE</label>
               <textarea class="backup-description" id="pairPhotoNoteInput" rows="2" placeholder="사진에 대한 메모"></textarea>
               <label class="field-label" for="pairPhotoFiles">PHOTOS</label>
@@ -1731,6 +1807,26 @@
               <div id="pairPhotoPreview" class="pair-photo-preview-grid"></div>
               <div class="backup-form-actions"><button class="primary" id="pairPhotoSaveButton" type="button">SAVE PHOTOS</button></div>
             </div>
+          </section>
+
+          <section id="pairPhotoDetailView" class="pair-view hidden">
+            <div class="pair-sub-toolbar">
+              <button class="small" id="pairPhotoDetailBack" type="button">◂ PAIR GALLERY</button>
+              <div><button class="small" id="pairPhotoDeletePost" type="button">DELETE POST</button></div>
+            </div>
+            <article class="pair-photo-detail-card">
+              <header class="pair-photo-detail-heading">
+                <div class="pair-detail-kicker">PAIR GALLERY / PHOTO POST</div>
+                <h3 id="pairPhotoDetailTitle"></h3>
+                <p id="pairPhotoDetailNote"></p>
+              </header>
+              <div class="photo-page-viewer pair-photo-page-viewer" aria-label="페어 사진 페이지">
+                <button class="photo-page-arrow" id="pairPhotoPrevImage" type="button" aria-label="이전 사진">‹</button>
+                <div class="photo-page-frame pair-photo-page-frame" id="pairPhotoPageFrame"><img id="pairPhotoPageImage" alt="현재 페어 사진"></div>
+                <button class="photo-page-arrow" id="pairPhotoNextImage" type="button" aria-label="다음 사진">›</button>
+              </div>
+              <div class="photo-page-footer"><span id="pairPhotoPageCount">1 / 1</span><button class="small" id="pairPhotoAdjustCurrent" type="button">ADJUST</button></div>
+            </article>
           </section>
 
           <section id="pairLogComposeView" class="pair-view hidden">
@@ -1898,7 +1994,7 @@
 
   <script>
 (() => {
-  // P. Toolbox v36: pair archive, JSON backup, and installable PWA.
+  // P. Toolbox v37: page-style photo viewers, pair photo crop, and root-level PWA icons.
   const ROOMS_KEY = 'promptToolbox.rooms.v28';
   const RESET_KEY = 'promptToolbox.v28.roomResetDone';
   const REMEMBERED_ROOM_KEY = 'promptToolbox.v30.rememberedRoom';
@@ -5476,7 +5572,10 @@ function startPromptToolbox() {
       if (!backupCropTarget) return null;
       if (backupCropTarget.kind === 'draft') return backupDraftImages[backupCropTarget.index] || null;
       if (backupCropTarget.kind === 'photoDraft') return photoDraftImages[backupCropTarget.index] || null;
+      if (backupCropTarget.kind === 'pairPhotoDraft') return pairPhotoDraftImages[backupCropTarget.index] || null;
+      if (backupCropTarget.kind === 'pairProfileDraft') return pairDraftImages[backupCropTarget.index] || null;
       const entry = backupEntriesData.find(item => item.id === backupCropTarget.entryId);
+      if (backupCropTarget.kind === 'pairProfileSaved') return entry?.members?.[backupCropTarget.index]?.photo || null;
       return entry?.images?.[backupCropTarget.index] || null;
     }
 
@@ -5504,7 +5603,7 @@ function startPromptToolbox() {
       if (!source) return;
       const crop = getBackupImageCrop(image);
       document.getElementById('backupCropImage').src = source;
-      const ratioEditable = kind === 'photoDraft' || kind === 'photoSaved';
+      const ratioEditable = ['photoDraft','photoSaved','pairPhotoDraft','pairPhotoSaved'].includes(kind);
       document.getElementById('backupCropRatio').disabled = !ratioEditable;
       document.getElementById('backupCropRatio').value = ratioEditable ? getBackupImageRatio(image) : '3/4';
       document.getElementById('backupCropStage').style.aspectRatio = (ratioEditable ? getBackupImageRatio(image) : '3/4').replace('/', ' / ');
@@ -5554,11 +5653,14 @@ function startPromptToolbox() {
       const crop = updateBackupCropPreview();
       image.crop = { x: crop.x, y: crop.y, zoom: crop.zoom };
       image.ratio = crop.ratio;
-      if (backupCropTarget.kind === 'saved' || backupCropTarget.kind === 'photoSaved') {
+      if (['saved','photoSaved','pairPhotoSaved','pairProfileSaved'].includes(backupCropTarget.kind)) {
         const entry = backupEntriesData.find(item => item.id === backupCropTarget.entryId);
         try {
           await persistBackupEntryAfterImageEdit(entry);
-          if (entry.kind === 'photo') renderPhotoGallery(); else renderBackupEntries();
+          if (entry.kind === 'photo') renderPhotoGallery();
+          else if (entry.kind === 'pair-photo') { renderPairPhotos(); if (currentPairPhotoPostId === entry.id) renderPairPhotoPostDetail(); }
+          else if (entry.kind === 'pair') { renderPairCards(); if (currentPairId === entry.id) renderPairDetail(); }
+          else renderBackupEntries();
           if (backupCurrentEntryId === entry.id) renderBackupDetail();
           if (photoCurrentEntryId === entry.id) renderPhotoArchiveDetail();
           setStatus('사진 표시 위치를 저장했습니다.');
@@ -5570,6 +5672,12 @@ function startPromptToolbox() {
       } else if (backupCropTarget.kind === 'photoDraft') {
         renderPhotoDraftImages();
         setStatus('사진 자르기 위치를 적용했습니다.');
+      } else if (backupCropTarget.kind === 'pairPhotoDraft') {
+        renderPairPhotoPreview();
+        setStatus('페어 사진 위치를 조정했습니다.');
+      } else if (backupCropTarget.kind === 'pairProfileDraft') {
+        setPairDraftPhotoPreview(backupCropTarget.index);
+        setStatus('캐릭터 사진 위치를 조정했습니다.');
       } else {
         renderBackupImagePreview();
         setStatus('사진 자르기 위치를 적용했습니다.');
@@ -6202,6 +6310,7 @@ function applyBackupTemplate(template) {
     let photoDraftImages = [];
     let photoEditingId = null;
     let photoCurrentEntryId = null;
+    let photoCurrentImageIndex = 0;
     let photoCardUrls = [];
     let photoDetailUrls = [];
     let photoDraftUrls = [];
@@ -6229,7 +6338,7 @@ function applyBackupTemplate(template) {
       photoCardUrls.forEach(URL.revokeObjectURL); photoCardUrls = [];
       grid.replaceChildren();
       const entries = getPhotoArchiveEntries();
-      document.getElementById('photoArchiveCount').textContent = `${backupEntriesData.filter(entry => entry.kind === 'photo').length} PHOTO SETS`;
+      document.getElementById('photoArchiveCount').textContent = `${backupEntriesData.filter(entry => entry.kind === 'photo').length} POSTS`;
       document.getElementById('photoArchiveResultCount').textContent = `${entries.length} items`;
       if (!entries.length) {
         const empty = document.createElement('div');
@@ -6264,7 +6373,7 @@ function applyBackupTemplate(template) {
         title.textContent = entry.title || 'untitled';
         const meta = document.createElement('div');
         meta.className = 'photo-archive-card-meta';
-        meta.textContent = `${(entry.images || []).length} PHOTOS · ${entry.pinned ? 'PINNED' : 'PHOTO SET'}`;
+        meta.textContent = `${(entry.images || []).length} PHOTOS · ${entry.pinned ? 'PINNED' : 'POST'}`;
         caption.append(title, meta);
         card.append(cover, caption);
         grid.appendChild(card);
@@ -6281,6 +6390,7 @@ function applyBackupTemplate(template) {
       const entry = backupEntriesData.find(item => item.id === id && item.kind === 'photo');
       if (!entry) return;
       photoCurrentEntryId = id;
+      photoCurrentImageIndex = 0;
       renderPhotoArchiveDetail();
       showPhotoArchiveView('detail');
     }
@@ -6295,18 +6405,31 @@ function applyBackupTemplate(template) {
       const tags = document.getElementById('photoArchiveDetailTags');
       tags.replaceChildren();
       (entry.tags || []).forEach(tagText => { const tag=document.createElement('span'); tag.textContent=`#${tagText}`; tags.appendChild(tag); });
-      const wrap = document.getElementById('photoArchiveDetailImages');
-      wrap.replaceChildren();
-      (entry.images || []).forEach((image, index) => {
-        const figure = document.createElement('figure'); figure.className='photo-archive-detail-item';
-        const frame = document.createElement('div'); frame.className='photo-archive-detail-frame';
+      const images = (entry.images || []).filter(image => image.blob || image.dataUrl);
+      const image = images[photoCurrentImageIndex];
+      const frame = document.getElementById('photoArchivePageFrame');
+      const img = document.getElementById('photoArchivePageImage');
+      if (image) {
         frame.style.aspectRatio = getBackupImageRatio(image).replace('/', ' / ');
-        const img = document.createElement('img'); img.alt=image.name || `PHOTO ${index+1}`; img.src=backupImageSource(image, photoDetailUrls); applyBackupImageCrop(img,image); frame.appendChild(img);
-        const actions = document.createElement('figcaption'); actions.className='photo-archive-image-actions';
-        const ratio = document.createElement('span'); ratio.textContent=getBackupImageRatio(image).replace('/', ':');
-        const crop = document.createElement('button'); crop.type='button'; crop.textContent='ADJUST'; crop.addEventListener('click',()=>openBackupCropEditor('photoSaved',index,entry.id));
-        actions.append(ratio,crop); figure.append(frame,actions); wrap.appendChild(figure);
-      });
+        img.src = backupImageSource(image, photoDetailUrls);
+        img.alt = entry.title || `PHOTO ${photoCurrentImageIndex + 1}`;
+        applyBackupImageCrop(img, image);
+      } else {
+        frame.style.aspectRatio = '3 / 4';
+        img.removeAttribute('src');
+      }
+      document.getElementById('photoArchivePageCount').textContent = images.length ? `${photoCurrentImageIndex + 1} / ${images.length}` : '0 / 0';
+      document.getElementById('photoArchivePrevImage').disabled = photoCurrentImageIndex <= 0;
+      document.getElementById('photoArchiveNextImage').disabled = photoCurrentImageIndex >= images.length - 1;
+      document.getElementById('photoArchiveAdjustCurrent').disabled = !image;
+    }
+
+    function changePhotoArchivePage(delta) {
+      const entry = backupEntriesData.find(item => item.id === photoCurrentEntryId && item.kind === 'photo');
+      if (!entry) return;
+      const images = (entry.images || []).filter(image => image.blob || image.dataUrl);
+      photoCurrentImageIndex = Math.max(0, Math.min(images.length - 1, photoCurrentImageIndex + delta));
+      renderPhotoArchiveDetail();
     }
 
     function resetPhotoArchiveDraft() {
@@ -6315,7 +6438,7 @@ function applyBackupTemplate(template) {
       document.getElementById('photoArchiveNoteInput').value='';
       document.getElementById('photoArchiveTagsInput').value='';
       document.getElementById('photoArchiveFiles').value='';
-      document.getElementById('photoArchiveComposeTitle').textContent='NEW PHOTO SET';
+      document.getElementById('photoArchiveComposeTitle').textContent='NEW PHOTO POST';
       document.getElementById('photoArchiveSave').textContent='SAVE PHOTOS';
       renderPhotoDraftImages();
     }
@@ -6350,7 +6473,7 @@ function applyBackupTemplate(template) {
       document.getElementById('photoArchiveNoteInput').value=entry.description || '';
       document.getElementById('photoArchiveTagsInput').value=(entry.tags || []).join(', ');
       photoDraftImages=(entry.images || []).map(image=>({name:image.name,blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:getBackupImageRatio(image)}));
-      document.getElementById('photoArchiveComposeTitle').textContent='EDIT PHOTO SET';
+      document.getElementById('photoArchiveComposeTitle').textContent='EDIT PHOTO POST';
       document.getElementById('photoArchiveSave').textContent='SAVE CHANGES';
       renderPhotoDraftImages(); showPhotoArchiveView('compose');
     }
@@ -6384,11 +6507,11 @@ function applyBackupTemplate(template) {
 
     async function deletePhotoArchiveEntry() {
       const entry=backupEntriesData.find(item=>item.id===photoCurrentEntryId && item.kind==='photo'); if(!entry) return;
-      if(!window.confirm(`"${entry.title || '사진 묶음'}"을 삭제할까요?`)) return;
+      if(!window.confirm(`"${entry.title || '사진 게시글'}"을 삭제할까요?`)) return;
       try {
         if(backupStorageMode==='localStorage') { const records=getLocalBackupRecords().filter(item=>item.id!==entry.id); if(!saveLocalBackupRecords(records)) return; }
         else await backupDBRequest('readwrite','delete',entry.id);
-        backupEntriesData=backupEntriesData.filter(item=>item.id!==entry.id); photoCurrentEntryId=null; renderPhotoGallery(); showPhotoArchiveView('grid'); setStatus('사진 묶음을 삭제했습니다.');
+        backupEntriesData=backupEntriesData.filter(item=>item.id!==entry.id); photoCurrentEntryId=null; renderPhotoGallery(); showPhotoArchiveView('grid'); setStatus('사진 게시글을 삭제했습니다.');
       } catch(error) { setStatus(`삭제 실패: ${error.message || '다시 시도해주세요.'}`); }
     }
 
@@ -6409,6 +6532,14 @@ function applyBackupTemplate(template) {
       document.getElementById('photoArchiveEdit').addEventListener('click',()=>editPhotoArchiveEntry(photoCurrentEntryId));
       document.getElementById('photoArchiveDelete').addEventListener('click',deletePhotoArchiveEntry);
       document.getElementById('photoArchiveSave').addEventListener('click',savePhotoArchiveEntry);
+      document.getElementById('photoArchivePrevImage').addEventListener('click',()=>changePhotoArchivePage(-1));
+      document.getElementById('photoArchiveNextImage').addEventListener('click',()=>changePhotoArchivePage(1));
+      document.getElementById('photoArchiveAdjustCurrent').addEventListener('click',()=>{
+        const entry=backupEntriesData.find(item=>item.id===photoCurrentEntryId && item.kind==='photo');
+        const images=(entry?.images||[]).filter(image=>image.blob||image.dataUrl);
+        const image=images[photoCurrentImageIndex];
+        if(image) openBackupCropEditor('photoSaved',entry.images.indexOf(image),entry.id);
+      });
       document.getElementById('photoArchiveSearch').addEventListener('input',renderPhotoGallery);
       document.getElementById('photoArchiveRatioFilter').addEventListener('change',renderPhotoGallery);
       document.getElementById('photoArchiveFiles').addEventListener('change',event=>{
@@ -6422,6 +6553,9 @@ function applyBackupTemplate(template) {
     // P. Toolbox Pair Board. Pair profiles, pair-only photo posts, and chat logs
     // are separate record kinds in the existing per-room backup database.
     let currentPairId = null;
+    let currentPairPhotoPostId = null;
+    let currentPairPhotoIndex = 0;
+    let pairPhotoDetailUrls = [];
     let pairEditingId = null;
     let pairDraftImages = [null, null];
     let pairPhotoDraftImages = [];
@@ -6453,7 +6587,7 @@ function applyBackupTemplate(template) {
             const photo = member.photo || {};
             let dataUrl = photo.dataUrl || '';
             if (!dataUrl && photo.blob) dataUrl = await makeBackupImageDataUrl(photo);
-            return { name: member.name, photo: dataUrl ? { name: photo.name || 'photo', dataUrl } : null };
+            return { name: member.name, photo: dataUrl ? { name: photo.name || 'photo', dataUrl, crop: getBackupImageCrop(photo), ratio: '3/4' } : null };
           })) };
         } else {
           stored = await makeLocalBackupRecord(record);
@@ -6479,7 +6613,7 @@ function applyBackupTemplate(template) {
     }
 
     function openPairView(view) {
-      ['Gallery','Detail','Compose','PhotoCompose','LogCompose'].forEach(name => {
+      ['Gallery','Detail','Compose','PhotoCompose','PhotoDetail','LogCompose'].forEach(name => {
         const node = document.getElementById(`pair${name}View`);
         node.classList.toggle('hidden', name.toLowerCase() !== view.toLowerCase());
       });
@@ -6501,25 +6635,25 @@ function applyBackupTemplate(template) {
         grid.appendChild(empty); return;
       }
       items.forEach(pair => {
-        const card = document.createElement('article'); card.className='pair-gallery-card'; card.tabIndex=0;
+        const card = document.createElement('article'); card.className='pair-gallery-card'; card.tabIndex=0; card.setAttribute('role','button');
         const members = document.createElement('div'); members.className='pair-card-members';
-        const names = document.createElement('div'); names.className='pair-card-names';
         (pair.members || []).slice(0,2).forEach((member,index)=>{
           const frame=document.createElement('div'); frame.className='pair-card-photo';
           const photo=member.photo;
           if (photo && (photo.blob || photo.dataUrl)) {
             const img=document.createElement('img'); img.loading='lazy'; img.alt=member.name || `Character ${index+1}`;
-            img.src=backupImageSource(photo,pairGalleryObjectUrls); frame.appendChild(img);
-          } else { frame.classList.add('empty'); frame.textContent=index===0?'CHARACTER A':'CHARACTER B'; }
-          members.appendChild(frame);
-          const name=document.createElement('div'); name.textContent=member.name || (index===0?'Character A':'Character B'); names.appendChild(name);
+            img.src=backupImageSource(photo,pairGalleryObjectUrls); applyBackupImageCrop(img,photo); frame.appendChild(img);
+          } else { frame.classList.add('empty'); frame.textContent='NO IMAGE'; }
+          const label=document.createElement('span'); label.className='pair-card-photo-name'; label.textContent=member.name || (index===0?'CHARACTER A':'CHARACTER B');
+          frame.appendChild(label); members.appendChild(frame);
         });
-        while (members.children.length<2) { const f=document.createElement('div'); f.className='pair-card-photo empty'; f.textContent='NO IMAGE'; members.appendChild(f); const n=document.createElement('div'); n.textContent='—'; names.appendChild(n); }
+        while (members.children.length<2) { const f=document.createElement('div'); f.className='pair-card-photo empty'; f.textContent='NO IMAGE'; members.appendChild(f); }
+        const join=document.createElement('span'); join.className='pair-card-join'; join.textContent='×'; members.appendChild(join);
         const caption=document.createElement('div'); caption.className='pair-card-caption';
         const title=document.createElement('div'); title.className='pair-card-title'; title.textContent=pair.title || `${pair.members?.[0]?.name || 'A'} × ${pair.members?.[1]?.name || 'B'}`;
-        const note=document.createElement('div'); note.className='pair-card-note'; note.textContent=pair.description || `${pairPhotoRecords(pair.id).length} photo sets · ${pairLogRecords(pair.id).length} chat logs`;
+        const note=document.createElement('div'); note.className='pair-card-note'; note.textContent=`${pairPhotoRecords(pair.id).length} photo posts · ${pairLogRecords(pair.id).length} chat logs`;
         const tags=document.createElement('div'); tags.className='pair-card-tags'; tags.textContent=(pair.tags||[]).slice(0,4).map(t=>`#${t}`).join(' ');
-        caption.append(title,note,tags); card.append(members,names,caption);
+        caption.append(title,note,tags); card.append(members,caption);
         card.addEventListener('click',()=>openPairDetail(pair.id));
         card.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openPairDetail(pair.id);}});
         grid.appendChild(card);
@@ -6530,9 +6664,14 @@ function applyBackupTemplate(template) {
       const target=document.getElementById(index===0?'pairAPreview':'pairBPreview');
       target.replaceChildren();
       const photo=pairDraftImages[index];
+      const adjust=document.getElementById(index===0?'pairAAdjust':'pairBAdjust');
       if (photo && (photo.blob || photo.dataUrl)) {
-        const img=document.createElement('img'); img.alt=index===0?'Character A':'Character B'; img.src=backupImageSource(photo,pairDraftObjectUrls); target.appendChild(img);
-      } else { const text=document.createElement('span'); text.textContent='NO IMAGE'; target.appendChild(text); }
+        const img=document.createElement('img'); img.alt=index===0?'Character A':'Character B'; img.src=backupImageSource(photo,pairDraftObjectUrls); applyBackupImageCrop(img,photo); target.appendChild(img);
+        adjust.hidden=false;
+      } else {
+        const text=document.createElement('span'); text.textContent='NO IMAGE'; target.appendChild(text);
+        adjust.hidden=true;
+      }
     }
 
     function resetPairForm() {
@@ -6559,7 +6698,7 @@ function applyBackupTemplate(template) {
       document.getElementById('pairBNameInput').value=pair.members?.[1]?.name||'';
       document.getElementById('pairDescriptionInput').value=pair.description||'';
       document.getElementById('pairTagsInput').value=(pair.tags||[]).join(', ');
-      pairDraftImages=[pair.members?.[0]?.photo||null,pair.members?.[1]?.photo||null];
+      pairDraftImages=[pair.members?.[0]?.photo?{...pair.members[0].photo,crop:getBackupImageCrop(pair.members[0].photo),ratio:'3/4'}:null,pair.members?.[1]?.photo?{...pair.members[1].photo,crop:getBackupImageCrop(pair.members[1].photo),ratio:'3/4'}:null];
       document.getElementById('pairAImageInput').value=''; document.getElementById('pairBImageInput').value='';
       document.getElementById('pairComposeHeading').textContent='EDIT PAIR';
       document.getElementById('pairSaveButton').textContent='SAVE CHANGES';
@@ -6575,7 +6714,7 @@ function applyBackupTemplate(template) {
       const record={
         id:pairEditingId||makePairId(),kind:'pair',
         title:document.getElementById('pairNameInput').value.trim()||`${nameA} × ${nameB}`,
-        members:[{name:nameA,photo:pairDraftImages[0]},{name:nameB,photo:pairDraftImages[1]}],
+        members:[{name:nameA,photo:pairDraftImages[0]?{...pairDraftImages[0],crop:getBackupImageCrop(pairDraftImages[0]),ratio:'3/4'}:null},{name:nameB,photo:pairDraftImages[1]?{...pairDraftImages[1],crop:getBackupImageCrop(pairDraftImages[1]),ratio:'3/4'}:null}],
         description:document.getElementById('pairDescriptionInput').value.trim(),
         tags:document.getElementById('pairTagsInput').value.split(/[，,\n]/).map(v=>v.trim().replace(/^#/,'')).filter(Boolean),
         createdAt:existing?.createdAt||now,updatedAt:now
@@ -6596,13 +6735,14 @@ function applyBackupTemplate(template) {
       const members=document.getElementById('pairMembersView'); members.replaceChildren();
       (pair.members||[]).slice(0,2).forEach((member,index)=>{
         const card=document.createElement('article'); card.className='pair-member-card';
+        const label=document.createElement('div');label.className='pair-member-label';label.textContent=index===0?'CHARACTER A':'CHARACTER B';
         const frame=document.createElement('div'); frame.className='pair-member-photo';
         if(member.photo&&(member.photo.blob||member.photo.dataUrl)){
-          const img=document.createElement('img');img.alt=member.name||`Character ${index+1}`;img.src=backupImageSource(member.photo,pairDetailObjectUrls);frame.appendChild(img);
+          const img=document.createElement('img');img.alt=member.name||`Character ${index+1}`;img.src=backupImageSource(member.photo,pairDetailObjectUrls);applyBackupImageCrop(img,member.photo);frame.appendChild(img);
         } else {frame.classList.add('empty');frame.textContent='NO IMAGE';}
         const name=document.createElement('div');name.className='pair-member-name';name.textContent=member.name||`Character ${index+1}`;
-        const label=document.createElement('div');label.className='pair-member-label';label.textContent=index===0?'CHARACTER A':'CHARACTER B';
-        card.append(frame,name,label);members.appendChild(card);
+        card.append(label,frame,name);members.appendChild(card);
+        if(index===0){const join=document.createElement('div');join.className='pair-link-mark';join.textContent='×';members.appendChild(join);}
       });
       renderPairPhotos(); renderPairChatLogs();
     }
@@ -6614,15 +6754,47 @@ function applyBackupTemplate(template) {
       const posts=pairPhotoRecords(currentPairId);
       if(!posts.length){const empty=document.createElement('div');empty.className='backup-empty';empty.textContent='아직 페어 사진이 없습니다.';wrap.appendChild(empty);return;}
       posts.forEach(post=>{
-        const card=document.createElement('article');card.className='pair-photo-post';
-        const images=document.createElement('div');images.className='pair-photo-post-images';
-        (post.images||[]).forEach(image=>{const img=document.createElement('img');img.loading='lazy';img.alt=post.title||'Pair photo';img.src=backupImageSource(image,pairPhotoPostUrls);applyBackupImageCrop(img,image);images.appendChild(img);});
+        const card=document.createElement('article');card.className='pair-photo-post';card.tabIndex=0;card.setAttribute('role','button');
+        const first=(post.images||[]).find(image=>image.blob||image.dataUrl);
+        const cover=document.createElement('div');cover.className='pair-photo-post-cover';
+        if(first){cover.style.aspectRatio=getBackupImageRatio(first).replace('/', ' / ');const img=document.createElement('img');img.alt=post.title||'Pair photo';img.src=backupImageSource(first,pairPhotoPostUrls);applyBackupImageCrop(img,first);cover.appendChild(img);}
+        else {cover.textContent='NO PHOTO';}
         const title=document.createElement('div');title.className='pair-photo-post-title';title.textContent=post.title||'untitled';
         const note=document.createElement('div');note.className='pair-photo-post-note';note.textContent=post.description||'';
-        const actions=document.createElement('div');actions.className='pair-post-actions';
-        const remove=document.createElement('button');remove.type='button';remove.textContent='DELETE';remove.addEventListener('click',async()=>{if(!confirm('이 사진 묶음을 삭제할까요?'))return;try{await deleteRoomRecord(post.id);renderPairPhotos();setStatus('페어 사진을 삭제했습니다.');}catch(e){setStatus(e.message||'삭제 실패');}});
-        actions.appendChild(remove);card.append(images,title,note,actions);wrap.appendChild(card);
+        const meta=document.createElement('div');meta.className='pair-photo-post-meta';meta.textContent=`${(post.images||[]).length} PHOTOS`;
+        card.append(cover,title,note,meta);
+        card.addEventListener('click',()=>openPairPhotoPost(post.id));
+        card.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openPairPhotoPost(post.id);}});
+        wrap.appendChild(card);
       });
+    }
+
+    function openPairPhotoPost(postId) {
+      const post=pairPhotoRecords(currentPairId).find(item=>item.id===postId); if(!post)return;
+      currentPairPhotoPostId=postId; currentPairPhotoIndex=0; renderPairPhotoPostDetail(); openPairView('photodetail');
+    }
+
+    function renderPairPhotoPostDetail() {
+      const post=backupEntriesData.find(item=>item.id===currentPairPhotoPostId&&item.kind==='pair-photo'&&item.pairId===currentPairId); if(!post)return;
+      revokePairUrls(pairPhotoDetailUrls);
+      document.getElementById('pairPhotoDetailTitle').textContent=post.title||'';
+      document.getElementById('pairPhotoDetailNote').textContent=post.description||'';
+      const images=(post.images||[]).filter(image=>image.blob||image.dataUrl);
+      const image=images[currentPairPhotoIndex];
+      const frame=document.getElementById('pairPhotoPageFrame'); const img=document.getElementById('pairPhotoPageImage');
+      if(image){frame.style.aspectRatio=getBackupImageRatio(image).replace('/', ' / ');img.src=backupImageSource(image,pairPhotoDetailUrls);img.alt=post.title||`PHOTO ${currentPairPhotoIndex+1}`;applyBackupImageCrop(img,image);}
+      else {frame.style.aspectRatio='3 / 4';img.removeAttribute('src');}
+      document.getElementById('pairPhotoPageCount').textContent=images.length?`${currentPairPhotoIndex+1} / ${images.length}`:'0 / 0';
+      document.getElementById('pairPhotoPrevImage').disabled=currentPairPhotoIndex<=0;
+      document.getElementById('pairPhotoNextImage').disabled=currentPairPhotoIndex>=images.length-1;
+      document.getElementById('pairPhotoAdjustCurrent').disabled=!image;
+    }
+
+    function changePairPhotoPage(delta) {
+      const post=backupEntriesData.find(item=>item.id===currentPairPhotoPostId&&item.kind==='pair-photo');if(!post)return;
+      const images=(post.images||[]).filter(image=>image.blob||image.dataUrl);
+      currentPairPhotoIndex=Math.max(0,Math.min(images.length-1,currentPairPhotoIndex+delta));
+      renderPairPhotoPostDetail();
     }
 
     function renderPairChatLogs() {
@@ -6651,15 +6823,20 @@ function applyBackupTemplate(template) {
     function renderPairPhotoPreview() {
       revokePairUrls(pairPhotoObjectUrls);const wrap=document.getElementById('pairPhotoPreview');wrap.replaceChildren();
       pairPhotoDraftImages.forEach((image,index)=>{
-        const item=document.createElement('div');item.className='pair-photo-preview-item';const img=document.createElement('img');img.src=backupImageSource(image,pairPhotoObjectUrls);img.alt=image.name||`Photo ${index+1}`;
-        const remove=document.createElement('button');remove.type='button';remove.textContent='REMOVE';remove.addEventListener('click',()=>{pairPhotoDraftImages.splice(index,1);renderPairPhotoPreview();});item.append(img,remove);wrap.appendChild(item);
+        const item=document.createElement('div');item.className='pair-photo-preview-item';
+        const frame=document.createElement('div');frame.className='pair-photo-preview-frame';frame.style.aspectRatio=getBackupImageRatio(image).replace('/', ' / ');
+        const img=document.createElement('img');img.src=backupImageSource(image,pairPhotoObjectUrls);img.alt=image.name||`Photo ${index+1}`;applyBackupImageCrop(img,image);frame.appendChild(img);
+        const actions=document.createElement('div');actions.className='pair-photo-preview-actions';
+        const crop=document.createElement('button');crop.type='button';crop.textContent='CROP / RATIO';crop.addEventListener('click',()=>openBackupCropEditor('pairPhotoDraft',index));
+        const remove=document.createElement('button');remove.type='button';remove.textContent='REMOVE';remove.addEventListener('click',()=>{pairPhotoDraftImages.splice(index,1);renderPairPhotoPreview();});
+        actions.append(crop,remove);item.append(frame,actions);wrap.appendChild(item);
       });
     }
 
     async function savePairPhotos() {
       if(!pairPhotoDraftImages.length){setStatus('사진을 한 장 이상 추가해주세요.');return;}
       const now=new Date().toISOString();
-      const record={id:makePairId(),kind:'pair-photo',pairId:currentPairId,title:document.getElementById('pairPhotoTitleInput').value.trim(),description:document.getElementById('pairPhotoNoteInput').value.trim(),images:pairPhotoDraftImages.map(image=>({name:image.name||'image',blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:'3/4'})),createdAt:now,updatedAt:now};
+      const record={id:makePairId(),kind:'pair-photo',pairId:currentPairId,title:document.getElementById('pairPhotoTitleInput').value.trim(),description:document.getElementById('pairPhotoNoteInput').value.trim(),images:pairPhotoDraftImages.map(image=>({name:image.name||'image',blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:getBackupImageRatio(image)})),createdAt:now,updatedAt:now};
       try{await saveRoomRecord(record);renderPairDetail();openPairView('detail');setStatus('페어 갤러리에 사진을 저장했습니다.');}
       catch(error){setStatus(`사진 저장 실패: ${error.message||'다시 시도해주세요.'}`);}
     }
@@ -6694,8 +6871,10 @@ function applyBackupTemplate(template) {
       document.getElementById('pairSearch').addEventListener('input',renderPairCards);
       document.getElementById('pairComposeCancel').addEventListener('click',()=>{resetPairForm();openPairView('gallery');});
       document.getElementById('pairSaveButton').addEventListener('click',savePair);
-      document.getElementById('pairAImageInput').addEventListener('change',event=>{const file=event.target.files?.[0];if(file){pairDraftImages[0]={name:file.name,blob:file};setPairDraftPhotoPreview(0);}});
-      document.getElementById('pairBImageInput').addEventListener('change',event=>{const file=event.target.files?.[0];if(file){pairDraftImages[1]={name:file.name,blob:file};setPairDraftPhotoPreview(1);}});
+      document.getElementById('pairAImageInput').addEventListener('change',event=>{const file=event.target.files?.[0];if(file){pairDraftImages[0]={name:file.name,blob:file,crop:{x:50,y:50,zoom:1},ratio:'3/4'};setPairDraftPhotoPreview(0);}event.target.value='';});
+      document.getElementById('pairBImageInput').addEventListener('change',event=>{const file=event.target.files?.[0];if(file){pairDraftImages[1]={name:file.name,blob:file,crop:{x:50,y:50,zoom:1},ratio:'3/4'};setPairDraftPhotoPreview(1);}event.target.value='';});
+      document.getElementById('pairAAdjust').addEventListener('click',()=>openBackupCropEditor('pairProfileDraft',0));
+      document.getElementById('pairBAdjust').addEventListener('click',()=>openBackupCropEditor('pairProfileDraft',1));
       document.getElementById('pairBackButton').addEventListener('click',()=>{renderPairCards();openPairView('gallery');});
       document.getElementById('pairEditButton').addEventListener('click',()=>editPair(currentPairId));
       document.getElementById('pairDeleteButton').addEventListener('click',deletePair);
@@ -6704,6 +6883,19 @@ function applyBackupTemplate(template) {
       document.getElementById('pairPhotoCancel').addEventListener('click',()=>openPairView('detail'));
       document.getElementById('pairPhotoSaveButton').addEventListener('click',savePairPhotos);
       document.getElementById('pairPhotoFiles').addEventListener('change',event=>{const files=Array.from(event.target.files||[]).filter(file=>file.type.startsWith('image/'));files.forEach(file=>pairPhotoDraftImages.push({name:file.name,blob:file,crop:{x:50,y:50,zoom:1},ratio:'3/4'}));renderPairPhotoPreview();event.target.value='';});
+      document.getElementById('pairPhotoDetailBack').addEventListener('click',()=>{renderPairPhotos();openPairView('detail');});
+      document.getElementById('pairPhotoPrevImage').addEventListener('click',()=>changePairPhotoPage(-1));
+      document.getElementById('pairPhotoNextImage').addEventListener('click',()=>changePairPhotoPage(1));
+      document.getElementById('pairPhotoAdjustCurrent').addEventListener('click',()=>{
+        const post=backupEntriesData.find(item=>item.id===currentPairPhotoPostId&&item.kind==='pair-photo');
+        const images=(post?.images||[]).filter(image=>image.blob||image.dataUrl); const image=images[currentPairPhotoIndex];
+        if(image) openBackupCropEditor('pairPhotoSaved',post.images.indexOf(image),post.id);
+      });
+      document.getElementById('pairPhotoDeletePost').addEventListener('click',async()=>{
+        const post=backupEntriesData.find(item=>item.id===currentPairPhotoPostId&&item.kind==='pair-photo');if(!post)return;
+        if(!confirm('이 페어 사진 게시글을 삭제할까요?'))return;
+        try{await deleteRoomRecord(post.id);currentPairPhotoPostId=null;renderPairPhotos();openPairView('detail');setStatus('페어 사진 게시글을 삭제했습니다.');}catch(error){setStatus(error.message||'삭제에 실패했습니다.');}
+      });
       document.getElementById('pairLogCancel').addEventListener('click',()=>{pairLogEditingId=null;openPairView('detail');});
       document.getElementById('pairLogSaveButton').addEventListener('click',savePairLog);
       renderPairCards();
@@ -7011,7 +7203,7 @@ function applyBackupTemplate(template) {
   };
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register(new URL('./sw.js', location.href), { scope: './' })
+      navigator.serviceWorker.register(new URL('./sw.js', document.baseURI), { scope: new URL('./', document.baseURI).pathname })
         .catch(error => console.warn('Service worker registration failed:', error));
     });
   }
