@@ -11,7 +11,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" sizes="192x192" href="./p-toolbox-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="./p-toolbox-192.png">
-  <title>P. Toolbox v43</title>
+  <title>P. Toolbox v48</title>
   <style>
     :root {
       color-scheme: light;
@@ -1053,17 +1053,31 @@
     .pair-log-editor pre,.pair-chat-rich pre { max-width:100%; overflow:auto; padding:8px; background:#f0edf0; border:1px solid #ddd2d8; white-space:pre-wrap; }
     .pair-log-editor-note { margin-top:6px; color:#927e89; font:9px Tahoma,sans-serif; }
     .pair-log-feature-panel { padding:8px; border:1px solid #cbb7c1; border-top:0; background:#fffdfb; }
+    .pair-log-markdown-source { display:block; width:100%; min-height:120px; resize:vertical; padding:8px; border:1px solid #cbb7c1; background:#fff; color:#55434f; font:11px/1.6 Consolas,"Courier New",monospace; }
+    .pair-log-markdown-actions { display:flex; flex-wrap:wrap; align-items:center; gap:5px; margin-top:7px; }
+    .pair-log-markdown-actions button { min-height:24px; padding:3px 8px; border:1px solid #b99aaa; background:#fffdfb; color:#72596a; font:10px Tahoma,sans-serif; }
+    .pair-log-markdown-preview { margin-top:8px; padding:9px; border:1px solid #ddd2d8; background:#fff; color:#55434f; overflow-wrap:anywhere; }
+    .pair-log-markdown-preview.hidden { display:none; }
+    .pair-log-markdown-preview table { width:100%; border-collapse:collapse; }
+    .pair-log-markdown-preview th,.pair-log-markdown-preview td { border:1px solid #dce9ec; padding:5px 7px; text-align:left; }
+
     .pair-log-feature-panel.hidden { display:none; }
     .pair-log-palette-head,.pair-log-palette-pagebar,.pair-log-template-actions { display:flex; align-items:center; flex-wrap:wrap; gap:5px; }
     .pair-log-palette-head input[type="text"] { width:92px; min-width:0; padding:4px 5px; border:1px solid #cbb7c1; }
     .pair-log-palette-head input[type="color"] { width:27px; height:25px; padding:1px; }
     .pair-log-palette-pagebar { margin:7px 0; }
     .pair-log-palette-pagebar select { min-width:100px; flex:1; }
+    .pair-log-palette-quick-wrap { display:flex; flex-direction:column; gap:5px; margin:8px 0 5px; }
+    .pair-log-palette-quick-wrap small,.pair-log-palette-section-label { color:#8d7887; font-size:9px; letter-spacing:.04em; }
+    .pair-log-palette-quick { display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); gap:4px; }
+    .pair-log-palette-quick button { min-width:0; height:22px; padding:0; border:1px solid rgba(70,60,70,.18); border-radius:4px; }
     .pair-log-palette-grid { display:grid; grid-template-columns:repeat(10,minmax(0,1fr)); gap:3px; }
     .pair-log-palette-grid button { min-width:0; aspect-ratio:1; padding:0; border:1px solid rgba(70,60,70,.18); }
-    .pair-log-palette-grid.neutral { grid-template-columns:repeat(6,minmax(0,1fr)); }
+    .pair-log-palette-grid.neutral { grid-template-columns:repeat(4,minmax(0,1fr)); }
     .pair-log-palette-saved { display:flex; flex-wrap:wrap; gap:4px; margin-top:7px; }
     .pair-log-palette-saved button { min-width:24px; height:23px; padding:2px 6px; }
+    .pair-log-palette-saved .is-saved { min-width:24px; width:24px; padding:0; }
+    .pair-log-palette-saved button[data-pair-log-palette-remove] { width:22px; min-width:22px; }
     .pair-log-secret-settings { margin:8px 0; padding:7px 9px; border:1px solid #d7c4ce; background:#fffdfb; color:#76596d; font-size:10px; }
     .pair-log-secret-settings label { display:flex; align-items:center; gap:6px; cursor:pointer; }
     .pair-log-secret-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:5px; margin-top:7px; }
@@ -1330,6 +1344,295 @@
       .pair-photo-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
       .pair-photo-preview-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
     }
+
+
+/* === RP Archive original record-template styles, scoped to Pair Log === */
+.rt-block{position:relative;display:block;width:100%;max-width:100%;box-sizing:border-box;margin:18px 0;padding:14px;color:#708d98;font-size:11px;line-height:1.7;overflow-wrap:anywhere}
+
+.rt-block *{box-sizing:border-box;max-width:100%}
+
+.rt-editable{outline:none;cursor:text;white-space:pre-wrap;overflow-wrap:anywhere}
+
+.rt-editable:focus{outline:1px dashed rgba(142,188,201,.55);outline-offset:2px}
+
+.rt-logo{display:inline-flex;align-items:center;justify-content:center;min-width:30px;min-height:22px;padding:2px 6px;border:1px solid currentColor;border-radius:4px;font-size:10px;font-weight:600;letter-spacing:.08em;line-height:1.2}
+
+.rt-logo img{display:block;width:auto;height:auto;max-width:110px;max-height:28px;object-fit:contain}
+
+.rt-controls{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:4px;min-height:20px;margin:-7px -7px 8px;color:#a0b9c1;font-size:8px}
+
+.rt-controls-label{margin-right:auto;letter-spacing:.08em}
+
+.rt-controls button{min-height:20px;padding:1px 6px;border:1px solid #e0ebee;border-radius:5px;background:rgba(255,255,255,.82);color:#83a7b3;font-size:8px;line-height:1.2}
+
+.rt-main{min-height:62px;white-space:pre-wrap}
+
+.rt-block .rt-editable[contenteditable="true"]:empty:before{content:attr(data-placeholder);color:#b2c3c6;pointer-events:none}
+
+.rt-memo{padding:14px 16px 12px;border:1px solid #e6e0c9;border-radius:3px;background:#fffdf0;box-shadow:0 2px 7px rgba(128,119,82,.07);color:#827f6c}
+
+.rt-memo:before{content:"";position:absolute;top:0;left:0;width:100%;height:4px;background:rgba(208,194,139,.34)}
+
+.rt-memo-head{display:flex;align-items:center;gap:8px;padding-bottom:9px;border-bottom:1px solid rgba(183,171,126,.28)}
+
+.rt-memo-brand{font-size:8px;letter-spacing:.16em;color:#a39a79}
+
+.rt-memo-date{margin-left:auto;font-size:8px;color:#aaa58e}
+
+.rt-memo-title{margin:12px 0 5px;font-size:14px;font-weight:600;color:#77745f}
+
+.rt-memo-body{min-height:78px;padding:2px 0 8px;font-size:11px;line-height:1.9}
+
+.rt-memo-foot{padding-top:7px;border-top:1px dashed rgba(183,171,126,.35);font-size:8px;letter-spacing:.07em;color:#aaa58e;text-align:right}
+
+.rt-email{padding:0;border:1px solid #dce8ec;border-radius:10px;background:rgba(255,255,255,.94);color:#6e8995;box-shadow:0 2px 8px rgba(113,151,165,.055)}
+
+.rt-email-head{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #e5eef0;background:rgba(246,250,250,.85);border-radius:10px 10px 0 0}
+
+.rt-email-brand{display:flex;align-items:center;gap:7px;min-width:0}
+
+.rt-email-brandname{font-size:8px;letter-spacing:.12em;color:#9bb3bc}
+
+.rt-email-state{margin-left:auto;font-size:8px;letter-spacing:.1em;color:#aec0c5}
+
+.rt-email-toolbar{display:flex;gap:7px;align-items:center;padding:8px 12px;border-bottom:1px solid #edf2f3;font-size:9px}
+
+.rt-email-folder{color:#94aeb8}
+
+.rt-email-sep{color:#cad7da}
+
+.rt-email-fields{padding:3px 12px 0}
+
+.rt-email-field{display:flex;align-items:flex-start;gap:10px;min-height:29px;padding:6px 0;border-bottom:1px solid #edf1f2;font-size:9px}
+
+.rt-email-label{flex:0 0 48px;color:#a2b5bb}
+
+.rt-email-value{flex:1;min-width:0;color:#718d99}
+
+.rt-email-subject{font-weight:500;color:#607f8d}
+
+.rt-email-body{min-height:100px;padding:13px 12px;font-size:11px;line-height:1.9}
+
+.rt-email-foot{display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid #e9eff0;color:#a0b5bc;font-size:8px}
+
+.rt-email-send{margin-left:auto;padding:4px 12px;border:1px solid #cbdfe5;border-radius:6px;background:#edf6f7;color:#7e9fac;font-size:9px}
+
+.rt-letter{padding:22px 19px 17px;border:1px solid #e1e9e8;border-radius:2px;background:#fffefa;color:#718b8e;box-shadow:0 2px 8px rgba(118,151,151,.045)}
+
+.rt-letter-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-bottom:9px;border-bottom:1px solid #e5ece9}
+
+.rt-letter .rt-logo{border:0;padding:0;justify-content:flex-start;font-family:Georgia,serif;font-size:11px;letter-spacing:.13em}
+
+.rt-letter-brand{font-size:8px;letter-spacing:.16em;color:#a9b9b5}
+
+.rt-letter-date{margin-top:18px;text-align:right;font-size:9px;color:#9eaeaa}
+
+.rt-letter-recipient{margin:17px 0 14px;font-size:10px}
+
+.rt-letter-body{min-height:125px;font-family:Georgia,"Noto Serif KR",serif;font-size:12px;line-height:2.1;color:#697f7c}
+
+.rt-letter-sign{display:flex;flex-direction:column;align-items:flex-end;gap:2px;margin-top:14px;padding-top:10px;border-top:1px solid #edf0eb;font-size:9px;color:#9aaba5}
+
+.rt-letter-sign strong{font-size:11px;color:#728d87;font-weight:500}
+
+.rt-polaroid{width:min(100%,390px);margin:18px auto;padding:12px 12px 10px;border:1px solid #e5e6df;background:#fff;border-radius:2px;box-shadow:0 3px 10px rgba(85,105,106,.1);color:#78898b}
+
+.rt-polaroid-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 1px 8px}
+
+.rt-polaroid .rt-logo{border:0;padding:0;justify-content:flex-start;font-size:9px;letter-spacing:.12em}
+
+.rt-polaroid-brand{font-size:7px;letter-spacing:.17em;color:#b0b9b5}
+
+.rt-photo-frame{display:grid;place-items:center;width:100%;aspect-ratio:4/3;max-height:310px;overflow:hidden;background:#eef1ed;border:1px solid #e7ebe6;color:#a2b2ad;cursor:pointer}
+
+.rt-photo-frame img{display:block;width:100%;height:100%;object-fit:cover}
+
+.rt-photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:19px}
+
+.rt-photo-placeholder small{font-size:8px;letter-spacing:.1em}
+
+.rt-polaroid-caption{min-height:34px;padding:9px 3px 4px;font-family:Georgia,"Noto Serif KR",serif;font-size:11px;color:#778783}
+
+.rt-polaroid-foot{display:flex;justify-content:space-between;gap:8px;padding:5px 3px 0;border-top:1px solid #f0f1ed;font-size:8px;color:#aab6b0}
+
+.rt-dossier{padding:13px 14px 11px;border:1px solid #d8e2e3;background:#f9fbf8;color:#6e8586}
+
+.rt-dossier-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-bottom:9px;border-bottom:2px solid #afc4c5}
+
+.rt-dossier .rt-logo{border:0;border-radius:0;padding:0;justify-content:flex-start;font-size:10px;letter-spacing:.11em}
+
+.rt-dossier-brand{font-size:7px;letter-spacing:.15em;color:#9aaead}
+
+.rt-dossier-stamp{padding:3px 6px;border:1px solid #c69d9d;color:#b98f92;font-size:8px;letter-spacing:.15em;transform:rotate(-2deg)}
+
+.rt-dossier-meta{display:grid;grid-template-columns:auto 1fr auto 1fr;gap:4px 7px;margin-top:10px;padding:7px 8px;background:#eef3f0;font-size:8px}
+
+.rt-dossier-meta span,
+.rt-dossier-byline span{color:#9aadaa}
+
+.rt-dossier-title{margin:13px 0 7px;font-size:15px;font-weight:600;color:#637e80}
+
+.rt-dossier-byline{display:flex;flex-wrap:wrap;gap:4px 7px;padding-bottom:8px;border-bottom:1px solid #dfe8e3;font-size:8px}
+.rt-dossier-meta span,.rt-dossier-byline span{color:#9aadaa}
+
+.rt-dossier-body{min-height:95px;padding:10px 1px;font-size:10px;line-height:1.9}
+
+.rt-dossier-foot{display:flex;justify-content:space-between;gap:8px;padding-top:7px;border-top:1px solid #dfe8e3;font-size:8px;letter-spacing:.1em;color:#9aadaa}
+
+.rt-receipt{width:min(100%,350px);margin:18px auto;padding:15px 16px 12px;border:1px dashed #cfdcda;background:#fffefa;color:#788d89;font-family:"Courier New",monospace}
+
+.rt-receipt-head{text-align:center;padding-bottom:11px;border-bottom:1px dashed #d8e2de}
+
+.rt-receipt .rt-logo{display:flex;width:max-content;max-width:100%;margin:0 auto 3px;border:0;border-radius:0;font-family:inherit;font-size:12px;letter-spacing:.08em}
+
+.rt-receipt-sub{font-size:7px;letter-spacing:.14em;color:#a5b3ad}
+
+.rt-receipt-date{margin-top:7px;font-size:8px;color:#9eaea8}
+
+.rt-receipt-info{display:grid;grid-template-columns:auto 1fr;gap:3px 8px;padding:9px 0;border-bottom:1px dashed #d8e2de;font-size:8px}
+
+.rt-receipt-info span{color:#a2b1aa}
+
+.rt-receipt-items{padding:8px 0;border-bottom:1px dashed #d8e2de}
+
+.rt-receipt-item{display:grid;grid-template-columns:1fr 42px 58px;gap:5px;padding:3px 0;font-size:8px}
+
+.rt-receipt-item:first-child{padding-bottom:5px;color:#9eaea8;border-bottom:1px solid #e8eeea}
+
+.rt-receipt-item span:last-child{text-align:right}
+
+.rt-receipt-total{display:flex;justify-content:space-between;padding:9px 0;font-size:10px}
+
+.rt-receipt-note{min-height:35px;padding:4px 0 7px;border-top:1px dashed #d8e2de;font-size:8px}
+
+.rt-receipt-foot{text-align:center;padding-top:7px;border-top:1px dashed #d8e2de;font-size:8px;color:#a0afa8}
+
+@media (max-width:460px){
+.rt-block{margin:14px 0;padding:11px}
+.rt-email-head{padding:8px 9px}
+.rt-email-fields{padding-left:9px;padding-right:9px}
+.rt-email-body{padding:10px 9px}
+.rt-letter{padding:17px 14px 13px}
+.rt-dossier-meta{grid-template-columns:auto 1fr;gap:4px 8px}
+.rt-receipt{padding:12px 12px 10px}
+.rt-controls{gap:3px;justify-content:flex-start}
+.rt-controls-label{flex:1 0 100%;}
+.rt-controls button{padding:1px 5px}
+.rt-style-control{font-size:8px;gap:2px}
+.rt-style-control select{max-width:67px;padding:2px 3px;font-size:8px}
+}
+
+.rt-logo-hidden{display:none!important}
+
+.rt-version-section{width:100%;margin:26px 0 18px;padding:15px 0 13px;border-top:1px solid rgba(143,180,188,.34);border-bottom:1px solid rgba(143,180,188,.22);background:transparent;box-shadow:none}
+
+.rt-section-kicker{margin-bottom:7px;color:#9bb8bf;font-size:8px;letter-spacing:.16em}
+
+.rt-section-title{margin:0;color:#7197a2;font-size:17px;font-weight:500;line-height:1.45}
+
+.rt-section-rule{width:34px;height:1px;margin:9px 0 12px;background:#b8d1d5}
+
+.rt-section-body{min-height:46px;color:inherit;font-size:inherit;line-height:1.8}
+
+.detail-content .rt-controls{display:none!important}
+
+.rt-style-control{display:inline-flex;align-items:center;gap:3px;white-space:nowrap;color:#9aafb2;font-size:8px}
+
+.rt-style-control select{height:21px;max-width:78px;padding:1px 4px;border:1px solid #e0ebee;border-radius:5px;background:rgba(255,255,255,.9);color:#83a0a6;font-size:8px}
+
+.rt-memo-lined{width:min(100%,680px);min-height:0;padding:10px 17px 13px 21px;border:1px solid #e8dca5;border-bottom:0;border-radius:2px 2px 0 0;background-color:#fff3b9;background-image:repeating-linear-gradient(to bottom,transparent 0 23px,rgba(157,157,117,.25) 23px 24px,transparent 24px 25px);box-shadow:none}
+
+.rt-memo-lined:before{top:9px;bottom:10px;left:14px;width:1px;height:auto;background:rgba(205,139,132,.44)}
+
+.rt-memo-lined:after{content:"";position:absolute;left:-1px;right:-1px;bottom:-7px;height:8px;background:linear-gradient(#fff3b9,#fff3b9);clip-path:polygon(0 0,4% 42%,8% 8%,13% 54%,18% 12%,23% 48%,28% 7%,33% 55%,38% 15%,43% 48%,48% 5%,53% 56%,58% 12%,63% 46%,68% 6%,73% 52%,78% 10%,83% 55%,88% 7%,93% 47%,97% 12%,100% 35%,100% 100%,0 100%);filter:drop-shadow(0 2px 1px rgba(139,126,83,.10));pointer-events:none}
+
+.rt-memo-lined .rt-memo-head{border-bottom:1px solid rgba(175,163,117,.28)}
+
+.rt-memo-lined .rt-memo-title{color:#77734f}
+
+.rt-memo-lined .rt-memo-body{line-height:2.05;min-height:38px}
+
+.rt-memo-lined .rt-memo-foot{border-top:1px dashed rgba(175,163,117,.35)}
+
+@media (min-width:600px){
+.rt-memo-lined{margin-left:auto;margin-right:auto}
+}
+
+.rt-sticky{width:min(100%,340px);min-height:190px;margin:22px auto;padding:17px 18px 14px;border:0;border-radius:2px;background:#fff0a0;color:#81774d;box-shadow:2px 5px 12px rgba(103,91,48,.16)}
+
+.rt-sticky:before{top:0;right:0;left:auto;width:25px;height:25px;background:linear-gradient(225deg,#e1d27e 0 49%,rgba(145,125,63,.12) 50%,transparent 73%)}
+
+.rt-sticky:after{content:"";position:absolute;top:0;right:25px;width:1px;height:25px;background:rgba(159,137,67,.10);transform:rotate(45deg);transform-origin:top}
+
+.rt-sticky .rt-memo-head{border-bottom:1px solid rgba(171,147,71,.23)}
+
+.rt-sticky .rt-logo{border-color:rgba(150,132,71,.45);color:#8f8150}
+.rt-sticky .rt-memo-brand,.rt-sticky .rt-memo-date,.rt-sticky .rt-memo-foot{color:#a99a67}
+
+.rt-sticky .rt-memo-brand,
+.rt-sticky .rt-memo-date,
+.rt-sticky .rt-memo-foot{color:#a99a67}
+
+.rt-sticky .rt-memo-title{color:#756a43}
+
+.rt-sticky .rt-memo-body{min-height:100px;line-height:1.95}
+
+.rt-sticky .rt-memo-foot{border-top:1px dashed rgba(171,147,71,.32)}
+
+.rt-block{position:relative}
+
+.rt-block>.rt-controls{display:none!important;position:absolute!important;z-index:50;left:0;right:0;top:-8px;transform:translateY(-100%);max-width:100%;flex-wrap:wrap;box-shadow:0 4px 16px rgba(112,151,163,.14)}
+
+.rt-block>.rt-controls.rt-controls-visible{display:flex!important}
+
+.rt-version-section{margin:18px 0;border-top:1px solid rgba(143,180,188,.3);border-bottom:1px solid rgba(143,180,188,.22);padding:0;background:transparent}
+
+.rt-section-summary{display:flex;align-items:center;gap:9px;min-height:42px;list-style:none;cursor:pointer;padding:8px 10px}
+
+.rt-section-summary::-webkit-details-marker{display:none}
+
+.rt-section-chevron{display:inline-block;transition:transform .18s ease;color:#8daeb6;font-size:18px;line-height:1}
+
+.rt-version-section[open] .rt-section-chevron{transform:rotate(90deg)}
+
+.rt-section-kicker{font-size:8px;letter-spacing:.14em;color:#9bb8bf}
+
+.rt-section-title{font-size:14px;color:#7197a2;font-weight:500;outline:none}
+
+.rt-section-body{padding:8px 12px 14px 36px;min-height:38px;line-height:1.8}
+
+.rt-block.rt-pushed-up{transform:translateY(calc(-1 * var(--rt-push-up,52px)));transition:transform .18s ease}
+
+.rt-block{transition:transform .18s ease}
+
+.rt-toggle-section{display:block;width:100%;margin:16px 0;border-top:1px solid rgba(143,180,188,.3);border-bottom:1px solid rgba(143,180,188,.22);padding:0;background:transparent}
+
+.rt-toggle-section>.rt-section-summary{display:flex;align-items:center;gap:9px;min-height:42px;list-style:none;cursor:pointer;padding:8px 10px}
+
+.rt-toggle-section>.rt-section-summary::-webkit-details-marker{display:none}
+
+.rt-toggle-section .rt-section-title{outline:none}
+
+/* Pair-log record templates use the source archive's original paper designs. */
+.pair-chat-rich .rt-controls{display:none!important}
+.pair-log-editor .rt-controls{display:none}
+.pair-log-editor .rt-settings-open>.rt-controls.rt-controls-visible{display:flex}
+.pair-log-editor .rt-block{max-width:100%}
+.pair-chat-rich .rt-block{max-width:100%}
+
+
+    .pair-log-editor .rp-markdown-content p { margin:.45em 0; line-height:1.85; }
+    .pair-log-editor .rp-markdown-content h1,.pair-log-editor .rp-markdown-content h2,.pair-log-editor .rp-markdown-content h3,.pair-log-editor .rp-markdown-content h4,.pair-log-editor .rp-markdown-content h5,.pair-log-editor .rp-markdown-content h6 { margin:.75em 0 .35em; line-height:1.5; }
+    .pair-log-editor .rp-markdown-content blockquote { margin:.6em 0; padding:.35em .8em; border-left:2px solid #c7e0e9; background:#f5faf9; }
+    .pair-log-editor .rp-markdown-content pre { padding:10px; overflow:auto; background:#f1f6f6; white-space:pre-wrap; }
+    .pair-log-editor .rp-markdown-content code { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; background:#eef4f5; padding:1px 4px; }
+    .pair-log-editor .rp-markdown-content pre code { background:transparent; padding:0; }
+    .pair-log-editor .rp-markdown-content table { width:100%; border-collapse:collapse; font-size:.95em; }
+    .pair-log-editor .rp-markdown-content th,.pair-log-editor .rp-markdown-content td { border:1px solid #dce9ec; padding:5px 7px; text-align:left; }
+    .pair-log-editor .rp-markdown-content th { background:#f0f7f7; }
+    .pair-log-editor .rt-controls { display:none; }
+    .pair-log-editor .rt-settings-open > .rt-controls.rt-controls-visible { display:flex; }
+    .pair-log-editor .rt-controls button { cursor:pointer; }
 
 </style>
 </head>
@@ -1961,6 +2264,8 @@
                 <button type="button" id="pairLogFontApply">글꼴 적용</button>
                 <button type="button" id="pairLogPaletteToggle" aria-expanded="false">팔레트</button>
                 <button type="button" id="pairLogDecorToggle" aria-expanded="false">기록물 꾸미기</button>
+                <button type="button" id="pairLogMarkdownConvert" title="본문의 Markdown 문법을 서식으로 변환">MD → 서식</button>
+                <button type="button" id="pairLogMarkdownToggle" aria-expanded="false">Markdown 입력</button>
                 <button type="button" id="pairLogInsertImage">＋ 이미지</button>
                 <button type="button" id="pairLogInsertImageUrl">이미지 URL</button>
                 <button type="button" id="pairLogInsertChat">＋ A/B 대화</button>
@@ -1983,7 +2288,10 @@
                   <span id="pairLogPalettePageCount">1 / 19</span>
                   <button type="button" id="pairLogPaletteNext" aria-label="다음 색 계열">›</button>
                 </div>
+                <div class="pair-log-palette-quick-wrap"><small>기본 빠른 색상</small><div class="pair-log-palette-quick" id="pairLogPaletteQuick"></div></div>
+                <div class="pair-log-palette-section-label">색상 계열</div>
                 <div class="pair-log-palette-grid" id="pairLogPaletteGrid"></div>
+                <div class="pair-log-palette-section-label">저장한 색</div>
                 <div class="pair-log-palette-saved" id="pairLogPaletteSaved"></div>
               </div>
               <div class="pair-log-feature-panel hidden" id="pairLogDecorPanel">
@@ -2000,6 +2308,30 @@
                   <button type="button" data-pair-log-template="section">접이식 섹션</button>
                 </div>
               </div>
+              <div class="pair-log-feature-panel hidden" id="pairLogMarkdownPanel">
+                <label class="field-label" for="pairLogMarkdownSource">MARKDOWN INPUT</label>
+                <textarea class="pair-log-markdown-source" id="pairLogMarkdownSource" spellcheck="false" placeholder="# 제목
+
+**굵게**, *기울임*, ~~취소선~~
+> 인용
+- 목록
+`코드`
+
+| 항목 | 내용 |
+| --- | --- |
+| A | B |
+
+```text
+코드 블록
+```"></textarea>
+                <div class="pair-log-markdown-actions">
+                  <button type="button" id="pairLogMarkdownPreview">미리보기</button>
+                  <button type="button" id="pairLogMarkdownInsert">본문에 삽입</button>
+                  <button type="button" id="pairLogMarkdownClear">비우기</button>
+                  <small>본문 붙여넣기와 직접 입력도 Markdown 문법을 자동 변환합니다.</small>
+                </div>
+                <div class="pair-log-markdown-preview hidden" id="pairLogMarkdownPreviewArea" aria-label="Markdown 미리보기"></div>
+              </div>
               <div class="pair-log-secret-settings">
                 <label><input type="checkbox" id="pairLogSecretToggle"> 🔒 비밀글로 저장</label>
                 <div class="pair-log-secret-fields hidden" id="pairLogSecretFields">
@@ -2009,7 +2341,7 @@
                 </div>
               </div>
               <div class="pair-log-editor" id="pairLogRichEditor" contenteditable="true" spellcheck="false" data-placeholder="RP 원문을 작성하거나 붙여 넣어 주세요. 긴 글, 이미지, A/B 대화 레이아웃을 함께 보관할 수 있어."></div>
-              <div class="pair-log-editor-note">서식과 이미지, 캐릭터별 말풍선이 포함된 본문으로 저장됩니다.</div>
+              <div class="pair-log-editor-note">Markdown을 붙여넣거나 입력한 뒤 잠시 멈추면 제목·목록·인용·강조·표·코드 블록이 자동으로 서식 변환됩니다. Markdown 입력 패널에서는 미리보기와 직접 삽입도 할 수 있습니다.</div>
               <div class="backup-form-actions"><button class="primary" id="pairLogSaveButton" type="button">SAVE LOG</button></div>
             </div>
           </section>
@@ -7341,7 +7673,7 @@ function applyBackupTemplate(template) {
     }
 
     function sanitizePairLogStyle(raw) {
-      const allowed = new Set(['color','background-color','font-family','font-size','font-weight','font-style','text-decoration','text-align']);
+      const allowed = new Set(['color','background-color','font-family','font-size','font-weight','font-style','text-decoration','text-align','box-shadow','transform','width','min-height']);
       const safe = [];
       String(raw || '').split(';').forEach(part => {
         const colon = part.indexOf(':'); if (colon < 1) return;
@@ -7362,6 +7694,14 @@ function applyBackupTemplate(template) {
           if (!/^(none|underline|line-through|overline)$/i.test(value)) return;
         } else if (property === 'text-align') {
           if (!/^(left|right|center|justify)$/i.test(value)) return;
+        } else if (property === 'box-shadow') {
+          if (!/^(none|-?(?:0|[0-9.]+px)\s+-?(?:0|[0-9.]+px)\s+[0-9.]+px(?:\s+[0-9.]+px)?\s+rgba?\([0-9\s.,%]+\))$/i.test(value)) return;
+        } else if (property === 'transform') {
+          if (!/^rotate\(-?\d+(\.\d+)?deg\)$/i.test(value)) return;
+        } else if (property === 'width') {
+          if (!/^\d{1,3}%$/i.test(value)) return;
+        } else if (property === 'min-height') {
+          if (!/^\d{1,3}px$/i.test(value)) return;
         }
         safe.push(`${property}:${value}`);
       });
@@ -7371,36 +7711,47 @@ function applyBackupTemplate(template) {
     function sanitizePairLogHtml(source, editable = false) {
       const doc = new DOMParser().parseFromString(`<div>${String(source || '')}</div>`, 'text/html');
       const root = doc.body.firstElementChild;
-      root.querySelectorAll('script,style,iframe,object,embed,form,input,button,link,meta,video,audio,svg,math').forEach(node => node.remove());
-      const allowed = new Set(['DIV','P','BR','SPAN','STRONG','B','EM','I','U','S','DEL','MARK','CODE','SMALL','BLOCKQUOTE','PRE','UL','OL','LI','H2','H3','H4','HR','IMG','A','DETAILS','SUMMARY','SECTION','ARTICLE']);
-      const templateClasses = new Set(['pair-log-template','pair-log-template-memo','pair-log-template-memo-lined','pair-log-template-sticky','pair-log-template-email','pair-log-template-letter','pair-log-template-polaroid','pair-log-template-dossier','pair-log-template-receipt','pair-log-template-section','pair-log-template-body']);
+      root.querySelectorAll('script,style,iframe,object,embed,form,input,button,link,meta,video,audio,svg,math,.rt-controls').forEach(node => node.remove());
+      const allowed = new Set(['DIV','P','BR','SPAN','STRONG','B','EM','I','U','S','DEL','MARK','CODE','SMALL','BLOCKQUOTE','PRE','UL','OL','LI','H1','H2','H3','H4','H5','H6','HR','IMG','A','DETAILS','SUMMARY','SECTION','ARTICLE','HEADER','FOOTER','FIGURE','TABLE','THEAD','TBODY','TR','TH','TD']);
+      const legacyTemplateClasses = new Set(['pair-log-template','pair-log-template-memo','pair-log-template-memo-lined','pair-log-template-sticky','pair-log-template-email','pair-log-template-letter','pair-log-template-polaroid','pair-log-template-dossier','pair-log-template-receipt','pair-log-template-section','pair-log-template-body']);
+      const allowedData = new Set(['data-pair-log-template-label','data-pair-template','data-rp-type','data-rt-kind','data-rt-shadow','data-rt-tilt','data-rt-logo-hidden','data-rt-memo-width','data-rt-memo-height','data-rt-photo','data-rt-main']);
       [...root.querySelectorAll('*')].reverse().forEach(node => {
         if (!allowed.has(node.tagName)) { node.replaceWith(...node.childNodes); return; }
         [...node.attributes].forEach(attr => {
           const name = attr.name.toLowerCase();
-          if (name.startsWith('on') || name === 'contenteditable' || name === 'data-pair-temp') node.removeAttribute(attr.name);
+          if (name.startsWith('on') || name === 'contenteditable' || name === 'data-pair-temp' || name === 'data-rt-controls') node.removeAttribute(attr.name);
           else if (name === 'style') {
             const clean = sanitizePairLogStyle(attr.value);
             if (clean) node.setAttribute('style', clean); else node.removeAttribute('style');
           } else if (name === 'class') {
-            const classes = attr.value.split(/\s+/).filter(value => /^pair-log-(?:chat-layout|chat-head|chat-row|avatar|message|name|bubble)$/.test(value) || templateClasses.has(value) || ((node.classList.contains('pair-log-chat-row')) && ['a','b'].includes(value)));
+            const classes = attr.value.split(/\s+/).filter(value =>
+              /^pair-log-(?:chat-layout|chat-head|chat-row|avatar|message|name|bubble)$/.test(value) ||
+              legacyTemplateClasses.has(value) || value === 'rp-markdown-content' ||
+              (/^rt-[a-z0-9-]+$/i.test(value) && !['rt-settings-open','rt-pushed-up','rt-controls-visible'].includes(value)) ||
+              (node.classList.contains('pair-log-chat-row') && ['a','b'].includes(value))
+            );
             if (classes.length) node.className = classes.join(' '); else node.removeAttribute('class');
-          } else if (name === 'data-pair-log-template-label') {
-            if (attr.value !== '1' && attr.value !== '') node.removeAttribute(attr.name);
-          } else if (name === 'data-pair-template') {
-            if (!['memo','memo-lined','sticky','email','letter','polaroid','dossier','receipt','section'].includes(attr.value)) node.removeAttribute(attr.name);
+          } else if (allowedData.has(name)) {
+            if (name === 'data-pair-template' && !['memo','memo-lined','sticky','email','letter','polaroid','dossier','receipt','section'].includes(attr.value)) node.removeAttribute(attr.name);
+            else if (name === 'data-rp-type' && !['record-template','toggle-section'].includes(attr.value)) node.removeAttribute(attr.name);
+            else if (name === 'data-rt-kind' && !['memo','memo-lined','sticky','email','letter','polaroid','dossier','receipt'].includes(attr.value)) node.removeAttribute(attr.name);
+            else if (name === 'data-rt-shadow' && !['none','soft','deep'].includes(attr.value)) node.removeAttribute(attr.name);
+            else if (name === 'data-rt-tilt' && !['-2','-1','0','1','2'].includes(attr.value)) node.removeAttribute(attr.name);
+            else if (name === 'data-rt-logo-hidden' && attr.value !== '1') node.removeAttribute(attr.name);
+            else if (name === 'data-rt-memo-width' && !['65','82','100'].includes(attr.value)) node.removeAttribute(attr.name);
+            else if (name === 'data-rt-memo-height' && !['10','25','54','72','110','150'].includes(attr.value)) node.removeAttribute(attr.name);
+            else if (name === 'data-pair-log-template-label' && !['1',''].includes(attr.value)) node.removeAttribute(attr.name);
           } else if (node.tagName === 'DETAILS' && name === 'open') {
             node.setAttribute('open','');
           } else if (node.tagName === 'IMG' && name === 'src') {
             if (!/^data:image\/(?:png|jpe?g|webp|gif|avif|bmp);base64,/i.test(attr.value) && !/^https:\/\//i.test(attr.value)) node.removeAttribute('src');
           } else if (node.tagName === 'A' && name === 'href') {
             if (!/^https?:\/\//i.test(attr.value)) node.removeAttribute('href');
-          } else if (!['src','alt','title','href','target','rel'].includes(name)) node.removeAttribute(attr.name);
+          } else if (!['src','alt','title','href','target','rel','colspan','rowspan'].includes(name)) node.removeAttribute(attr.name);
         });
         if (editable) {
-          if (node.classList.contains('pair-log-name') || node.classList.contains('pair-log-bubble') || node.classList.contains('pair-log-template')) node.setAttribute('contenteditable','true');
-          else if (node.tagName === 'SUMMARY' && node.closest('.pair-log-template-section')) node.setAttribute('contenteditable','true');
-          else if (node.classList.contains('pair-log-chat-layout') || node.classList.contains('pair-log-chat-head') || node.classList.contains('pair-log-chat-row') || node.classList.contains('pair-log-avatar')) node.setAttribute('contenteditable','false');
+          if (node.classList.contains('pair-log-name') || node.classList.contains('pair-log-bubble') || node.classList.contains('pair-log-template') || node.classList.contains('rt-editable') || node.classList.contains('rt-section-title') || node.classList.contains('rt-section-body')) node.setAttribute('contenteditable','true');
+          else if (node.classList.contains('pair-log-chat-layout') || node.classList.contains('pair-log-chat-head') || node.classList.contains('pair-log-chat-row') || node.classList.contains('pair-log-avatar') || node.classList.contains('rt-photo-frame')) node.setAttribute('contenteditable','false');
         }
         if (node.tagName === 'A') { node.setAttribute('target','_blank'); node.setAttribute('rel','noopener noreferrer'); }
         if (node.tagName === 'IMG') { node.setAttribute('loading','lazy'); node.removeAttribute('width'); node.removeAttribute('height'); }
@@ -7411,7 +7762,7 @@ function applyBackupTemplate(template) {
     function pairLogPlainText(html) {
       const doc = new DOMParser().parseFromString(String(html || ''), 'text/html');
       const root = doc.body;
-      const blocks = new Set(['DIV','P','BLOCKQUOTE','PRE','LI','H2','H3','H4','SECTION','ARTICLE']);
+      const blocks = new Set(['DIV','P','BLOCKQUOTE','PRE','LI','H1','H2','H3','H4','H5','H6','SECTION','ARTICLE','HEADER','FOOTER','TR']);
       function walk(node) {
         if (node.nodeType === Node.TEXT_NODE) return node.nodeValue || '';
         if (node.nodeType !== Node.ELEMENT_NODE && node.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) return '';
@@ -7462,7 +7813,21 @@ function applyBackupTemplate(template) {
       const a=s*Math.min(l,1-l),f=n=>{const k=(n+h/30)%12;return Math.round(255*(l-a*Math.max(-1,Math.min(k-3,Math.min(9-k,1))))).toString(16).padStart(2,'0')};
       return '#'+f(0)+f(8)+f(4);
     }
-    const pairLogPaletteBuiltIns=new Set([...pairLogPaletteDefaults,...pairLogPaletteNeutrals,...pairLogPaletteHues.flatMap(h=>pairLogPaletteLightness.flatMap(l=>pairLogPaletteSaturation.map(sat=>pairLogHslToHex(h,sat,l))))]);
+    function pairLogHexToHsl(hex) {
+      const c=pairLogNormalizeHex(hex);if(!c)return {h:0,s:0,l:0};
+      const r=parseInt(c.slice(1,3),16)/255,g=parseInt(c.slice(3,5),16)/255,b=parseInt(c.slice(5,7),16)/255;
+      const max=Math.max(r,g,b),min=Math.min(r,g,b),delta=max-min;let h=0,s=0,l=(max+min)/2;
+      if(delta){s=delta/(1-Math.abs(2*l-1));switch(max){case r:h=60*(((g-b)/delta)%6);break;case g:h=60*((b-r)/delta+2);break;default:h=60*((r-g)/delta+4);}}
+      return {h:(h+360)%360,s:s*100,l:l*100};
+    }
+    function pairLogSortPaletteColors(colors) {
+      return [...new Set((colors||[]).map(pairLogNormalizeHex).filter(Boolean))].sort((a,b)=>{
+        const x=pairLogHexToHsl(a),y=pairLogHexToHsl(b),xn=x.s<7,yn=y.s<7;
+        if(xn!==yn)return xn?-1:1;if(xn&&yn)return y.l-x.l;
+        return x.h-y.h||x.l-y.l||x.s-y.s;
+      });
+    }
+    const pairLogPaletteBuiltIns=new Set(pairLogPaletteDefaults);
     function pairLogPaletteButton(color, saved=false) {
       const button=document.createElement('button');button.type='button';button.style.background=color;button.title=color;button.setAttribute('aria-label',color+' 적용');button.dataset.pairLogPalettePick=color;
       if(saved)button.className='is-saved';
@@ -7470,6 +7835,8 @@ function applyBackupTemplate(template) {
     }
     function renderPairLogPalette() {
       const grid=document.getElementById('pairLogPaletteGrid');if(!grid)return;
+      const quick=document.getElementById('pairLogPaletteQuick');
+      if(quick){quick.replaceChildren(...pairLogSortPaletteColors([...pairLogPaletteDefaults,...pairLogSavedColors]).map(color=>{const button=pairLogPaletteButton(color,pairLogSavedColors.includes(color));button.classList.add('is-quick');button.title=color;return button;}));}
       const total=pairLogPaletteHues.length+1;pairLogPalettePage=Math.max(0,Math.min(total-1,pairLogPalettePage));
       const colors=pairLogPalettePage===0?pairLogPaletteNeutrals:pairLogPaletteLightness.flatMap(l=>pairLogPaletteSaturation.map(sat=>pairLogHslToHex(pairLogPaletteHues[pairLogPalettePage-1],sat,l)));
       grid.classList.toggle('neutral',pairLogPalettePage===0);grid.replaceChildren(...colors.map(c=>pairLogPaletteButton(c)));
@@ -7487,18 +7854,47 @@ function applyBackupTemplate(template) {
     }
     function pairLogApplyColor(color) {
       const c=pairLogNormalizeHex(color);if(!c){setStatus('올바른 HEX 색상 코드를 입력해주세요.');return;}
-      const editor=document.getElementById('pairLogRichEditor');restorePairLogRange();const selection=window.getSelection();
-      if(!selection||!selection.rangeCount||selection.isCollapsed||!editor.contains(selection.anchorNode)||!editor.contains(selection.focusNode)){setStatus('본문에서 글자를 먼저 선택해주세요.');return;}
-      try {
-        document.execCommand('styleWithCSS',false,true);
-        const command=pairLogPaletteTarget==='text'?'foreColor':'hiliteColor';
-        const before=editor.innerHTML;document.execCommand(command,false,c);
-        if(pairLogPaletteTarget==='highlight'&&editor.innerHTML===before)document.execCommand('backColor',false,c);
-      } catch (_) {}
-      capturePairLogRange();pairLogHistorySnapshot();
+      const editor=document.getElementById('pairLogRichEditor');if(!editor)return;
+      const scrollState=pairLogCaptureScrollState();
+      const live=window.getSelection();
+      let range=null;
+      if(live&&live.rangeCount&&editor.contains(live.anchorNode)&&editor.contains(live.focusNode)&&!live.isCollapsed)range=live.getRangeAt(0).cloneRange();
+      if(!range&&pairLogSavedRange&&editor.contains(pairLogSavedRange.commonAncestorContainer)&&!pairLogSavedRange.collapsed)range=pairLogSavedRange.cloneRange();
+      if(!range){setStatus('본문에서 글자를 선택한 다음 색을 적용해주세요.');return;}
+      const parts=[],walker=document.createTreeWalker(editor,NodeFilter.SHOW_TEXT);
+      while(walker.nextNode()){
+        const node=walker.currentNode;if(!node.nodeValue)continue;
+        try{
+          if(range.intersectsNode(node)){
+            const start=node===range.startContainer?range.startOffset:0;
+            const end=node===range.endContainer?range.endOffset:node.nodeValue.length;
+            if(end>start)parts.push({node,start,end});
+          }
+        }catch(_){}
+      }
+      const wrapped=[];
+      for(let i=parts.length-1;i>=0;i--){
+        const {node,start,end}=parts[i];if(!node.parentNode)continue;
+        const part=document.createRange();part.setStart(node,start);part.setEnd(node,end);
+        const fragment=part.extractContents();if(!fragment.textContent)continue;
+        const span=document.createElement('span');
+        if(pairLogPaletteTarget==='text')span.style.color=c;else span.style.backgroundColor=c;
+        span.appendChild(fragment);part.insertNode(span);wrapped.push(span);
+      }
+      if(!wrapped.length){setStatus('선택 범위에서 색을 적용할 글자를 찾지 못했습니다.');return;}
+      wrapped.reverse();
+      const nextRange=document.createRange();nextRange.setStartBefore(wrapped[0]);nextRange.setEndAfter(wrapped[wrapped.length-1]);
+      pairLogSavedRange=nextRange.cloneRange();
+      pairLogHistorySnapshot();pairLogRestoreScrollStateDeferred(scrollState);
+      setStatus(pairLogPaletteTarget==='text'?'글자색을 적용했습니다.':'형광펜 색을 적용했습니다.');
+    }
+
+    function pairLogCurrentPaletteColor() {
+      const hex=pairLogNormalizeHex(document.getElementById('pairLogPaletteHex')?.value||'');
+      return hex||pairLogNormalizeHex(document.getElementById('pairLogPaletteColor')?.value||'');
     }
     function pairLogSavePaletteColor() {
-      const color=pairLogNormalizeHex(document.getElementById('pairLogPaletteColor')?.value||'');
+      const color=pairLogCurrentPaletteColor();
       if(!color){setStatus('저장할 색을 선택해주세요.');return;}
       if(pairLogPaletteBuiltIns.has(color)||pairLogSavedColors.includes(color)){setStatus('이미 팔레트에 있는 색입니다.');return;}
       if(pairLogSavedColors.length>=128){setStatus('사용자 색상은 최대 128개까지 저장할 수 있습니다.');return;}
@@ -7508,60 +7904,379 @@ function applyBackupTemplate(template) {
       const c=pairLogNormalizeHex(color);if(!c)return;pairLogSavedColors=pairLogSavedColors.filter(x=>x!==c);if(pairLogStoreSavedColors())renderPairLogPalette();
     }
     function pairLogCaptureSelectionOnToolbar(event) {
-      if(event.target.closest('button,select,input')){capturePairLogRange();if(event.type==='mousedown'&&event.target.tagName==='BUTTON')event.preventDefault();}
+      if(!event.target.closest('button,select,input'))return;
+      capturePairLogRange();
+      // pointerdown is capture-only. Preventing its default can suppress the later click
+      // on some mobile browsers, which made palette swatches appear inert.
+      // No preventDefault here: preserve synthesized click events on touch screens.
     }
     function pairLogHistoryUpdateButtons() {
       const undo=document.getElementById('pairLogUndo'),redo=document.getElementById('pairLogRedo');
       if(undo)undo.disabled=pairLogHistoryIndex<=0;if(redo)redo.disabled=pairLogHistoryIndex<0||pairLogHistoryIndex>=pairLogHistory.length-1;
     }
+    function pairLogHistoryContent(editor) {
+      const clone=editor.cloneNode(true);clone.querySelectorAll('.rt-controls').forEach(node=>node.remove());
+      clone.querySelectorAll('[data-controls-attached]').forEach(node=>node.removeAttribute('data-controls-attached'));
+      clone.querySelectorAll('.rt-settings-open,.rt-pushed-up,.rt-controls-visible').forEach(node=>node.classList.remove('rt-settings-open','rt-pushed-up','rt-controls-visible'));
+      return clone.innerHTML;
+    }
     function pairLogHistorySnapshot() {
       const editor=document.getElementById('pairLogRichEditor');if(!editor)return;
-      const html=editor.innerHTML;
+      const html=pairLogHistoryContent(editor);
       if(pairLogHistoryIndex>=0&&pairLogHistory[pairLogHistoryIndex]===html)return;
       pairLogHistory=pairLogHistory.slice(0,pairLogHistoryIndex+1);pairLogHistory.push(html);
       if(pairLogHistory.length>100){pairLogHistory.shift();}
       pairLogHistoryIndex=pairLogHistory.length-1;pairLogHistoryUpdateButtons();
     }
     function pairLogHistoryInit() {
-      clearTimeout(pairLogHistoryTimer);const editor=document.getElementById('pairLogRichEditor');pairLogHistory=[editor?.innerHTML||''];pairLogHistoryIndex=0;pairLogHistoryUpdateButtons();
+      clearTimeout(pairLogHistoryTimer);const editor=document.getElementById('pairLogRichEditor');pairLogHistory=[editor?pairLogHistoryContent(editor):''];pairLogHistoryIndex=0;pairLogHistoryUpdateButtons();
     }
     function pairLogHistoryQueue() {
       clearTimeout(pairLogHistoryTimer);pairLogHistoryTimer=setTimeout(pairLogHistorySnapshot,220);
     }
     function pairLogHistoryMove(direction) {
+      const scrollState=pairLogCaptureScrollState();
       clearTimeout(pairLogHistoryTimer);
       if(direction<0) pairLogHistorySnapshot();
       const next=pairLogHistoryIndex+direction;if(next<0||next>=pairLogHistory.length)return;
       pairLogHistoryIndex=next;const editor=document.getElementById('pairLogRichEditor');editor.innerHTML=pairLogHistory[pairLogHistoryIndex];
-      pairLogSavedRange=null;const range=document.createRange();range.selectNodeContents(editor);range.collapse(false);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);pairLogSavedRange=range.cloneRange();pairLogHistoryUpdateButtons();
+      pairLogHydrateRecordTemplates(editor,true);
+      pairLogSavedRange=null;const range=document.createRange();range.selectNodeContents(editor);range.collapse(false);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);pairLogSavedRange=range.cloneRange();pairLogHistoryUpdateButtons();pairLogRestoreScrollStateDeferred(scrollState);
     }
+function pairLogRecordTemplateMarkup(type){
+ const date=new Date().toISOString().slice(0,10).replace(/-/g,'.');
+ if(type==='section')return `
+  <details class="rt-toggle-section rt-version-section" data-rp-type="toggle-section" open>
+   <summary class="rt-section-summary"><span class="rt-section-chevron">›</span><span class="rt-section-kicker rt-editable">SECTION</span><span class="rt-section-title rt-editable" contenteditable="true">섹션 제목</span></summary>
+   <div class="rt-section-body rt-editable" data-rt-main contenteditable="true">이곳에 내용을 입력</div>
+  </details>`;
+ if(type==='memo'||type==='memo-lined'||type==='sticky'){
+  const memoClass=type==='memo-lined'?' rt-memo-lined':type==='sticky'?' rt-sticky':'';
+  const kind=type==='memo'?'memo':type;
+  const logo=type==='sticky'?'JUST A NOTE':'NOTE.';
+  const brand=type==='memo-lined'?'TEAR-OFF NOTE':type==='sticky'?'REMINDER':'PERSONAL NOTE';
+  return `
+  <article class="rt-block rt-memo${memoClass}" data-rp-type="record-template" data-rt-kind="${kind}">
+   <header class="rt-memo-head"><div class="rt-logo rt-editable">${logo}</div><div class="rt-memo-brand rt-editable">${brand}</div><div class="rt-memo-date rt-editable">${date}</div></header>
+   <div class="rt-memo-title rt-editable">잊지 말 것</div>
+   <div class="rt-main rt-memo-body rt-editable" data-rt-main>여기에 메모 내용 입력</div>
+   <footer class="rt-memo-foot rt-editable">남겨 둔 메모 · PRIVATE</footer>
+  </article>`;
+ }
+ if(type==='email')return `
+  <article class="rt-block rt-email" data-rp-type="record-template" data-rt-kind="email">
+   <header class="rt-email-head"><div class="rt-email-brand"><div class="rt-logo rt-editable">POST.</div><div class="rt-email-brandname rt-editable">MAIL SERVICE</div></div><div class="rt-email-state rt-editable">COMPOSE · DRAFT</div></header>
+   <div class="rt-email-toolbar"><span class="rt-email-folder rt-editable">받은 편지함</span><span class="rt-email-sep">/</span><span class="rt-email-folder rt-editable">새 메시지</span></div>
+   <div class="rt-email-fields">
+    <div class="rt-email-field"><span class="rt-email-label rt-editable">보낸 사람</span><span class="rt-editable rt-email-value">sender@example.com</span></div>
+    <div class="rt-email-field"><span class="rt-email-label rt-editable">받는 사람</span><span class="rt-editable rt-email-value">recipient@example.com</span></div>
+    <div class="rt-email-field"><span class="rt-email-label rt-editable">참조</span><span class="rt-editable rt-email-value">선택 사항</span></div>
+    <div class="rt-email-field"><span class="rt-email-label rt-editable">제목</span><strong class="rt-editable rt-email-subject">제목 없음</strong></div>
+   </div>
+   <div class="rt-main rt-email-body rt-editable" data-rt-main>메일 내용을 입력</div>
+   <footer class="rt-email-foot"><span class="rt-editable">첨부 파일 없음</span><span class="rt-email-send rt-editable">보내기</span></footer>
+  </article>`;
+ if(type==='letter')return `
+  <article class="rt-block rt-letter" data-rp-type="record-template" data-rt-kind="letter">
+   <header class="rt-letter-head"><div class="rt-logo rt-editable">CORRESPONDENCE</div><div class="rt-letter-brand rt-editable">PERSONAL LETTER</div></header>
+   <div class="rt-letter-date rt-editable">${date}</div>
+   <div class="rt-letter-recipient"><span class="rt-editable">To.</span> <strong class="rt-editable">받는 사람</strong></div>
+   <div class="rt-main rt-letter-body rt-editable" data-rt-main>편지 내용을 입력</div>
+   <footer class="rt-letter-sign"><span class="rt-editable">언제나</span><strong class="rt-editable">보내는 사람</strong></footer>
+  </article>`;
+ if(type==='polaroid')return `
+  <article class="rt-block rt-polaroid" data-rp-type="record-template" data-rt-kind="polaroid">
+   <header class="rt-polaroid-head"><div class="rt-logo rt-editable">FRAME 01</div><div class="rt-editable rt-polaroid-brand">INSTANT PHOTO</div></header>
+   <div class="rt-photo-frame" data-rt-photo contenteditable="false"><div class="rt-photo-placeholder"><span>＋</span><small>사진 추가</small></div></div>
+   <div class="rt-polaroid-caption rt-editable" data-rt-main>사진 아래에 남길 문장</div>
+   <footer class="rt-polaroid-foot"><span class="rt-editable">${date}</span><span class="rt-editable">장소 미기재</span></footer>
+  </article>`;
+ if(type==='dossier')return `
+  <article class="rt-block rt-dossier" data-rp-type="record-template" data-rt-kind="dossier">
+   <header class="rt-dossier-head"><div><div class="rt-logo rt-editable">ARCHIVE OFFICE</div><div class="rt-dossier-brand rt-editable">RECORDS &amp; INVESTIGATION</div></div><div class="rt-dossier-stamp rt-editable">CONFIDENTIAL</div></header>
+   <div class="rt-dossier-meta"><span class="rt-editable">문서 번호</span><strong class="rt-editable">AO-001</strong><span class="rt-editable">작성일</span><strong class="rt-editable">${date}</strong></div>
+   <div class="rt-dossier-title rt-editable">문서 제목</div>
+   <div class="rt-dossier-byline"><span class="rt-editable">작성 부서</span><strong class="rt-editable">기록 관리과</strong><span class="rt-editable">작성자</span><strong class="rt-editable">담당자 미기재</strong></div>
+   <div class="rt-main rt-dossier-body rt-editable" data-rt-main>문서 내용을 입력</div>
+   <footer class="rt-dossier-foot"><span class="rt-editable">외부 유출 금지</span><span class="rt-editable">ARCHIVE COPY</span></footer>
+  </article>`;
+ if(type==='receipt')return `
+  <article class="rt-block rt-receipt" data-rp-type="record-template" data-rt-kind="receipt">
+   <header class="rt-receipt-head"><div class="rt-logo rt-editable">THE LITTLE STORE</div><div class="rt-editable rt-receipt-sub">PURCHASE RECORD</div><div class="rt-editable rt-receipt-date">${date}</div></header>
+   <div class="rt-receipt-info"><span class="rt-editable">매장</span><strong class="rt-editable">매장명 미기재</strong><span class="rt-editable">주문 번호</span><strong class="rt-editable">000001</strong></div>
+   <div class="rt-receipt-items">
+    <div class="rt-receipt-item"><span class="rt-editable">항목</span><span class="rt-editable">수량</span><span class="rt-editable">금액</span></div>
+    <div class="rt-receipt-item"><span class="rt-editable">상품명</span><span class="rt-editable">1</span><span class="rt-editable">0</span></div>
+    <div class="rt-receipt-item"><span class="rt-editable">추가 항목</span><span class="rt-editable">1</span><span class="rt-editable">0</span></div>
+   </div>
+   <div class="rt-receipt-summary">
+    <div><span class="rt-editable">소계 / SUBTOTAL</span><strong class="rt-editable">0</strong></div>
+    <div><span class="rt-editable">세금 / TAX</span><strong class="rt-editable">0</strong></div>
+   </div>
+   <div class="rt-receipt-total"><span class="rt-editable">TOTAL PAID</span><strong class="rt-editable">₩ 0</strong></div>
+   <div class="rt-receipt-barcode" contenteditable="false" aria-label="영수증 바코드"><span></span><small class="rt-editable">0 000001 000000</small></div>
+   <div class="rt-main rt-receipt-note rt-editable" data-rt-main>하단 메모</div>
+   <footer class="rt-receipt-foot rt-editable">THANK YOU FOR YOUR VISIT</footer>
+  </article>`;
+ return '';
+}
     function pairLogMakeTemplate(type) {
-      const wrapper=document.createElement(type==='section'?'details':'div');
-      wrapper.className='pair-log-template pair-log-template-'+type;wrapper.dataset.pairTemplate=type;wrapper.contentEditable='true';
-      const label=(text)=>{const el=document.createElement('span');el.dataset.pairLogTemplateLabel='1';el.textContent=text;return el;};
-      const paragraph=(text)=>{const el=document.createElement('p');el.textContent=text;return el;};
-      if(type==='section'){
-        wrapper.open=true;const summary=document.createElement('summary');summary.textContent='SECTION · 제목을 입력';summary.contentEditable='true';const body=document.createElement('div');body.className='pair-log-template-body';body.textContent='이곳에 내용을 입력하세요.';wrapper.append(summary,body);
-      } else if(type==='memo'||type==='memo-lined'||type==='sticky') {
-        wrapper.append(label(type==='sticky'?'JUST A NOTE':type==='memo-lined'?'TEAR-OFF NOTE':'PERSONAL NOTE'),paragraph('이곳에 내용을 기록하세요.'),paragraph(new Date().toISOString().slice(0,10).replace(/-/g,'.')));
-      } else if(type==='email') {
-        wrapper.append(label('E-MAIL'));wrapper.append(paragraph('FROM · 발신자'),paragraph('TO · 수신자'),paragraph('SUBJECT · 제목'),paragraph('본문을 입력하세요.'));
-      } else if(type==='letter') {
-        wrapper.append(label('LETTER'));wrapper.append(paragraph('받는 사람에게,'),paragraph('편지 내용을 입력하세요.'),paragraph('보내는 사람'));
-      } else if(type==='polaroid') {
-        wrapper.append(label('PHOTO / MEMORY'));const photo=paragraph('사진은 상단의 이미지 삽입으로 추가하세요.');photo.dataset.pairLogTemplateLabel='';wrapper.append(photo,paragraph('사진 설명을 입력하세요.'));
-      } else if(type==='dossier') {
-        wrapper.append(label('CONFIDENTIAL DOSSIER'),paragraph('CASE NO. · 사건 번호'),paragraph('SUBJECT · 대상'),paragraph('기록 내용을 입력하세요.'));
-      } else if(type==='receipt') {
-        wrapper.append(label('RECEIPT'),paragraph('DATE · 날짜'),paragraph('ITEM · 항목'),paragraph('NOTE · 메모'));
+      const holder=document.createElement('div');
+      holder.innerHTML=pairLogRecordTemplateMarkup(type).trim();
+      return holder.firstElementChild;
+    }
+    function pairLogAttachRecordTemplateControls(block) {
+      if(!block || block.querySelector(':scope > .rt-controls')) return;
+      block.dataset.rtControls='1';
+      const tools=document.createElement('div');
+      tools.className='rt-controls';
+      tools.setAttribute('contenteditable','false');
+      const shadow=block.dataset.rtShadow||'default';
+      const tilt=block.dataset.rtTilt||'0';
+      tools.innerHTML='<span class="rt-controls-label">기록물 편집</span><label class="rt-style-control">그림자<select data-rt-control="shadow" aria-label="그림자"><option value="default" '+(shadow==='default'?'selected':'')+'>기본</option><option value="none" '+(shadow==='none'?'selected':'')+'>없음</option><option value="soft" '+(shadow==='soft'?'selected':'')+'>은은하게</option><option value="deep" '+(shadow==='deep'?'selected':'')+'>선명하게</option></select></label><label class="rt-style-control">기울기<select data-rt-control="tilt" aria-label="기울기"><option value="0" '+(tilt==='0'?'selected':'')+'>0°</option><option value="-2" '+(tilt==='-2'?'selected':'')+'>−2°</option><option value="-1" '+(tilt==='-1'?'selected':'')+'>−1°</option><option value="1" '+(tilt==='1'?'selected':'')+'>＋1°</option><option value="2" '+(tilt==='2'?'selected':'')+'>＋2°</option></select></label>'+(block.dataset.rtKind==='memo-lined'?'<label class="rt-style-control">너비<select data-rt-control="memo-width"><option value="65">좁게</option><option value="82">보통</option><option value="100">넓게</option></select></label><label class="rt-style-control">높이<select data-rt-control="memo-height"><option value="10">최소</option><option value="25">매우 낮게</option><option value="54">아주 짧게</option><option value="72">짧게</option><option value="110">보통</option><option value="150">길게</option></select></label>':'')+'<button type="button" data-rt-action="up" title="위로 이동">↑</button><button type="button" data-rt-action="down" title="아래로 이동">↓</button><button type="button" data-rt-action="logo-toggle" title="로고 표시/숨김">'+(block.dataset.rtLogoHidden==='1'?'로고 켜기':'로고 끄기')+'</button><button type="button" data-rt-action="logo" title="로고 이미지 변경">로고 이미지</button><button type="button" data-rt-action="logo-text" title="로고를 텍스트로 변경">로고 글자</button>'+(block.dataset.rtKind==='polaroid'?'<button type="button" data-rt-action="photo">사진 변경</button>':'')+'<button type="button" data-rt-action="delete" title="블록 삭제">삭제</button>';
+      if(block.dataset.rtKind==='memo-lined'){
+        const w=block.dataset.rtMemoWidth||'82',h=block.dataset.rtMemoHeight||'72';
+        tools.querySelector('[data-rt-control="memo-width"]').value=w;
+        tools.querySelector('[data-rt-control="memo-height"]').value=h;
+        block.style.width=w+'%';
+        const body=block.querySelector('.rt-memo-body');if(body)body.style.minHeight=h+'px';
       }
-      return wrapper;
+      if(block.dataset.rtLogoHidden==='1')block.querySelectorAll('.rt-logo').forEach(el=>el.classList.add('rt-logo-hidden'));
+      block.insertBefore(tools,block.firstChild);
     }
-    function insertPairLogTemplate(type) {
-      const allowed=['memo','memo-lined','sticky','email','letter','polaroid','dossier','receipt','section'];if(!allowed.includes(type))return;
-      insertPairLogNode(pairLogMakeTemplate(type));pairLogHistorySnapshot();
-      document.getElementById('pairLogDecorPanel')?.classList.add('hidden');document.getElementById('pairLogDecorToggle')?.setAttribute('aria-expanded','false');
+    function pairLogHydrateRecordTemplates(root, editing=false) {
+      if(!root)return;
+      const legacySections=[];
+      if(root.matches?.('.rt-toggle-section,.rt-version-section'))legacySections.push(root);
+      legacySections.push(...root.querySelectorAll('.rt-toggle-section,.rt-version-section'));
+      legacySections.forEach(section=>{
+        section.classList.remove('rt-block');section.dataset.rpType='toggle-section';delete section.dataset.rtKind;
+        section.querySelectorAll('.rt-controls').forEach(control=>control.remove());
+      });
+      const allBlocks=[];
+      if(root.matches?.('.rt-block[data-rp-type="record-template"]'))allBlocks.push(root);
+      allBlocks.push(...root.querySelectorAll('.rt-block[data-rp-type="record-template"]'));
+      allBlocks.forEach(block=>{
+        block.querySelectorAll('.rt-editable').forEach(el=>{
+          if(editing)el.setAttribute('contenteditable','true'); else el.removeAttribute('contenteditable');
+        });
+        if(block.dataset.rtLogoHidden==='1')block.querySelectorAll('.rt-logo').forEach(el=>el.classList.add('rt-logo-hidden'));
+        else block.querySelectorAll('.rt-logo').forEach(el=>el.classList.remove('rt-logo-hidden'));
+        if(editing)pairLogAttachRecordTemplateControls(block);
+        else block.querySelectorAll('.rt-controls').forEach(el=>el.remove());
+      });
+      const sections=[];
+      if(root.matches?.('.rt-toggle-section'))sections.push(root);
+      sections.push(...root.querySelectorAll('.rt-toggle-section'));
+      sections.forEach(section=>section.querySelectorAll('.rt-editable').forEach(el=>{
+        if(editing)el.setAttribute('contenteditable','true'); else el.removeAttribute('contenteditable');
+      }));
     }
+    function pairLogClearRecordControls() {
+      const editor=document.getElementById('pairLogRichEditor');if(!editor)return;
+      editor.querySelectorAll('.rt-pushed-up').forEach(el=>{el.classList.remove('rt-pushed-up');el.style.removeProperty('--rt-push-up');});
+      editor.querySelectorAll('.rt-settings-open').forEach(el=>el.classList.remove('rt-settings-open'));
+      editor.querySelectorAll('.rt-controls-visible').forEach(el=>el.classList.remove('rt-controls-visible'));
+    }
+    function pairLogFocusWithoutScroll() {
+      const editor=document.getElementById('pairLogRichEditor');if(!editor)return;
+      const scrollState=pairLogCaptureScrollState();
+      try{editor.focus({preventScroll:true});}catch(_){try{editor.focus();}catch(__){}}
+      pairLogRestoreScrollStateDeferred(scrollState);
+    }
+    function pairLogFocusEditableWithoutScroll(target) {
+      if(!target)return;
+      const scrollState=pairLogCaptureScrollState();
+      try{target.focus({preventScroll:true});}catch(_){try{target.focus();}catch(__){}}
+      const range=document.createRange();range.selectNodeContents(target);range.collapse(false);
+      const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);pairLogSavedRange=range.cloneRange();
+      pairLogRestoreScrollStateDeferred(scrollState);
+    }
+    function pairLogShiftPreviousRecordUp(block) {
+      let previous=block?.previousElementSibling;
+      while(previous&&!previous.matches('.rt-block[data-rp-type="record-template"]'))previous=previous.previousElementSibling;
+      if(!previous)return;
+      const controls=block.querySelector(':scope > .rt-controls');
+      const height=controls?Math.max(42,controls.getBoundingClientRect().height+10):52;
+      previous.classList.add('rt-pushed-up');previous.style.setProperty('--rt-push-up',height+'px');
+    }
+    function pairLogChooseRecordImage(block,kind) {
+      const input=document.createElement('input');input.type='file';input.accept='image/*';
+      input.addEventListener('change',()=>{
+        const file=input.files?.[0];if(!file)return;
+        if(file.size>12*1024*1024){setStatus('이미지 한 장의 최대 용량은 12MB입니다.');return;}
+        const reader=new FileReader();
+        reader.onload=()=>{
+          if(kind==='logo'){
+            const logo=block.querySelector('.rt-logo');if(!logo)return;
+            const img=document.createElement('img');img.src=String(reader.result);img.alt='사용자 지정 로고';logo.replaceChildren(img);
+          } else {
+            const frame=block.querySelector('[data-rt-photo]');if(!frame)return;
+            const img=document.createElement('img');img.src=String(reader.result);img.alt='삽입한 사진';frame.replaceChildren(img);frame.classList.add('has-photo');
+          }
+          pairLogHistorySnapshot();
+        };
+        reader.onerror=()=>setStatus('이미지 파일을 읽지 못했습니다.');reader.readAsDataURL(file);
+      });
+      input.click();
+    }
+    function pairLogInsertTemplate(type) {
+      const allowed=['section','memo','memo-lined','sticky','email','letter','polaroid','dossier','receipt'];if(!allowed.includes(type))return;
+      const scrollState=pairLogCaptureScrollState();
+      const block=pairLogMakeTemplate(type);if(!block)return;
+      insertPairLogNode(block);
+      pairLogHydrateRecordTemplates(block,true);
+      // The editor remains at the same viewport position; editing starts only when
+      // the user taps a field inside the newly inserted record.
+      pairLogHistorySnapshot();
+      document.getElementById('pairLogDecorPanel')?.classList.add('hidden');
+      document.getElementById('pairLogDecorToggle')?.setAttribute('aria-expanded','false');
+      pairLogRestoreScrollStateDeferred(scrollState);
+    }
+
+    function pairLogMarkdownInline(source) {
+      let text=escapeHtml(source),stash=[];
+      const hold=html=>{const token='@@PT-MD-'+stash.length+'@@';stash.push(html);return token;};
+      text=text.replace(/!\[([^\]]*)\]\((https?:\/\/[^\s)]+)(?:\s+['"]([^'"]*)['"])?\)/g,(_,alt,url,title)=>hold('<img src="'+escapeHtml(url)+'" alt="'+escapeHtml(alt)+'"'+(title?' title="'+escapeHtml(title)+'"':'')+' loading="lazy">'));
+      text=text.replace(/`([^`]+)`/g,(_,value)=>hold('<code>'+value+'</code>'));
+      text=text.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+|mailto:[^\s)]+)\)/g,(_,label,url)=>hold('<a href="'+escapeHtml(url)+'" target="_blank" rel="noopener noreferrer">'+label+'</a>'));
+      text=text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/__(.+?)__/g,'<strong>$1</strong>').replace(/~~(.+?)~~/g,'<del>$1</del>').replace(/(?<!\*)\*([^*\n]+)\*(?!\*)/g,'<em>$1</em>').replace(/(?<!_)_([^_\n]+)_(?!_)/g,'<em>$1</em>');
+      return text.replace(/@@PT-MD-(\d+)@@/g,(_,i)=>stash[Number(i)]||'');
+    }
+    function pairLogMarkdownToHtml(source) {
+      const lines=String(source||'').replace(/\r\n?/g,'\n').split('\n'),out=[];
+      let paragraph=[],listType='',list=[],quote=[],code=[],codeLang='',inCode=false;
+      const inline=pairLogMarkdownInline;
+      const flushParagraph=()=>{if(paragraph.length){out.push('<p>'+paragraph.map(inline).join('<br>')+'</p>');paragraph=[];}};
+      const flushList=()=>{if(list.length){out.push('<'+listType+'>'+list.map(value=>'<li>'+inline(value)+'</li>').join('')+'</'+listType+'>');list=[];listType='';}};
+      const flushQuote=()=>{if(quote.length){out.push('<blockquote>'+quote.map(value=>'<p>'+inline(value)+'</p>').join('')+'</blockquote>');quote=[];}};
+      const flush=()=>{flushParagraph();flushList();flushQuote();};
+      for(let i=0;i<lines.length;i++){
+        const line=lines[i];
+        if(inCode){if(/^\s*```/.test(line)){out.push('<pre><code'+(codeLang?' class="language-'+escapeHtml(codeLang)+'"':'')+'>'+escapeHtml(code.join('\n'))+'</code></pre>');inCode=false;code=[];codeLang='';}else code.push(line);continue;}
+        const fence=line.match(/^\s*```([^\s`]*)\s*$/);if(fence){flush();inCode=true;codeLang=fence[1];code=[];continue;}
+        if(!line.trim()){flush();continue;}
+        if(/^\s*(---+|\*\*\*+|___+)\s*$/.test(line)){flush();out.push('<hr>');continue;}
+        const heading=line.match(/^\s{0,3}(#{1,6})\s+(.+?)\s*#*\s*$/);if(heading){flush();const level=heading[1].length;out.push('<h'+level+'>'+inline(heading[2])+'</h'+level+'>');continue;}
+        if(/^\s*>/.test(line)){flushParagraph();flushList();quote.push(line.replace(/^\s*>\s?/,''));continue;}else flushQuote();
+        const unordered=line.match(/^\s*[-+*]\s+(.+)$/),ordered=line.match(/^\s*\d+[.)]\s+(.+)$/);
+        if(unordered||ordered){flushParagraph();const type=unordered?'ul':'ol';if(listType&&listType!==type)flushList();listType=type;list.push((unordered||ordered)[1]);continue;}
+        flushList();
+        if(line.includes('|')&&i+1<lines.length&&/^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?\s*$/.test(lines[i+1])){
+          flushParagraph();const cells=value=>value.trim().replace(/^\||\|$/g,'').split('|').map(item=>item.trim());
+          const headers=cells(line),separators=cells(lines[i+1]);i++;const rows=[];
+          while(i+1<lines.length&&lines[i+1].includes('|')&&lines[i+1].trim())rows.push(cells(lines[++i]));
+          const th=headers.map((value,j)=>'<th'+(/:\s*-{3,}:/.test(separators[j]||'')?' style="text-align:center"':/^-{3,}:/.test(separators[j]||'')?' style="text-align:right"':/:-{3,}$/.test(separators[j]||'')?' style="text-align:left"':'')+'>'+inline(value)+'</th>').join('');
+          out.push('<div style="max-width:100%;overflow-x:auto"><table><thead><tr>'+th+'</tr></thead><tbody>'+rows.map(row=>'<tr>'+headers.map((_,j)=>'<td>'+inline(row[j]||'')+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>');continue;
+        }
+        paragraph.push(line);
+      }
+      if(inCode)out.push('<pre><code'+(codeLang?' class="language-'+escapeHtml(codeLang)+'"':'')+'>'+escapeHtml(code.join('\n'))+'</code></pre>');
+      flush();return out.join('\n');
+    }
+    function pairLogLooksLikeMarkdown(text) {
+      const value=String(text||'').trim();if(!value)return false;
+      const lines=value.split(/\r?\n/);
+      const blockSyntax=lines.some(line=>/^\s{0,3}(#{1,6}\s+|>\s+|[-+*]\s+|\d+[.)]\s+|```|---+$|\*\*\*+$|___+$)/.test(line));
+      const inlineSyntax=/(\*\*[^*\n]+\*\*|__[^_\n]+__|~~[^~\n]+~~|`[^`\n]+`|(?<!\*)\*[^*\n]+\*(?!\*)|(?<!_)_[^_\n]+_(?!_)|\[[^\]]+\]\(https?:\/\/[^)]+\)|!\[[^\]]*\]\(https?:\/\/[^)]+\))/.test(value);
+      const tableSyntax=lines.length>=2&&lines.some(line=>line.includes('|'))&&lines.some(line=>/^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?\s*$/.test(line));
+      return blockSyntax||inlineSyntax||tableSyntax;
+    }
+    function pairLogInsertHtmlAtSelection(html) {
+      const scrollState=pairLogCaptureScrollState();
+      const editor=document.getElementById('pairLogRichEditor'),selection=window.getSelection();
+      let range=null;
+      if(selection&&selection.rangeCount&&editor.contains(selection.anchorNode)&&editor.contains(selection.focusNode))range=selection.getRangeAt(0).cloneRange();
+      if((!range||!editor.contains(range.commonAncestorContainer))&&pairLogSavedRange&&editor.contains(pairLogSavedRange.commonAncestorContainer))range=pairLogSavedRange.cloneRange();
+      if(!range){range=document.createRange();range.selectNodeContents(editor);range.collapse(false);}
+      const wrapper=document.createElement('div');wrapper.className='rp-markdown-content';wrapper.innerHTML=sanitizePairLogHtml(html,true);
+      range.deleteContents();range.insertNode(wrapper);
+      const after=document.createElement('p');after.innerHTML='<br>';wrapper.after(after);
+      const caret=document.createRange();caret.setStart(after,0);caret.collapse(true);pairLogSavedRange=caret.cloneRange();
+      pairLogHydrateRecordTemplates(editor,true);pairLogHistorySnapshot();pairLogRestoreScrollStateDeferred(scrollState);
+    }
+
+    function pairLogHandleMarkdownPaste(event) {
+      const plain=event.clipboardData?.getData('text/plain')||'';if(!pairLogLooksLikeMarkdown(plain))return;
+      // The text/plain payload is the Markdown source of truth. Mobile clipboards often
+      // attach a generated HTML wrapper too, even when the copied text is raw Markdown.
+      event.preventDefault();pairLogInsertHtmlAtSelection(pairLogMarkdownToHtml(plain));
+      setStatus('Markdown 서식을 자동으로 변환해 붙여넣었습니다.');
+    }
+    let pairLogMarkdownAutoTimer=null;
+    function pairLogMarkdownTarget(editor) {
+      if(!editor)return null;
+      const selection=window.getSelection();
+      let node=selection&&selection.rangeCount?selection.anchorNode:null;
+      if(!node||!editor.contains(node)){
+        if(pairLogSavedRange&&editor.contains(pairLogSavedRange.commonAncestorContainer))node=pairLogSavedRange.startContainer;
+        else return editor;
+      }
+      if(node===editor){
+        const offset=selection&&selection.rangeCount?selection.anchorOffset:editor.childNodes.length;
+        const candidate=editor.childNodes[offset]||editor.childNodes[offset-1]||null;
+        if(candidate)node=candidate;
+      }
+      if(node.nodeType===Node.TEXT_NODE&&node.parentNode===editor)return node;
+      let element=node.nodeType===Node.ELEMENT_NODE?node:node.parentElement;
+      while(element&&element.parentElement!==editor)element=element.parentElement;
+      return element&&element.parentElement===editor?element:editor;
+    }
+    function pairLogMarkdownTargetIsProtected(target,editor) {
+      if(!target)return true;
+      if(target!==editor&&target.nodeType===Node.ELEMENT_NODE&&target.closest('.rt-block,.rt-toggle-section,.pair-log-chat-layout,.rt-controls,[contenteditable="false"]'))return true;
+      const root=target.nodeType===Node.TEXT_NODE?target.parentElement:target;
+      const protectedContent='img,table,ul,ol,blockquote,pre,strong,b,em,i,u,s,del,mark,a,span[style],.rt-block,.rt-toggle-section,.pair-log-chat-layout,.rt-controls,[contenteditable="false"]';
+      if(root&&root!==editor&&root.querySelector?.(protectedContent))return true;
+      if(target===editor){
+        if(editor.querySelector(protectedContent))return true;
+        if([...editor.children].some(child=>!['P','DIV','BR'].includes(child.tagName)))return true;
+      }
+      return false;
+    }
+    function pairLogQueueMarkdownAutoConvert() {
+      clearTimeout(pairLogMarkdownAutoTimer);
+      const editor=document.getElementById('pairLogRichEditor');
+      const target=pairLogMarkdownTarget(editor);
+      if(!target||pairLogMarkdownTargetIsProtected(target,editor))return;
+      const read=element=>element.nodeType===Node.TEXT_NODE?element.nodeValue:(element.innerText||element.textContent||'');
+      const raw=read(target).trim();
+      if(!pairLogLooksLikeMarkdown(raw))return;
+      if((raw.match(/^\s*```/gm)||[]).length%2===1)return;
+      pairLogMarkdownAutoTimer=setTimeout(()=>{
+        if(!target.isConnected||pairLogMarkdownTargetIsProtected(target,editor))return;
+        const latest=read(target).trim();
+        if(!pairLogLooksLikeMarkdown(latest)||((latest.match(/^\s*```/gm)||[]).length%2===1))return;
+        const converted=sanitizePairLogHtml(pairLogMarkdownToHtml(latest),true);
+        const holder=document.createElement('div');holder.innerHTML=converted;
+        const nodes=[...holder.childNodes];if(!nodes.length)return;
+        const scrollState=pairLogCaptureScrollState();
+        if(target===editor)editor.replaceChildren(...nodes);else target.replaceWith(...nodes);
+        const last=nodes[nodes.length-1]||null,caretBlock=document.createElement('p');caretBlock.innerHTML='<br>';
+        if(last&&last.parentNode)last.after(caretBlock);else editor.appendChild(caretBlock);
+        const range=document.createRange();range.setStart(caretBlock,0);range.collapse(true);
+        const activeSelection=window.getSelection();activeSelection.removeAllRanges();activeSelection.addRange(range);pairLogSavedRange=range.cloneRange();
+        pairLogHydrateRecordTemplates(editor,true);
+        clearTimeout(pairLogHistoryTimer);pairLogHistorySnapshot();pairLogRestoreScrollStateDeferred(scrollState);
+        setStatus('Markdown 문법을 서식으로 자동 변환했습니다.');
+      },350);
+    }
+
+    function pairLogConvertCurrentMarkdown() {
+      const editor=document.getElementById('pairLogRichEditor');
+      const plain=(editor.innerText||editor.textContent||'').trim();
+      if(editor.querySelector('.rt-block,.rt-toggle-section,.pair-log-chat-layout,img,table,ul,ol,blockquote,pre,strong,b,em,i,u,s,del,mark,a,span[style]')){
+        setStatus('기존 서식이나 기록물이 포함되어 있어 전체 변환을 중단했습니다. Markdown 원문만 있는 본문에서 사용해주세요.');return;
+      }
+      if(!pairLogLooksLikeMarkdown(plain)){setStatus('변환할 Markdown 문법이 없습니다.');return;}
+      const scrollState=pairLogCaptureScrollState();
+      editor.innerHTML=sanitizePairLogHtml(pairLogMarkdownToHtml(plain),true);
+      const after=document.createElement('p');after.innerHTML='<br>';editor.appendChild(after);
+      pairLogHydrateRecordTemplates(editor,true);
+      const range=document.createRange();range.setStart(after,0);range.collapse(true);pairLogSavedRange=range.cloneRange();
+      pairLogHistorySnapshot();pairLogRestoreScrollStateDeferred(scrollState);setStatus('본문의 Markdown을 서식으로 변환했습니다.');
+    }
+
     function pairLogBytesToB64(bytes) { let binary='';for(let i=0;i<bytes.length;i+=0x8000)binary+=String.fromCharCode(...bytes.subarray(i,i+0x8000));return btoa(binary); }
     function pairLogB64ToBytes(value) { const raw=atob(value);const bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);return bytes; }
     async function pairLogDeriveSecretKey(password,salt,iterations=PAIR_LOG_SECRET_ITERATIONS) {
@@ -7653,18 +8368,49 @@ function applyBackupTemplate(template) {
       const editor=document.getElementById('pairLogRichEditor');const selection=window.getSelection();
       if(selection&&selection.rangeCount&&editor.contains(selection.anchorNode)&&editor.contains(selection.focusNode)) pairLogSavedRange=selection.getRangeAt(0).cloneRange();
     }
-    function restorePairLogRange() {
-      const editor=document.getElementById('pairLogRichEditor');editor.focus();
+    function pairLogCaptureScrollState() {
+      const values=[];let node=document.getElementById('pairLogRichEditor');
+      while(node){values.push({node,left:node.scrollLeft,top:node.scrollTop});node=node.parentElement;}
+      return {values,x:window.scrollX,y:window.scrollY};
+    }
+    function pairLogRestoreScrollState(state) {
+      if(!state)return;
+      state.values.forEach(item=>{if(item.node&&item.node.isConnected){item.node.scrollLeft=item.left;item.node.scrollTop=item.top;}});
+      try{window.scrollTo(state.x,state.y);}catch(_){}
+    }
+    function pairLogRestoreScrollStateDeferred(state) {
+      if(!state)return;
+      pairLogRestoreScrollState(state);
+      const restore=()=>pairLogRestoreScrollState(state);
+      try{requestAnimationFrame(restore);}catch(_){setTimeout(restore,0);}
+    }
+    function restorePairLogRange(options={}) {
+      const editor=document.getElementById('pairLogRichEditor');
+      if(!editor)return;
+      const shouldFocus=options.focus!==false;
+      const scrollState=shouldFocus?pairLogCaptureScrollState():null;
+      if(shouldFocus){try{editor.focus({preventScroll:true});}catch(_){try{editor.focus();}catch(__){}}}
       const selection=window.getSelection();
       if(pairLogSavedRange&&editor.contains(pairLogSavedRange.commonAncestorContainer)){selection.removeAllRanges();selection.addRange(pairLogSavedRange);}
       else {const range=document.createRange();range.selectNodeContents(editor);range.collapse(false);selection.removeAllRanges();selection.addRange(range);pairLogSavedRange=range.cloneRange();}
+      if(scrollState)pairLogRestoreScrollStateDeferred(scrollState);
     }
     function insertPairLogNode(node) {
-      restorePairLogRange();const selection=window.getSelection();let range=selection.rangeCount?selection.getRangeAt(0):null;
-      if(!range||!document.getElementById('pairLogRichEditor').contains(range.commonAncestorContainer)){range=document.createRange();range.selectNodeContents(document.getElementById('pairLogRichEditor'));range.collapse(false);}
-      range.deleteContents();range.insertNode(node);const after=document.createElement('p');after.innerHTML='<br>';node.after(after);
-      const next=document.createRange();next.setStart(after,0);next.collapse(true);selection.removeAllRanges();selection.addRange(next);pairLogSavedRange=next.cloneRange();pairLogHistorySnapshot();
+      // Insert at the remembered caret without focusing the editor or moving the
+      // live selection to the bottom of the scroll pane.
+      const scrollState=pairLogCaptureScrollState();
+      const editor=document.getElementById('pairLogRichEditor'),selection=window.getSelection();
+      let range=null;
+      if(selection&&selection.rangeCount&&editor.contains(selection.anchorNode)&&editor.contains(selection.focusNode))range=selection.getRangeAt(0).cloneRange();
+      if((!range||!editor.contains(range.commonAncestorContainer))&&pairLogSavedRange&&editor.contains(pairLogSavedRange.commonAncestorContainer))range=pairLogSavedRange.cloneRange();
+      if(!range){range=document.createRange();range.selectNodeContents(editor);range.collapse(false);}
+      range.deleteContents();range.insertNode(node);
+      const after=document.createElement('p');after.innerHTML='<br>';node.after(after);
+      const next=document.createRange();next.setStart(after,0);next.collapse(true);pairLogSavedRange=next.cloneRange();
+      pairLogHydrateRecordTemplates(editor,true);
+      pairLogHistorySnapshot();pairLogRestoreScrollStateDeferred(scrollState);
     }
+
     function makePairLogChatRow(side,name='') {
       const row=document.createElement('div');row.className=`pair-log-chat-row ${side}`;
       const avatar=document.createElement('span');avatar.className='pair-log-avatar';avatar.contentEditable='false';avatar.textContent=side==='a'?'A':'B';avatar.dataset.pairSide=side;
@@ -7706,11 +8452,20 @@ function applyBackupTemplate(template) {
       if(data?.contentHtml) editor.innerHTML=sanitizePairLogHtml(data.contentHtml, true);
       else if(data?.content) editor.innerHTML=data.content.split(/\r?\n/).map(line=>`<p>${escapeHtml(line)||'<br>'}</p>`).join('');
       else editor.innerHTML='';
+      pairLogHydrateRecordTemplates(editor,true);
       const secretToggle=document.getElementById('pairLogSecretToggle');secretToggle.checked=!!log?.secret;
       document.getElementById('pairLogSecretFields').classList.toggle('hidden',!secretToggle.checked);
       document.getElementById('pairLogSecretPassword').value='';document.getElementById('pairLogSecretPasswordConfirm').value='';
       document.getElementById('pairLogComposeHeading').textContent=log?'EDIT RP LOG':'NEW RP LOG';
-      pairLogSavedRange=null;openPairView('logcompose');pairLogHistoryInit();
+      pairLogSavedRange=null;
+      ['pairLogPalettePanel','pairLogDecorPanel','pairLogMarkdownPanel'].forEach(id=>document.getElementById(id)?.classList.add('hidden'));
+      document.getElementById('pairLogPaletteToggle')?.setAttribute('aria-expanded','false');
+      document.getElementById('pairLogDecorToggle')?.setAttribute('aria-expanded','false');
+      document.getElementById('pairLogMarkdownToggle')?.setAttribute('aria-expanded','false');
+      document.getElementById('pairLogMarkdownSource').value='';
+      document.getElementById('pairLogMarkdownPreviewArea').replaceChildren();
+      document.getElementById('pairLogMarkdownPreviewArea').classList.add('hidden');
+      openPairView('logcompose');pairLogHistoryInit();
       pairLogReadSavedColors();renderPairLogPalette();
     }
 
@@ -7718,11 +8473,12 @@ function applyBackupTemplate(template) {
       const editor=document.getElementById('pairLogRichEditor');
       const contentHtml=sanitizePairLogHtml(editor.innerHTML);
       const content=pairLogPlainText(contentHtml);
-      if(!content.trim()&&!contentHtml.includes('<img')){setStatus('저장할 RP 로그를 입력해주세요.');return;}
+      const title=document.getElementById('pairLogTitleInput').value.trim();
+      if(!title){setStatus('RP 제목을 입력해주세요.');document.getElementById('pairLogTitleInput').focus();return;}
       const existing=pairLogRecords(currentPairId).find(item=>item.id===pairLogEditingId);const now=new Date().toISOString();
       const plain={
         id:pairLogEditingId||makePairId(),kind:'pair-log',pairId:currentPairId,
-        title:document.getElementById('pairLogTitleInput').value.trim()||`RP log · ${new Date().toLocaleDateString('ko-KR')}`,
+        title,
         subtitle:document.getElementById('pairLogSubtitleInput').value.trim(),
         platform:document.getElementById('pairLogPlatformInput').value.trim(),
         date:document.getElementById('pairLogDateInput').value||new Date().toISOString().slice(0,10),
@@ -7731,7 +8487,7 @@ function applyBackupTemplate(template) {
         favorite:!!existing?.favorite,contentHtml,content,createdAt:existing?.createdAt||now,updatedAt:now
       };
       const protect=document.getElementById('pairLogSecretToggle').checked;
-      let record=plain;
+      let record=plain,clearSecretCacheAfterSave=false;
       if(protect){
         const password=document.getElementById('pairLogSecretPassword').value;
         const confirmPassword=document.getElementById('pairLogSecretPasswordConfirm').value;
@@ -7752,10 +8508,10 @@ function applyBackupTemplate(template) {
       } else if(existing?.secret) {
         if(!pairLogSecretCache.has(existing.id)){setStatus('비밀글을 먼저 잠금 해제해주세요.');return;}
         if(!confirm('비밀글 잠금을 해제하고 일반 로그로 저장할까요?'))return;
-        pairLogSecretCache.delete(existing.id);
+        clearSecretCacheAfterSave=true;
       }
       try {
-        await saveRoomRecord(record);pairLogEditingId=null;renderPairChatLogs();openPairView('detail');setStatus(protect?'비밀글을 암호화해 저장했습니다.':'페어 RP 로그를 저장했습니다.');
+        await saveRoomRecord(record);if(clearSecretCacheAfterSave)pairLogSecretCache.delete(existing.id);pairLogEditingId=null;renderPairChatLogs();openPairView('detail');setStatus(protect?'비밀글을 암호화해 저장했습니다.':'페어 RP 로그를 저장했습니다.');
       } catch(error) {setStatus(`대화 로그 저장 실패: ${error.message||'다시 시도해주세요.'}`);}
     }
 
@@ -7803,11 +8559,65 @@ function applyBackupTemplate(template) {
       document.getElementById('pairLogCancel').addEventListener('click',()=>{pairLogEditingId=null;openPairView('detail');});
       document.getElementById('pairLogSaveButton').addEventListener('click',savePairLog);
       const logEditor=document.getElementById('pairLogRichEditor');
-      ['mouseup','keyup','input'].forEach(type=>logEditor.addEventListener(type,capturePairLogRange));
-      logEditor.addEventListener('input',pairLogHistoryQueue);
-      logEditor.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'){event.preventDefault();pairLogHistoryMove(event.shiftKey?1:-1);}else if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='y'){event.preventDefault();pairLogHistoryMove(1);}});
-      document.getElementById('pairLogToolbar').addEventListener('mousedown',event=>{if(event.target.closest('button'))capturePairLogRange();});
-      document.getElementById('pairLogToolbar').addEventListener('mousedown',pairLogCaptureSelectionOnToolbar);
+      ['mouseup','pointerup','keyup','input'].forEach(type=>logEditor.addEventListener(type,capturePairLogRange));
+      document.addEventListener('selectionchange',()=>{
+        const selection=window.getSelection();
+        if(selection&&selection.rangeCount&&logEditor.contains(selection.anchorNode)&&logEditor.contains(selection.focusNode))capturePairLogRange();
+      });
+      logEditor.addEventListener('input',()=>{pairLogHistoryQueue();pairLogQueueMarkdownAutoConvert();});
+      logEditor.addEventListener('compositionend',()=>pairLogQueueMarkdownAutoConvert());
+      logEditor.addEventListener('paste',pairLogHandleMarkdownPaste);
+      logEditor.addEventListener('change',event=>{
+        const control=event.target.closest('[data-rt-control]');if(!control)return;
+        const block=control.closest('.rt-block');if(!block)return;
+        const value=control.value;
+        if(control.dataset.rtControl==='shadow'){
+          if(value==='default'){delete block.dataset.rtShadow;block.style.removeProperty('box-shadow');}
+          else{block.dataset.rtShadow=value;const shadows={none:'none',soft:'0 5px 14px rgba(86,105,100,.16)',deep:'0 9px 22px rgba(68,83,78,.24)'};block.style.boxShadow=shadows[value]||'';}
+        }
+        if(control.dataset.rtControl==='tilt'){const tilt=Number(value)||0;if(!tilt){delete block.dataset.rtTilt;block.style.removeProperty('transform');}else{block.dataset.rtTilt=String(tilt);block.style.transform='rotate('+tilt+'deg)';}}
+        if(control.dataset.rtControl==='memo-width'){const width=Math.max(50,Math.min(100,Number(value)||82));block.dataset.rtMemoWidth=String(width);block.style.width=width+'%';}
+        if(control.dataset.rtControl==='memo-height'){const height=Math.max(10,Math.min(220,Number(value)||72));block.dataset.rtMemoHeight=String(height);const body=block.querySelector('.rt-memo-body');if(body)body.style.minHeight=height+'px';}
+        pairLogHistorySnapshot();
+      });
+      logEditor.addEventListener('click',event=>{
+        const action=event.target.closest('[data-rt-action]');
+        if(action){event.preventDefault();event.stopPropagation();const block=action.closest('.rt-block');if(!block)return;const kind=action.dataset.rtAction;
+          if(kind==='logo-toggle'){const hidden=block.dataset.rtLogoHidden!=='1';if(hidden){block.dataset.rtLogoHidden='1';block.querySelectorAll('.rt-logo').forEach(el=>el.classList.add('rt-logo-hidden'));action.textContent='로고 켜기';}else{delete block.dataset.rtLogoHidden;block.querySelectorAll('.rt-logo').forEach(el=>el.classList.remove('rt-logo-hidden'));action.textContent='로고 끄기';}pairLogHistorySnapshot();return;}
+          if(kind==='logo'){pairLogChooseRecordImage(block,'logo');return;}
+          if(kind==='photo'){pairLogChooseRecordImage(block,'photo');return;}
+          if(kind==='logo-text'){const logo=block.querySelector('.rt-logo');if(logo){logo.textContent='LOGO';logo.setAttribute('contenteditable','true');pairLogFocusEditableWithoutScroll(logo);pairLogHistorySnapshot();}return;}
+          if(kind==='delete'){if(confirm('이 기록물 블록을 삭제할까요?')){block.remove();pairLogCaptureRange();pairLogHistorySnapshot();}return;}
+          if(kind==='up'||kind==='down'){const sibling=kind==='up'?block.previousElementSibling:block.nextElementSibling;if(!sibling){setStatus(kind==='up'?'이미 최상단입니다.':'이미 최하단입니다.');return;}if(kind==='up')block.parentNode.insertBefore(block,sibling);else block.parentNode.insertBefore(sibling,block);pairLogCaptureRange();pairLogHistorySnapshot();return;}
+        }
+        const photoFrame=event.target.closest('[data-rt-photo]');
+        if(photoFrame&&!event.target.closest('.rt-controls')){const photoBlock=photoFrame.closest('.rt-block[data-rp-type=\"record-template\"]');if(photoBlock){event.preventDefault();pairLogChooseRecordImage(photoBlock,'photo');return;}}
+        const block=event.target.closest('.rt-block[data-rp-type=\"record-template\"]');if(!block||event.target.closest('.rt-controls'))return;
+        const already=block.classList.contains('rt-settings-open');pairLogClearRecordControls();
+        if(!already){block.classList.add('rt-settings-open');const tools=block.querySelector(':scope > .rt-controls');if(tools)tools.classList.add('rt-controls-visible');pairLogShiftPreviousRecordUp(block);}
+      });
+      logEditor.addEventListener('keydown',event=>{
+        if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'){event.preventDefault();pairLogHistoryMove(event.shiftKey?1:-1);return;}
+        if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='y'){event.preventDefault();pairLogHistoryMove(1);return;}
+        if(event.key==='Enter'&&!event.shiftKey&&!event.isComposing){
+          const sel=window.getSelection();let node=sel?.anchorNode;if(node&&node.nodeType===3)node=node.parentElement;
+          const block=node?.closest?.('p,div,blockquote');
+          if(block&&block!==logEditor&&logEditor.contains(block)&&!block.closest('.rt-block,.pair-log-chat-layout')){
+            const text=(block.innerText||block.textContent||'').trim();
+            if(pairLogLooksLikeMarkdown(text)){
+              event.preventDefault();
+              const scrollState=pairLogCaptureScrollState();
+              const holder=document.createElement('div');holder.innerHTML=sanitizePairLogHtml(pairLogMarkdownToHtml(text),true);
+              const nodes=[...holder.childNodes];const lastInserted=nodes[nodes.length-1]||null;block.replaceWith(...nodes);
+              const next=document.createElement('p');next.innerHTML='<br>';
+              if(lastInserted&&lastInserted.parentNode)lastInserted.after(next);else logEditor.appendChild(next);
+              const caret=document.createRange();caret.setStart(next,0);caret.collapse(true);sel.removeAllRanges();sel.addRange(caret);pairLogSavedRange=caret.cloneRange();pairLogHydrateRecordTemplates(logEditor,true);pairLogHistorySnapshot();pairLogRestoreScrollStateDeferred(scrollState);
+            }
+          }
+        }
+      });
+      document.getElementById('pairLogToolbar').addEventListener('pointerdown',()=>capturePairLogRange());
+      document.getElementById('pairLogToolbar').addEventListener('mousedown',()=>capturePairLogRange());
       document.getElementById('pairLogToolbar').addEventListener('click',event=>{
         const command=event.target.closest('[data-pair-log-command]');if(!command)return;
         const cmd=command.dataset.pairLogCommand;
@@ -7818,30 +8628,78 @@ function applyBackupTemplate(template) {
         else document.execCommand(cmd,false,command.dataset.pairLogValue||null);
         capturePairLogRange();pairLogHistorySnapshot();
       });
+      ['pairLogPaletteToggle','pairLogDecorToggle'].forEach(id=>{
+        const button=document.getElementById(id);
+        button.addEventListener('pointerdown',()=>capturePairLogRange());
+        button.addEventListener('mousedown',()=>capturePairLogRange());
+      });
       document.getElementById('pairLogPaletteToggle').addEventListener('click',()=>{
+        const scrollState=pairLogCaptureScrollState();
         const panel=document.getElementById('pairLogPalettePanel'),next=panel.classList.contains('hidden');panel.classList.toggle('hidden',!next);
-        document.getElementById('pairLogPaletteToggle').setAttribute('aria-expanded',String(next));if(next){capturePairLogRange();renderPairLogPalette();}
+        document.getElementById('pairLogPaletteToggle').setAttribute('aria-expanded',String(next));if(next)renderPairLogPalette();
+        pairLogRestoreScrollStateDeferred(scrollState);
       });
       document.getElementById('pairLogDecorToggle').addEventListener('click',()=>{
+        const scrollState=pairLogCaptureScrollState();
         const panel=document.getElementById('pairLogDecorPanel'),next=panel.classList.contains('hidden');panel.classList.toggle('hidden',!next);
-        document.getElementById('pairLogDecorToggle').setAttribute('aria-expanded',String(next));if(next)capturePairLogRange();
+        document.getElementById('pairLogDecorToggle').setAttribute('aria-expanded',String(next));
+        pairLogRestoreScrollStateDeferred(scrollState);
       });
-      document.getElementById('pairLogDecorPanel').addEventListener('mousedown',capturePairLogRange);
+      document.getElementById('pairLogDecorPanel').addEventListener('pointerdown',()=>capturePairLogRange());
+      document.getElementById('pairLogDecorPanel').addEventListener('mousedown',()=>capturePairLogRange());
       document.getElementById('pairLogDecorPanel').addEventListener('click',event=>{const button=event.target.closest('[data-pair-log-template]');if(button)insertPairLogTemplate(button.dataset.pairLogTemplate);});
+      document.getElementById('pairLogMarkdownConvert').addEventListener('pointerdown',()=>capturePairLogRange());
+      document.getElementById('pairLogMarkdownConvert').addEventListener('mousedown',()=>capturePairLogRange());
+      document.getElementById('pairLogMarkdownConvert').addEventListener('click',pairLogConvertCurrentMarkdown);
+      document.getElementById('pairLogMarkdownToggle').addEventListener('pointerdown',()=>capturePairLogRange());
+      document.getElementById('pairLogMarkdownToggle').addEventListener('mousedown',()=>capturePairLogRange());
+      document.getElementById('pairLogMarkdownToggle').addEventListener('click',()=>{
+        const scrollState=pairLogCaptureScrollState();
+        const panel=document.getElementById('pairLogMarkdownPanel'),button=document.getElementById('pairLogMarkdownToggle');
+        const open=panel.classList.contains('hidden');panel.classList.toggle('hidden',!open);button.setAttribute('aria-expanded',String(open));
+        pairLogRestoreScrollStateDeferred(scrollState);
+      });
+      document.getElementById('pairLogMarkdownPreview').addEventListener('click',()=>{
+        const source=document.getElementById('pairLogMarkdownSource').value;
+        if(!source.trim()){setStatus('미리볼 Markdown 내용을 입력해주세요.');return;}
+        const preview=document.getElementById('pairLogMarkdownPreviewArea');
+        preview.innerHTML=sanitizePairLogHtml(pairLogMarkdownToHtml(source),true);preview.classList.remove('hidden');
+      });
+      document.getElementById('pairLogMarkdownInsert').addEventListener('pointerdown',()=>capturePairLogRange());
+      document.getElementById('pairLogMarkdownInsert').addEventListener('mousedown',()=>capturePairLogRange());
+      document.getElementById('pairLogMarkdownInsert').addEventListener('click',()=>{
+        const source=document.getElementById('pairLogMarkdownSource').value;
+        if(!source.trim()){setStatus('본문에 삽입할 Markdown 내용을 입력해주세요.');return;}
+        const scrollState=pairLogCaptureScrollState();
+        pairLogInsertHtmlAtSelection(pairLogMarkdownToHtml(source));
+        document.getElementById('pairLogMarkdownPanel').classList.add('hidden');
+        document.getElementById('pairLogMarkdownToggle').setAttribute('aria-expanded','false');
+        pairLogRestoreScrollStateDeferred(scrollState);
+        setStatus('Markdown을 본문에 삽입했습니다.');
+      });
+      document.getElementById('pairLogMarkdownClear').addEventListener('click',()=>{
+        document.getElementById('pairLogMarkdownSource').value='';
+        const preview=document.getElementById('pairLogMarkdownPreviewArea');preview.replaceChildren();preview.classList.add('hidden');
+      });
       document.getElementById('pairLogFontApply').addEventListener('click',()=>{
         const editor=document.getElementById('pairLogRichEditor');restorePairLogRange();const sel=window.getSelection();
         if(!sel||!sel.rangeCount||sel.isCollapsed||!editor.contains(sel.anchorNode)||!editor.contains(sel.focusNode)){setStatus('본문에서 글자를 선택한 뒤 글꼴을 적용해주세요.');return;}
         document.execCommand('styleWithCSS',false,true);document.execCommand('fontName',false,document.getElementById('pairLogFontSelect').value);capturePairLogRange();pairLogHistorySnapshot();
       });
+      document.getElementById('pairLogPalettePanel').addEventListener('pointerdown',capturePairLogSelectionOnToolbar);
       document.getElementById('pairLogPalettePanel').addEventListener('mousedown',capturePairLogSelectionOnToolbar);
       document.getElementById('pairLogPalettePanel').addEventListener('click',event=>{
         const target=event.target.closest('[data-pair-log-color-target]');if(target){pairLogPaletteTarget=target.dataset.pairLogColorTarget;renderPairLogPalette();return;}
         const remove=event.target.closest('[data-pair-log-palette-remove]');if(remove){pairLogPaletteRemove(remove.dataset.pairLogPaletteRemove);return;}
         const pick=event.target.closest('[data-pair-log-palette-pick]');if(pick){pairLogSetPaletteColor(pick.dataset.pairLogPalettePick);pairLogApplyColor(pick.dataset.pairLogPalettePick);return;}
       });
+      document.getElementById('pairLogPaletteColor').addEventListener('pointerdown',capturePairLogRange);
       document.getElementById('pairLogPaletteColor').addEventListener('input',event=>pairLogSetPaletteColor(event.target.value));
+      document.getElementById('pairLogPaletteHex').addEventListener('pointerdown',capturePairLogRange);
+      document.getElementById('pairLogPaletteHex').addEventListener('input',event=>{const c=pairLogNormalizeHex(event.target.value);if(c)document.getElementById('pairLogPaletteColor').value=c;});
+      document.getElementById('pairLogPaletteHex').addEventListener('change',event=>{const c=pairLogNormalizeHex(event.target.value);if(c)pairLogSetPaletteColor(c);else setStatus('HEX 코드를 확인해주세요.');});
       document.getElementById('pairLogPaletteHex').addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();const c=pairLogNormalizeHex(event.target.value);if(c)pairLogSetPaletteColor(c);else setStatus('HEX 코드를 확인해주세요.');}});
-      document.getElementById('pairLogPaletteApply').addEventListener('click',()=>pairLogApplyColor(document.getElementById('pairLogPaletteColor').value));
+      document.getElementById('pairLogPaletteApply').addEventListener('click',()=>{const color=pairLogCurrentPaletteColor();if(color){pairLogSetPaletteColor(color);pairLogApplyColor(color);}else setStatus('HEX 색상 코드를 확인해주세요.');});
       document.getElementById('pairLogPaletteSave').addEventListener('click',pairLogSavePaletteColor);
       document.getElementById('pairLogPalettePrev').addEventListener('click',()=>{pairLogPalettePage=Math.max(0,pairLogPalettePage-1);renderPairLogPalette();});
       document.getElementById('pairLogPaletteNext').addEventListener('click',()=>{pairLogPalettePage=Math.min(pairLogPaletteHues.length,pairLogPalettePage+1);renderPairLogPalette();});
