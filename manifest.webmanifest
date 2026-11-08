@@ -2,7 +2,7 @@
   "id": "./",
   "name": "P. Toolbox",
   "short_name": "P. Toolbox",
-  "description": "Prompt creation, image archives, and pair records.",
+  "description": "Prompt generator, prompt and photo archives, and pair RP logs.",
   "lang": "ko-KR",
   "start_url": "./",
   "scope": "./",

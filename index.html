@@ -11,7 +11,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" sizes="192x192" href="./p-toolbox-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="./p-toolbox-192.png">
-  <title>P. Toolbox v37</title>
+  <title>P. Toolbox v38</title>
   <style>
     :root {
       color-scheme: light;
@@ -329,6 +329,11 @@
     .converter-actions button { min-width: 98px; }
     .prompt-editor-main { max-width: 760px; margin: 0 auto; }
     .prompt-editor-note { margin: 0 0 9px; padding: 7px 8px; border: 1px solid #999; background: #e2e2e2; color: #333; font-size: 11px; line-height: 1.5; }
+
+    .weight-group-mode { display:flex; align-items:center; flex-wrap:wrap; gap:5px; padding:7px 9px; border:1px solid var(--line); border-top:0; background:#f7f4f6; color:#70596a; font:9px Tahoma,sans-serif; }
+    .weight-group-mode button { min-height:22px; padding:2px 7px; border:1px solid #bda8b7; background:#fff; color:#715b6b; font-size:9px; }
+    .weight-group-mode button.active { background:#76596d; color:#fff; border-color:#76596d; }
+    .weight-group-help { color:#988392; margin-left:auto; }
     .prompt-editor-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin: 10px 0 7px; }
     .prompt-editor-toolbar-left, .prompt-editor-toolbar-right { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
     .prompt-editor-toolbar select { min-width: 180px; font-size: 11px; }
@@ -586,6 +591,15 @@
     .backup-search-row { display:grid; grid-template-columns:minmax(0,1fr) 155px; gap:6px; }
     .backup-search-row input, .backup-search-row select { width:100%; min-width:0; min-height:29px; padding:4px 7px; border:1px solid var(--bp-line); background:#fff; color:#55434f; font-size:11px; }
     .backup-home-toolbar-bottom { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:7px; }
+
+    .backup-board-control { display:flex; align-items:center; gap:7px; flex-wrap:wrap; min-width:0; }
+    #backupBoardTabs { display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
+    #backupBoardTabs .small { min-height:25px; padding:4px 9px; font-size:9px; }
+    #backupAddBoard { min-height:25px; padding:4px 8px; border-style:dashed; font-size:9px; }
+    .backup-compose-board-row { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .backup-compose-board-row > div { min-width:0; }
+    @media(max-width:600px){.backup-compose-board-row{grid-template-columns:1fr 1fr}.backup-compose-board-row>div:first-child{grid-column:1/-1}}
+
     .backup-filter-shortcuts { display:flex; align-items:center; flex-wrap:wrap; gap:5px; }
     .backup-filter-shortcuts button { min-height:23px; padding:3px 8px; border:1px solid var(--bp-line); background:#fff; color:var(--bp-ink); font-size:9px; }
     .backup-filter-shortcuts button.active { background:var(--bp-ink); color:#fff; border-color:var(--bp-ink); }
@@ -1026,6 +1040,38 @@
     .pair-preview-caption { position:absolute; bottom:3px; left:0; right:0; z-index:2; padding:1px 3px; background:rgba(255,255,255,.78); text-align:center; color:#866d7b; font:bold 8px Tahoma,sans-serif; letter-spacing:1.5px; }
     .pair-destination .start-destination-graphic { height:142px; }
     .pair-destination .start-destination-desc { min-height:0; }
+
+    .pair-log-meta-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; margin-bottom:12px; }
+    .pair-log-meta-grid label { display:grid; gap:4px; min-width:0; }
+    .pair-log-toolbar { display:flex; flex-wrap:wrap; gap:4px; padding:7px; border:1px solid #cbb7c1; border-bottom:0; background:#eee7ea; }
+    .pair-log-toolbar button { min-height:25px; padding:3px 7px; border:1px solid #b99aaa; background:#fffdfb; color:#72596a; font:10px Tahoma,sans-serif; }
+    .pair-log-toolbar button:active { background:#76596d; color:#fff; }
+    .pair-log-editor { min-height:360px; max-height:70vh; overflow:auto; padding:14px; border:1px solid #cbb7c1; background:#fffefa; color:#55434f; font:13px/1.7 Tahoma,Arial,sans-serif; overflow-wrap:anywhere; }
+    .pair-log-editor:empty:before { content:attr(data-placeholder); color:#aa9aa3; pointer-events:none; }
+    .pair-log-editor img { display:block; max-width:100%; height:auto; margin:8px auto; }
+    .pair-log-editor blockquote,.pair-chat-rich blockquote { margin:10px 0; padding:7px 12px; border-left:3px solid #b78fa5; background:#f8f0f4; color:#6b5864; }
+    .pair-log-editor pre,.pair-chat-rich pre { max-width:100%; overflow:auto; padding:8px; background:#f0edf0; border:1px solid #ddd2d8; white-space:pre-wrap; }
+    .pair-log-editor-note { margin-top:6px; color:#927e89; font:9px Tahoma,sans-serif; }
+    .pair-log-chat-layout { margin:12px 0; padding:10px; border:1px dashed #c7aebd; background:#fbf5f8; }
+    .pair-log-chat-head { margin-bottom:8px; color:#98778c; font:bold 9px Tahoma,sans-serif; letter-spacing:1px; }
+    .pair-log-chat-row { display:flex; align-items:flex-start; gap:8px; margin:8px 0; }
+    .pair-log-chat-row.b { justify-content:flex-end; }
+    .pair-log-avatar { width:28px; height:28px; flex:0 0 28px; display:grid; place-items:center; overflow:hidden; border:1px solid #cdb8c4; border-radius:50%; background:#f1e4eb; color:#795d70; font:bold 9px Tahoma,sans-serif; }
+    .pair-log-avatar img { width:100%; height:100%; object-fit:cover; margin:0; }
+    .pair-log-message { min-width:0; max-width:82%; }
+    .pair-log-name { margin:0 0 3px; color:#987d8c; font:bold 9px Tahoma,sans-serif; }
+    .pair-log-bubble { min-height:28px; padding:7px 9px; border:1px solid #dfd0d9; border-radius:3px 10px 10px 10px; background:#fff; color:#564752; font-size:11px; line-height:1.55; white-space:pre-wrap; }
+    .pair-log-chat-row.b .pair-log-bubble { border-radius:10px 3px 10px 10px; background:#f1e7ed; }
+    .pair-chat-rich { padding:10px 2px; color:#594852; font:12px/1.7 Tahoma,Arial,sans-serif; overflow-wrap:anywhere; }
+    .pair-chat-rich img { display:block; max-width:100%; height:auto; margin:8px auto; }
+    .pair-chat-rich .pair-log-chat-layout { margin:8px 0; }
+    .pair-chat-meta { display:flex; flex-wrap:wrap; gap:5px; color:#9b8190; font:9px Tahoma,sans-serif; }
+    .pair-chat-tags { display:flex; flex-wrap:wrap; gap:4px; margin:5px 0; }
+    .pair-chat-tags span { padding:2px 6px; border:1px dotted #cdb8c4; color:#8d7182; font-size:8px; }
+    .pair-chat-actions { display:flex; flex-wrap:wrap; gap:5px; margin-top:7px; }
+    .pair-chat-actions button { min-height:22px; padding:2px 7px; border:1px solid #cbb7c1; background:#fff; color:#76596d; font-size:8px; }
+    @media(max-width:600px){.pair-log-meta-grid{grid-template-columns:1fr}.pair-log-editor{min-height:300px}.pair-log-toolbar{gap:3px}.pair-log-toolbar button{font-size:9px;padding:3px 6px}}
+
     .pair-site { max-width:900px; margin:0 auto; }
     .pair-home-header { margin-bottom:10px; }
     .pair-toolbar { display:flex; align-items:center; gap:8px; margin:9px 0 12px; }
@@ -1511,9 +1557,13 @@
               </select>
             </div>
             <div class="backup-home-toolbar-bottom">
-              <div class="backup-filter-shortcuts">
-                <button class="small active" type="button" data-backup-filter="all">ALL</button>
-                <button class="small" type="button" data-backup-filter="wardrobe">WARDROBE</button>
+              <div class="backup-board-control">
+                <div class="backup-filter-shortcuts" id="backupBoardTabs">
+                  <button class="small active" type="button" data-backup-filter="all">ALL</button>
+                  <button class="small" type="button" data-backup-filter="general">GENERAL</button>
+                  <button class="small" type="button" data-backup-filter="wardrobe">WARDROBE</button>
+                </div>
+                <button class="small" id="backupAddBoard" type="button">＋ BOARD</button>
                 <span class="backup-hint" id="backupGalleryCount">0 items</span>
               </div>
               <button class="primary" id="backupNewEntry" type="button">＋ NEW POST</button>
@@ -1585,7 +1635,11 @@
             </div>
 
             <section id="backupComposeCard" class="backup-compose-card">
-              <div class="backup-compose-top">
+              <div class="backup-compose-top backup-compose-board-row">
+                <div>
+                  <label class="field-label" for="backupBoardSelect">BOARD</label>
+                  <select id="backupBoardSelect" class="backup-full"></select>
+                </div>
                 <div>
                   <label class="field-label" for="backupTemplate">PAGE DESIGN</label>
                   <select id="backupTemplate" class="backup-full">
@@ -1830,12 +1884,30 @@
           </section>
 
           <section id="pairLogComposeView" class="pair-view hidden">
-            <div class="backup-compose-toolbar pair-sub-toolbar"><button class="small" id="pairLogCancel" type="button">◂ BACK</button><strong id="pairLogComposeHeading">NEW CHAT LOG</strong><span></span></div>
-            <div class="backup-compose-card pair-form-card">
-              <label class="field-label" for="pairLogTitleInput">TITLE</label>
-              <input class="backup-full" id="pairLogTitleInput" type="text" maxlength="100" placeholder="로그 제목 또는 날짜">
-              <label class="field-label" for="pairLogContentInput">CHAT LOG</label>
-              <textarea class="pair-chat-editor" id="pairLogContentInput" rows="14" placeholder="A: ...&#10;B: ..."></textarea>
+            <div class="backup-compose-toolbar pair-sub-toolbar"><button class="small" id="pairLogCancel" type="button">◂ BACK</button><strong id="pairLogComposeHeading">NEW RP LOG</strong><span></span></div>
+            <div class="backup-compose-card pair-form-card pair-log-form-card">
+              <div class="pair-log-meta-grid">
+                <label class="field-label" for="pairLogTitleInput">TITLE<input class="backup-full" id="pairLogTitleInput" type="text" maxlength="300" placeholder="RP 제목"></label>
+                <label class="field-label" for="pairLogSubtitleInput">SUBTITLE<input class="backup-full" id="pairLogSubtitleInput" type="text" maxlength="300" placeholder="부제 · 선택"></label>
+                <label class="field-label" for="pairLogDateInput">DATE<input class="backup-full" id="pairLogDateInput" type="date"></label>
+                <label class="field-label" for="pairLogPlatformInput">PLATFORM<input class="backup-full" id="pairLogPlatformInput" type="text" maxlength="120" placeholder="플랫폼"></label>
+                <label class="field-label" for="pairLogCategoryInput">CATEGORY<input class="backup-full" id="pairLogCategoryInput" type="text" maxlength="80" placeholder="분류 · 선택"></label>
+                <label class="field-label" for="pairLogTagsInput">TAGS<input class="backup-full" id="pairLogTagsInput" type="text" placeholder="태그 · 쉼표로 구분"></label>
+              </div>
+              <div class="pair-log-toolbar" id="pairLogToolbar">
+                <button type="button" data-pair-log-command="bold"><b>B</b></button>
+                <button type="button" data-pair-log-command="italic"><i>I</i></button>
+                <button type="button" data-pair-log-command="underline"><u>U</u></button>
+                <button type="button" data-pair-log-command="formatBlock" data-pair-log-value="blockquote">인용</button>
+                <button type="button" data-pair-log-command="insertUnorderedList">목록</button>
+                <button type="button" id="pairLogInsertImage">＋ 이미지</button>
+                <button type="button" id="pairLogInsertChat">＋ A/B 대화</button>
+                <button type="button" id="pairLogAddA">＋ A 대사</button>
+                <button type="button" id="pairLogAddB">＋ B 대사</button>
+                <input id="pairLogImageInput" type="file" accept="image/*" hidden>
+              </div>
+              <div class="pair-log-editor" id="pairLogRichEditor" contenteditable="true" spellcheck="false" data-placeholder="RP 원문을 작성하거나 붙여 넣어 주세요. 긴 글, 이미지, A/B 대화 레이아웃을 함께 보관할 수 있어."></div>
+              <div class="pair-log-editor-note">서식과 이미지, 캐릭터별 말풍선이 포함된 본문으로 저장됩니다.</div>
               <div class="backup-form-actions"><button class="primary" id="pairLogSaveButton" type="button">SAVE LOG</button></div>
             </div>
           </section>
@@ -1866,6 +1938,12 @@
                   <option value="nai">1.2::tag:: 형식</option>
                 </select>
               </div>
+            </div>
+            <div class="weight-group-mode" aria-label="묶음 가중치 변환 방식">
+              <span>묶음 처리</span>
+              <button class="small active" id="weightConvertGrouped" type="button">묶음 유지</button>
+              <button class="small" id="weightConvertSeparate" type="button">태그별 분리</button>
+              <span class="weight-group-help">예: 2::A,B:: → (A:2), (B:2)</span>
             </div>
             <div id="promptItemsList" class="prompt-items-list" aria-live="polite">
               <div class="prompt-items-empty">프롬프트를 불러오면 편집 항목이 여기에 표시됩니다.</div>
@@ -1994,7 +2072,7 @@
 
   <script>
 (() => {
-  // P. Toolbox v37: page-style photo viewers, pair photo crop, and root-level PWA icons.
+  // P. Toolbox v38: rich pair logs, custom backup boards, coherent theme pools, and grouped/separate weight conversion.
   const ROOMS_KEY = 'promptToolbox.rooms.v28';
   const RESET_KEY = 'promptToolbox.v28.roomResetDone';
   const REMEMBERED_ROOM_KEY = 'promptToolbox.v30.rememberedRoom';
@@ -2760,7 +2838,67 @@ function startPromptToolbox() {
           'fairytale castle courtyard', 'superhero city rooftop', 'modern school hallway',
           'school rooftop at sunset', 'concert backstage corridor', 'concert stage',
           'hospital emergency department', 'quiet hospital ward', 'sleeper train compartment',
-          'vintage train dining car'
+          'vintage train dining car',
+      "sunlit glass conservatory",
+      "flower-filled greenhouse aisle",
+      "quiet library reading room",
+      "grand hotel corridor",
+      "marble museum hall",
+      "old-fashioned train station waiting room",
+      "rooftop swimming pool at twilight",
+      "rainy covered arcade",
+      "neighborhood laundromat",
+      "vintage record store",
+      "nighttime convenience store",
+      "narrow apartment stairwell",
+      "apartment rooftop laundry area",
+      "modern art gallery",
+      "botanical garden walkway",
+      "ornate tea house interior",
+      "lantern-lit riverside promenade",
+      "moonlit stone bridge",
+      "covered wooden veranda",
+      "mountain hot spring terrace",
+      "snowy forest cabin",
+      "autumn park footpath",
+      "windy flower conservatory",
+      "secluded greenhouse at night",
+      "seaside boardwalk",
+      "ferry cabin with large windows",
+      "quiet aquarium tunnel",
+      "suburban bus stop at dusk",
+      "underground shopping arcade",
+      "bright hospital waiting room",
+      "hospital rooftop garden",
+      "university lecture hall",
+      "school music room",
+      "school art classroom",
+      "concert dressing room",
+      "backstage dressing mirror",
+      "recording studio booth",
+      "small independent cinema",
+      "empty dance studio",
+      "photography studio",
+      "antique shop interior",
+      "flower shop counter",
+      "bakery before opening",
+      "late-night diner booth",
+      "rooftop bar terrace",
+      "old harbor warehouse",
+      "floodlit sports court",
+      "indoor swimming pool gallery",
+      "astronomy observatory dome",
+      "planetarium interior",
+      "orbital station observation deck",
+      "spaceship corridor window",
+      "underwater glass tunnel",
+      "submarine observation room",
+      "abandoned botanical dome",
+      "deserted amusement park",
+      "ferris wheel at night",
+      "old cinema ticket hall",
+      "bookshop window seat",
+      "apartment balcony garden"
         ]
       },
       mood: {
@@ -2809,6 +2947,9 @@ function startPromptToolbox() {
 
 
     categoryData.expression.values.push('focused expression', 'fierce expression');
+    categoryData.interaction.values.push(["one adjusting the other’s scarf", "one fastening the other’s coat", "one brushing rain from the other’s shoulder", "one sharing an earbud with the other", "one showing the other something on a phone", "one taking a candid photo of the other", "one holding the other’s hand behind their back", "one wrapping a blanket around the other", "one offering the other a warm drink", "one wiping a smudge from the other’s cheek", "one fixing the other’s tie", "one straightening the other’s sleeve", "one leaning against the other while waiting", "one falling asleep against the other", "one waking the other gently", "one pulling a chair out for the other", "one helping the other put on a coat", "one shielding the other from rain", "one holding the door open for the other", "one guiding the other through a crowd", "one catching the other’s falling belongings", "one passing a note to the other", "one pointing something out to the other", "one sharing a book between them", "one holding the other’s wrist to check a watch", "one resting a hand over the other’s hand", "one placing a scarf around the other’s neck", "one leaning over to read the other’s book", "one playfully stealing the other’s hat", "one reaching up to remove something from the other’s hair", "one standing on tiptoe to reach the other", "one sitting close with their shoulders touching", "both looking at the same photograph", "both holding opposite ends of the same umbrella", "one guiding the other through a doorway", "one offering their hand to help the other stand", "one turning the other toward the camera", "one hiding behind the other while peeking out", "one leaning over the other’s shoulder to look at a screen", "one holding the other’s hand while crossing the street", "one sharing a blanket on a bench", "one offering their seat to the other"]);
+    categoryData.roleA.values.push(["A gently tucks B’s hair behind their ear", "A places a warm cup into B’s hands", "A holds an umbrella above B", "A checks B’s sleeve for rain", "A offers B their coat", "A steadies B by the elbow", "A points out a distant landmark to B", "A shares one side of their headphones with B", "A takes B’s hand while stepping down", "A brushes dust from B’s shoulder", "A ties B’s scarf loosely", "A rests their chin on B’s shoulder", "A nudges B playfully with an elbow", "A waits beside B at a station platform", "A holds the elevator door for B", "A turns a page for B", "A fixes B’s collar before a photograph", "A offers B the last piece of food", "A catches B’s sleeve before they walk away", "A gives B a reassuring nod", "A covers B’s hand with their own", "A carries the heavier bag for B", "A leans closer to hear B speak"]);
+    categoryData.roleB.values.push(["B accepts A’s offered coat", "B leans closer under A’s umbrella", "B looks up at A while holding the cup", "B reaches for A’s hand", "B turns toward A with a small smile", "B rests their head against A’s shoulder", "B points toward something outside the frame", "B shares an earbud with A", "B steadies themself with A’s arm", "B brushes a loose strand from A’s face", "B adjusts A’s scarf in return", "B looks down at the note A handed over", "B waits beside A with their hands in their pockets", "B holds the door for A", "B turns the page while A reads", "B closes their eyes as A fixes their collar", "B offers A the last piece in return", "B catches A’s hand before they leave", "B nods back to reassure A", "B rests their hand over A’s", "B reaches for the lighter bag", "B leans in to hear A better", "B glances at A from the corner of their eye"]);
 
     // 기본 태그의 한국어 자연어 표기입니다. 영어 원문은 출력용으로 별도 보존합니다.
     categoryData.roleA = {
@@ -3186,6 +3327,8 @@ function startPromptToolbox() {
       'retro aesthetic, nostalgic vintage setting': ['old bookstore','old apartment corridor','quiet cafe interior','empty theater','abandoned train station'],
       'coastal town aesthetic, seaside architecture': ['seaside cliff','quiet beach','harbor at night','moonlit lake']
     };
+    Object.assign(themeBackgroundMap, {"contemporary city, everyday urban life": ["modern apartment interior", "quiet cafe interior", "neighborhood laundromat", "nighttime convenience store", "late-night diner booth", "bookshop window seat", "apartment balcony garden", "suburban bus stop at dusk"], "modern police procedural, city streets and interiors": ["office building lobby", "subway platform", "rain-soaked city street", "nighttime convenience store", "grand hotel corridor", "underground shopping arcade", "modern art gallery"], "historical Japan, samurai era town": ["traditional courtyard", "ornate tea house interior", "moonlit stone bridge", "covered wooden veranda", "ancient mountain temple", "lantern-lit riverside promenade"], "historical Europe, medieval town and castle": ["grand ballroom", "ornate palace interior", "marble museum hall", "old-fashioned train station waiting room", "ancient ruins", "old manor library", "ornate staircase"], "American Wild West, western town": ["dust-covered gas station", "old harbor warehouse", "deserted coastal town", "late-night diner booth"], "modern sports arena, fencing competition": ["floodlit sports court", "indoor swimming pool gallery", "sports arena", "university lecture hall"], "industrial facility, warehouse and factory": ["industrial factory", "old harbor warehouse", "ruined power plant", "grand hotel corridor"], "rural countryside, quiet village": ["snowy forest cabin", "autumn park footpath", "flower field", "foggy rural crossroads", "mountain hot spring terrace", "covered wooden veranda"], "urban nightlife, backstreets and clubs": ["rainy covered arcade", "late-night diner booth", "rooftop bar terrace", "nighttime convenience store", "small independent cinema", "vintage record store"]});
+
     const themePropsMap = {
       'Kowloon Walled City, densely packed buildings': ['folding umbrella','neon sign','portable radio','flashlight','smartphone','camera','newspaper','coffee cup','motorcycle helmet','protective gloves','radio earpiece','old map','satchel'],
       'Kowloon Walled City, labyrinthine alleyways, tangled cables': ['folding umbrella','neon sign','portable radio','flashlight','smartphone','camera','newspaper','coffee cup','motorcycle helmet','protective gloves','radio earpiece','old map','satchel'],
@@ -3423,6 +3566,8 @@ function startPromptToolbox() {
       'retro aesthetic, nostalgic vintage setting': ['falling leaves','light rain','lens flare','soft bokeh','floating dust particles','wind-blown hair','subtle motion blur'],
       'coastal town aesthetic, seaside architecture': ['thin drifting mist','rippling water reflections','drifting clouds','floating feathers','wind-blown fabric','light rain','lens flare','starry sky']
     };
+
+    Object.assign(ko, {"sunlit glass conservatory": "햇빛이 드는 유리 온실", "flower-filled greenhouse aisle": "꽃으로 가득한 온실 통로", "quiet library reading room": "조용한 도서관 열람실", "grand hotel corridor": "고풍스러운 호텔 복도", "marble museum hall": "대리석 박물관 홀", "old-fashioned train station waiting room": "옛 기차역 대합실", "rooftop swimming pool at twilight": "해 질 무렵의 옥상 수영장", "rainy covered arcade": "비 내리는 아케이드 상가", "neighborhood laundromat": "동네 셀프 세탁방", "vintage record store": "빈티지 레코드 가게", "nighttime convenience store": "밤의 편의점", "narrow apartment stairwell": "좁은 아파트 계단실", "apartment rooftop laundry area": "아파트 옥상 빨래터", "modern art gallery": "현대 미술관", "botanical garden walkway": "식물원 산책로", "ornate tea house interior": "장식이 화려한 다실 내부", "lantern-lit riverside promenade": "등불이 켜진 강변 산책로", "moonlit stone bridge": "달빛 아래 돌다리", "covered wooden veranda": "지붕이 있는 나무 툇마루", "mountain hot spring terrace": "산속 온천 테라스", "snowy forest cabin": "눈 덮인 숲속 오두막", "autumn park footpath": "가을 공원 오솔길", "windy flower conservatory": "바람 부는 꽃 온실", "secluded greenhouse at night": "밤의 외딴 온실", "seaside boardwalk": "해변 나무 산책로", "ferry cabin with large windows": "큰 창이 있는 페리 객실", "quiet aquarium tunnel": "조용한 수족관 터널", "suburban bus stop at dusk": "해 질 무렵 교외 버스 정류장", "underground shopping arcade": "지하 쇼핑 아케이드", "bright hospital waiting room": "밝은 병원 대기실", "hospital rooftop garden": "병원 옥상 정원", "university lecture hall": "대학교 강의실", "school music room": "학교 음악실", "school art classroom": "학교 미술실", "concert dressing room": "공연 분장실", "backstage dressing mirror": "무대 뒤 분장 거울", "recording studio booth": "녹음 스튜디오 부스", "small independent cinema": "작은 독립 영화관", "empty dance studio": "텅 빈 댄스 스튜디오", "photography studio": "사진 스튜디오", "antique shop interior": "골동품 가게 내부", "flower shop counter": "꽃집 카운터", "bakery before opening": "개점 전 빵집", "late-night diner booth": "심야 식당 부스", "rooftop bar terrace": "옥상 바 테라스", "old harbor warehouse": "오래된 항구 창고", "floodlit sports court": "조명이 켜진 스포츠 코트", "indoor swimming pool gallery": "실내 수영장 관람석", "astronomy observatory dome": "천문대 돔", "planetarium interior": "천문관 내부", "orbital station observation deck": "궤도 정거장 전망 데크", "spaceship corridor window": "우주선 복도 창문", "underwater glass tunnel": "해저 유리 터널", "submarine observation room": "잠수함 관측실", "abandoned botanical dome": "버려진 식물원 돔", "deserted amusement park": "폐장한 놀이공원", "ferris wheel at night": "밤의 관람차", "old cinema ticket hall": "옛 영화관 매표 홀", "bookshop window seat": "서점 창가 자리", "apartment balcony garden": "아파트 베란다 정원"});
 
     // Expanded AU packs: each added world receives matching locations, action beats,
     // props, and a non-generic weapon pool where appropriate.
@@ -4138,6 +4283,8 @@ function startPromptToolbox() {
     }
     removeExcludedBuiltInOptions();
 
+    categoryData.roleA.values.push("A gently tucks B’s hair behind their ear", "A places a warm cup into B’s hands", "A holds an umbrella above B", "A checks B’s sleeve for rain", "A offers B their coat", "A steadies B by the elbow", "A points out a distant landmark to B", "A shares one side of their headphones with B", "A takes B’s hand while stepping down", "A brushes dust from B’s shoulder", "A ties B’s scarf loosely", "A rests their chin on B’s shoulder", "A nudges B playfully with an elbow", "A waits beside B at a station platform", "A holds the elevator door for B", "A turns a page for B", "A fixes B’s collar before a photograph", "A offers B the last piece of food", "A catches B’s sleeve before they walk away", "A gives B a reassuring nod", "A covers B’s hand with their own", "A carries the heavier bag for B", "A leans closer to hear B speak");
+    categoryData.roleB.values.push("B accepts A’s offered coat", "B leans closer under A’s umbrella", "B looks up at A while holding the cup", "B reaches for A’s hand", "B turns toward A with a small smile", "B rests their head against A’s shoulder", "B points toward something outside the frame", "B shares an earbud with A", "B steadies themself with A’s arm", "B brushes a loose strand from A’s face", "B adjusts A’s scarf in return", "B looks down at the note A handed over", "B waits beside A with their hands in their pockets", "B holds the door for A", "B turns the page while A reads", "B closes their eyes as A fixes their collar", "B offers A the last piece in return", "B catches A’s hand before they leave", "B nods back to reassure A", "B rests their hand over A’s", "B reaches for the lighter bag", "B leans in to hear A better", "B glances at A from the corner of their eye");
     const categoryOrder = ['theme', 'au', 'camera', 'composition', 'pose', 'expression', 'interaction', 'roleA', 'roleB', 'action', 'weapons', 'props', 'background', 'mood', 'lighting', 'effects'];
     const categoryGrid = document.getElementById('categoryGrid');
     const status = document.getElementById('status');
@@ -4185,6 +4332,97 @@ function startPromptToolbox() {
       })[char]);
     }
 
+    const auThemeCompatibilityMap = {
+      'post-apocalyptic world, abandoned civilization':['modern urban setting, contemporary architecture','retro aesthetic, nostalgic vintage setting'],
+      'zombie apocalypse, abandoned city after outbreak':['modern urban setting, contemporary architecture','post-apocalyptic world, abandoned civilization'],
+      'zombie apocalypse, fortified survivor safehouse':['modern urban setting, contemporary architecture','post-apocalyptic world, abandoned civilization'],
+      'zombie apocalypse, quarantined city district':['modern urban setting, contemporary architecture','post-apocalyptic world, abandoned civilization'],
+      'overgrown post-apocalyptic city':['post-apocalyptic world, abandoned civilization','rural countryside, quiet village'],
+      'frozen post-apocalyptic world, snowbound village':['post-apocalyptic world, abandoned civilization','rural countryside, quiet village'],
+      'flooded post-apocalyptic world, submerged city':['post-apocalyptic world, abandoned civilization','modern urban setting, contemporary architecture'],
+      'desert wasteland, nomad caravan':['post-apocalyptic world, abandoned civilization','rural countryside, quiet village'],
+      'monster outbreak, evacuated modern city':['modern urban setting, contemporary architecture','post-apocalyptic world, abandoned civilization'],
+      'alien encounter, luminous metropolis':['modern fantasy, contemporary city with supernatural elements','cyberpunk aesthetic, futuristic megacity'],
+      'dystopian surveillance state, controlled megacity':['cyberpunk aesthetic, futuristic megacity','modern urban setting, contemporary architecture'],
+      'space opera, interstellar station':['high fantasy world, ancient magic civilization','cyberpunk aesthetic, futuristic megacity'],
+      'space habitat, isolated orbital outpost':['cyberpunk aesthetic, futuristic megacity','modern urban setting, contemporary architecture'],
+      'deep-sea research station, underwater habitat':['modern urban setting, contemporary architecture'],
+      'modern occult investigation, hidden supernatural society':['modern fantasy, contemporary city with supernatural elements','gothic aesthetic, ornate dark architecture'],
+      'haunted rural village, folklore mystery':['rural countryside, quiet village','gothic aesthetic, ornate dark architecture'],
+      '1920s film noir, prohibition-era city':['retro aesthetic, nostalgic vintage setting','Victorian aesthetic, historical European city'],
+      'ancient Egypt, royal city of the Nile':['traditional Chinese aesthetic, elegant wooden architecture','high fantasy world, ancient magic civilization'],
+      'ancient Rome, classical city':['historical Europe, medieval town and castle','high fantasy world, ancient magic civilization'],
+      'Norse mythic age, northern village':['rural countryside, quiet village','high fantasy world, ancient magic civilization'],
+      'dark fairytale kingdom, enchanted forest':['high fantasy world, ancient magic civilization','gothic aesthetic, ornate dark architecture'],
+      'superhero universe, modern metropolitan city':['modern urban setting, contemporary architecture','modern fantasy, contemporary city with supernatural elements'],
+      'modern school AU, urban campus life':['modern urban setting, contemporary architecture','contemporary city, everyday urban life'],
+      'idol industry AU, backstage and concert venue':['contemporary city, everyday urban life','modern urban setting, contemporary architecture'],
+      'medical thriller, contemporary hospital':['modern urban setting, contemporary architecture','contemporary city, everyday urban life'],
+      'train journey AU, intercity sleeper train':['retro aesthetic, nostalgic vintage setting','contemporary city, everyday urban life']
+    };
+
+    function inferThemePool(id, theme) {
+      const key=String(theme||'').toLowerCase();
+      const values=categoryData[id]?.values||[];
+      const has=(...terms)=>terms.some(term=>key.includes(term));
+      const pick=(terms)=>values.filter(value=>terms.some(term=>value.toLowerCase().includes(term)));
+      if(id==='background'){
+        if(has('kowloon','hong kong','urban','cyberpunk','police','nightlife','modern city','contemporary city')) return pick(['alley','city','street','market','apartment','subway','rooftop','harbor','office','glass','cafe','arcade','laundromat','diner','convenience','warehouse','station','cinema','record','balcony','sports court']);
+        if(has('space','orbital','alien','deep-sea','underwater','dystopian')) return pick(['orbital','spaceship','underwater','submarine','deep-sea','data center','alien-lit','futuristic','submerged','subway','laboratory']);
+        if(has('post-apocalyptic','zombie','outbreak','overgrown post-apocalyptic','frozen post-apocalyptic','flooded post-apocalyptic','desert wasteland','monster outbreak')) return pick(['overgrown','abandoned','ruined','industrial','forest','cabin','subway','station','warehouse','power plant','snow','desert','flooded','rooftop','convenience']);
+        if(has('traditional','chinese','japan','wuxia','xianxia','ancient egypt','ancient rome','norse','medieval')) return pick(['traditional','garden','bamboo','mountain','temple','palace','courtyard','ancient','nile','roman','norse','fjord','tea house','lantern','stone bridge','veranda','hot spring']);
+        if(has('fantasy','gothic','victorian','historical europe','fairytale','academia','film noir')) return pick(['ballroom','rose garden','palace','library','cathedral','greenhouse','museum','staircase','theater','chapel','castle','jazz club','art deco','antique','bookstore','cinema']);
+        if(has('coastal','harbor','seaside')) return pick(['harbor','seaside','beach','cliff','lake','ferry','riverside','boardwalk','waterfront','aquarium']);
+        if(has('rural','village','countryside','haunted')) return pick(['forest','village','cabin','crossroads','chapel','mountain','snow','garden','flower','veranda','hot spring']);
+        if(has('school')) return pick(['school','university','cafe','park','apartment']);
+        if(has('idol','concert')) return pick(['concert','studio','dressing','stage','cinema','city','apartment']);
+        if(has('medical','hospital')) return pick(['hospital','clinic','laboratory','rooftop garden']);
+        if(has('train journey')) return pick(['train','station','diner','bookshop','harbor']);
+      }
+      if(id==='action'){
+        if(has('post-apocalyptic','zombie','outbreak','dystopian','haunted')) return ['dynamic evasive movement','dramatic defensive stance','rapid change of direction','leaping over scattered debris','dramatic landing pose','evasive movement through falling rain','dust cloud from a sudden impact','running through a collapsing corridor','dodging falling debris','dramatic chase through the streets'];
+        if(has('urban','hong kong','kowloon','cyberpunk','police','nightlife','school','idol','medical','train')) return ['dynamic evasive movement','rapid change of direction','neon-lit parkour movement','dramatic chase through the streets','evasive movement through falling rain','dramatic leap between rooftops','running through a crowded corridor'];
+        if(has('traditional','chinese','japan','wuxia','ancient','norse','medieval')) return ['stylized martial arts choreography','dramatic defensive stance','midair leap','rapid change of direction','spinning movement with motion blur','duel choreography','defensive formation'];
+        if(has('fantasy','xianxia','high fantasy','fairytale','occult')) return ['protective barrier spell','arcane spellcasting gesture','magical energy clash','glowing sigils swirling through the air','mystical energy burst','summoning a spectral shield','midair leap'];
+        if(has('space','orbital','alien','deep-sea','underwater')) return ['mechanical exosuit movement','holographic decoy effect','rapid change of direction','dynamic evasive movement','dramatic defensive stance','clockwork device activation'];
+      }
+      if(id==='props'){
+        if(has('kowloon','hong kong','urban','cyberpunk','modern','police','nightlife','school','idol','medical','train')) return pick(['smartphone','camera','headphones','coffee','newspaper','radio','flashlight','umbrella','satchel','notebook','microphone','monitor','medical','suitcase','watch','key','pen']);
+        if(has('space','orbital','alien','deep-sea','underwater','dystopian')) return pick(['radio','goggle','flashlight','glove','utility','crystal','device','scanner','mask','oxygen','tool','compass']);
+        if(has('post-apocalyptic','zombie','outbreak','overgrown post-apocalyptic','frozen post-apocalyptic','flooded post-apocalyptic','desert wasteland','monster outbreak')) return pick(['flashlight','radio','mask','first-aid','water flask','map','rope','utility','glove','goggle','compass','backpack']);
+        if(has('traditional','chinese','japan','wuxia','xianxia','ancient','norse','medieval')) return pick(['fan','jade','silk','porcelain','hairpin','scroll','incense','lantern','bead','comb','pouch','cloak','map','pendant','horn']);
+        if(has('fantasy','gothic','victorian','fairytale','academia')) return pick(['book','key','pocket watch','parasol','pen','spectacles','lantern','pendant','crystal','perfume','flower','journal','goggles']);
+        if(has('coastal','harbor','seaside','rural','village')) return pick(['camera','map','water flask','compass','satchel','flower','lantern','umbrella','journal','rope']);
+      }
+      if(id==='mood'){
+        if(has('post-apocalyptic','zombie','outbreak','dystopian','haunted','gothic','occult')) return pick(['tense','ominous','eerie','lonely','melancholic','mysterious','cold','solemn']);
+        if(has('romantic','school','idol','coastal','garden','seaside')) return pick(['romantic','nostalgic','serene','peaceful','dreamlike','warm','intimate','festive']);
+        if(has('space','alien','xianxia','high fantasy','fairytale')) return pick(['ethereal','otherworldly','dreamlike','surreal','sacred','mysterious','solemn']);
+        if(has('retro','victorian','academia','film noir')) return pick(['nostalgic','melancholic','decadent','elegant','mysterious','intimate','solemn']);
+      }
+      if(id==='lighting'){
+        if(has('urban','hong kong','kowloon','cyberpunk','nightlife','film noir')) return pick(['neon','streetlight','blue hour','low-key','high contrast','reflected','rim','cinematic','spotlight']);
+        if(has('post-apocalyptic','zombie','outbreak','dystopian','haunted')) return pick(['low-key','moonlight','overcast','candlelight','flashlight','backlighting','silhouette','flickering','blue hour']);
+        if(has('traditional','chinese','japan','wuxia','ancient','norse','rural','village')) return pick(['moonlight','dappled','soft diffused','window','golden hour','candlelight','sunset','soft backlighting']);
+        if(has('space','alien','xianxia','high fantasy','fairytale')) return pick(['volumetric','god rays','moonlight','soft bloom','glowing','silhouette','dramatic','rim']);
+        if(has('gothic','victorian','academia','haunted','occult')) return pick(['candlelight','chiaroscuro','low-key','silhouette','moonlight','spotlight','window','soft diffused']);
+        if(has('coastal','harbor','seaside','water','deep-sea')) return pick(['reflected','sunset','blue hour','moonlight','overcast','soft backlighting','caustic','god rays']);
+        if(has('school','medical','modern','contemporary','train','idol')) return pick(['window','overcast','streetlight','blue hour','golden hour','soft diffused','spotlight','high-key']);
+      }
+      if(id==='effects'){
+        if(has('urban','hong kong','kowloon','cyberpunk','nightlife','rain')) return pick(['rain','wet','water droplets','bokeh','lens flare','motion blur','smoke','dust','glowing']);
+        if(has('post-apocalyptic','zombie','outbreak','dystopian','haunted')) return pick(['dust','mist','smoke','embers','rain','debris','falling ash','cracked glass','wind','flickering']);
+        if(has('traditional','chinese','japan','wuxia','rural','village','garden','seaside','coastal')) return pick(['petals','leaves','mist','wind','dust','reflections','clouds','feathers','rain']);
+        if(has('space','alien','xianxia','high fantasy','fairytale','occult')) return pick(['glowing','runes','mist','clouds','feathers','starry','sparkling','shimmering','lens flare']);
+        if(has('gothic','victorian','academia','haunted','film noir')) return pick(['dust','mist','smoke','feathers','bokeh','rain','falling leaves','lens flare']);
+      }
+      return values;
+    }
+
+    function compatibleThemesForAU(au) {
+      return auThemeCompatibilityMap[au] || categoryData.theme.values;
+    }
+
     function getSelectedTheme() {
       const auSelect = categoryGrid.querySelector('[data-category="au"] .category-select');
       if (auSelect && auSelect.value !== '') {
@@ -4209,40 +4447,46 @@ function startPromptToolbox() {
       const theme = getSelectedTheme();
       let base = categoryData[id].values;
 
-      if (id === 'background') {
-        if (theme && themeBackgroundMap[theme]) base = base.filter(item => themeBackgroundMap[theme].includes(item));
+      if (id === 'theme') {
+        const auSelect = categoryGrid.querySelector('[data-category="au"] .category-select');
+        const auValues = [...categoryData.au.values, ...(Array.isArray(customTags.au) ? customTags.au : [])];
+        const selectedAU = auSelect && auSelect.value !== '' ? auValues[Number(auSelect.value)] : null;
+        if (selectedAU && auThemeCompatibilityMap[selectedAU]) base = base.filter(item => compatibleThemesForAU(selectedAU).includes(item));
+      } else if (id === 'background') {
+        if (theme) base = themeBackgroundMap[theme] ? base.filter(item => themeBackgroundMap[theme].includes(item)) : inferThemePool(id, theme);
       } else if (id === 'props') {
         if (theme && themePropsMap[theme]) {
-          base = sceneMode.value === 'action' ? themeActionPropsMap[theme] : themePropsMap[theme];
+          base = sceneMode.value === 'action' ? (themeActionPropsMap[theme] || themePropsMap[theme]) : themePropsMap[theme];
+        } else if (theme) {
+          base = inferThemePool(id, theme);
         } else {
           base = sceneMode.value === 'action'
             ? ['flashlight','portable radio','protective gloves','portable first-aid kit','protective goggles','water flask']
             : ['old book','flower bouquet','coffee cup','folding umbrella','camera','satchel','water flask'];
         }
       } else if (id === 'weapons') {
-        base = sceneMode.value === 'action' && theme && themeWeaponMap[theme]
-          ? themeWeaponMap[theme]
-          : (sceneMode.value === 'action' ? categoryData.weapons.values : []);
+        base = sceneMode.value !== 'action' ? [] : (theme ? (themeWeaponMap[theme] || []) : categoryData.weapons.values);
       } else if (id === 'action') {
-        if (theme && themeActionMap[theme]) base = themeActionMap[theme];
+        if (theme) base = themeActionMap[theme] || inferThemePool(id, theme);
       } else if (id === 'pose' && sceneMode.value === 'action') {
         base = combatPoseValues;
       } else if (id === 'expression' && sceneMode.value === 'action') {
         base = combatExpressionValues;
       } else if (id === 'mood' && sceneMode.value === 'action') {
-        const themedMoods = theme && themeMoodMap[theme] ? themeMoodMap[theme] : categoryData.mood.values;
+        const themedMoods = themeMoodMap[theme] || (theme ? inferThemePool('mood', theme) : categoryData.mood.values);
         const actionMoods = themedMoods.filter(item => combatMoodValues.includes(item));
         base = actionMoods.length ? actionMoods : ['tense atmosphere','dramatic atmosphere','ominous atmosphere'];
-      } else if (id === 'mood' && theme && themeMoodMap[theme]) {
-        base = themeMoodMap[theme];
-      } else if (id === 'lighting' && theme && themeLightingMap[theme]) {
-        base = themeLightingMap[theme];
-      } else if (id === 'effects' && theme && themeEffectsMap[theme]) {
-        base = themeEffectsMap[theme];
+      } else if (id === 'mood' && theme) {
+        base = themeMoodMap[theme] || inferThemePool(id, theme);
+      } else if (id === 'lighting' && theme) {
+        base = themeLightingMap[theme] || inferThemePool(id, theme);
+      } else if (id === 'effects' && theme) {
+        base = themeEffectsMap[theme] || inferThemePool(id, theme);
       } else if ((id === 'interaction' || id === 'roleA' || id === 'roleB') && sceneMode.value === 'action') {
         base = getCombatValuesForTheme(id, theme) || base;
       }
 
+      if (theme && ['background','props','mood','lighting','effects'].includes(id) && (!Array.isArray(base) || !base.length)) base = categoryData[id].values;
       return [...base, ...extra];
     }
 
@@ -4765,6 +5009,7 @@ function startPromptToolbox() {
     const promptEditorSummary = document.getElementById('promptEditorSummary');
     const promptWeightFormat = document.getElementById('promptWeightFormat');
     let promptEditorItems = [];
+    let promptGroupMode = 'grouped';
 
     function splitPromptSegments(value) {
       // NAI 가중치 그룹 내부의 쉼표와 줄바꿈은 한 항목으로 보존하고,
@@ -4817,14 +5062,60 @@ function startPromptToolbox() {
         : `(${text}:${normalizedWeight})`;
     }
 
+    function formatPromptItemSeparate(item) {
+      const source = String(item.text || '');
+      if (!source.trim()) return '';
+      const weightText = String(item.weight || '').trim();
+      const numericWeight = Number(weightText);
+      if (!weightText || !Number.isFinite(numericWeight)) return source.trim();
+
+      const tags = [];
+      const separators = [];
+      let current = '';
+      for (let i = 0; i < source.length; i += 1) {
+        const char = source[i];
+        if (char === ',' || char === '\n' || char === '\r') {
+          if (current.trim()) tags.push(current.trim());
+          current = '';
+          let separator = char;
+          if (char === ',') {
+            while (i + 1 < source.length && (source[i + 1] === ' ' || source[i + 1] === '\t')) separator += source[++i];
+            while (i + 1 < source.length && (source[i + 1] === '\n' || source[i + 1] === '\r')) separator += source[++i];
+          } else {
+            if (char === '\r' && source[i + 1] === '\n') separator += source[++i];
+            while (i + 1 < source.length && (source[i + 1] === '\n' || source[i + 1] === '\r')) separator += source[++i];
+            while (i + 1 < source.length && (source[i + 1] === ' ' || source[i + 1] === '\t')) separator += source[++i];
+          }
+          if (separator === ',') separator = ', ';
+          separators.push(separator);
+        } else {
+          current += char;
+        }
+      }
+      if (current.trim()) tags.push(current.trim());
+      if (tags.length <= 1) return `(${tags[0] || source.trim()}:${String(numericWeight)})`;
+      let output = '';
+      tags.forEach((tag, index) => {
+        output += `(${tag}:${String(numericWeight)})`;
+        if (index < tags.length - 1) output += separators[index] || ', ';
+      });
+      return output;
+    }
+
+    function renderWeightGroupMode() {
+      document.getElementById('weightConvertGrouped').classList.toggle('active',promptGroupMode==='grouped');
+      document.getElementById('weightConvertSeparate').classList.toggle('active',promptGroupMode==='separate');
+    }
+
     function updatePromptEditorOutput() {
       const included = promptEditorItems.filter(item => item.enabled && String(item.text || '').trim());
       const rendered = included.map((item, index) => {
-        const current = formatPromptItem(item);
+        const current = promptGroupMode === 'separate' && item.sourceFormat === 'nai' ? formatPromptItemSeparate(item) : formatPromptItem(item);
         if (index === included.length - 1) return current;
         return current + (item.separatorAfter || ', ');
       }).join('').trim();
       weightOutput.value = rendered;
+      renderWeightGroupMode();
       const disabledCount = promptEditorItems.filter(item => !item.enabled).length;
       promptEditorSummary.textContent = `${included.length}개 포함 · ${disabledCount}개 제외 · 전체 ${promptEditorItems.length}개`;
     }
@@ -4929,10 +5220,13 @@ function startPromptToolbox() {
       setStatus('모든 항목을 결과에서 제외했습니다.');
     });
     promptWeightFormat.addEventListener('change', updatePromptEditorOutput);
+    document.getElementById('weightConvertGrouped').addEventListener('click',()=>{promptGroupMode='grouped';updatePromptEditorOutput();setStatus('쉼표로 묶인 가중치 그룹을 하나로 변환합니다.');});
+    document.getElementById('weightConvertSeparate').addEventListener('click',()=>{promptGroupMode='separate';promptWeightFormat.value='paren';updatePromptEditorOutput();setStatus('가중치 그룹 안의 태그를 개별 가중치로 나눴습니다.');});
     document.getElementById('clearConverter').addEventListener('click', () => {
       weightInput.value = '';
       weightOutput.value = '';
       promptEditorItems = [];
+      promptGroupMode = 'grouped';
       renderPromptEditorItems();
       weightInput.focus();
       setStatus('편집기를 초기화했습니다.');
@@ -5728,6 +6022,72 @@ function startPromptToolbox() {
       });
     }
 
+    const DEFAULT_BACKUP_BOARDS = [
+      { id: 'general', name: 'GENERAL' },
+      { id: 'wardrobe', name: 'WARDROBE' }
+    ];
+    let activeBackupBoardFilter = 'all';
+
+    function getCustomBackupBoards() {
+      const saved = loadStorage('promptToolbox.customBackupBoards', []);
+      return Array.isArray(saved) ? saved.filter(item => item && typeof item.id === 'string' && typeof item.name === 'string' && item.id.startsWith('custom-')) : [];
+    }
+
+    function getAllBackupBoards() { return [...DEFAULT_BACKUP_BOARDS, ...getCustomBackupBoards()]; }
+
+    function getEntryBoard(entry) {
+      if (entry?.board && getAllBackupBoards().some(board => board.id === entry.board)) return entry.board;
+      return entry?.template === 'wardrobe' ? 'wardrobe' : 'general';
+    }
+
+    function renderBackupBoardTabs() {
+      const tabs = document.getElementById('backupBoardTabs');
+      if (!tabs) return;
+      tabs.replaceChildren();
+      const all = [{id:'all',name:'ALL'}, ...getAllBackupBoards()];
+      all.forEach(board => {
+        const button = document.createElement('button');
+        button.type = 'button'; button.className = 'small' + (activeBackupBoardFilter === board.id ? ' active' : '');
+        button.dataset.backupFilter = board.id; button.textContent = board.name;
+        button.addEventListener('click', () => {
+          activeBackupBoardFilter = board.id;
+          renderBackupBoardTabs(); renderBackupEntries();
+          syncBackupDesignMode('gallery');
+        });
+        tabs.appendChild(button);
+      });
+    }
+
+    function renderBackupBoardSelect(selected = '') {
+      const select = document.getElementById('backupBoardSelect');
+      const current = selected || select.value || 'general';
+      select.replaceChildren();
+      getAllBackupBoards().forEach(board => {
+        const option = document.createElement('option'); option.value = board.id; option.textContent = board.name;
+        select.appendChild(option);
+      });
+      select.value = getAllBackupBoards().some(board => board.id === current) ? current : 'general';
+    }
+
+    function addCustomBackupBoard() {
+      const raw = window.prompt('새 게시판 이름을 입력해주세요.');
+      if (raw === null) return;
+      const name = raw.trim().slice(0, 24);
+      if (!name) return;
+      const existing = getAllBackupBoards().find(board => board.name.toLocaleLowerCase() === name.toLocaleLowerCase());
+      if (existing) {
+        activeBackupBoardFilter = existing.id; renderBackupBoardTabs(); renderBackupEntries(); renderBackupBoardSelect(existing.id);
+        setStatus('이미 있는 게시판을 선택했습니다.'); return;
+      }
+      const boards = getCustomBackupBoards();
+      const id = `custom-${Date.now()}-${Math.random().toString(36).slice(2,7)}`;
+      boards.push({id, name});
+      saveStorage('promptToolbox.customBackupBoards', boards);
+      activeBackupBoardFilter = id;
+      renderBackupBoardTabs(); renderBackupBoardSelect(id); renderBackupEntries();
+      setStatus(`${name} 게시판을 추가했습니다.`);
+    }
+
     function getBackupCategories() {
       const saved = loadStorage('promptToolbox.backupCategories', DEFAULT_BACKUP_CATEGORIES);
       const categories = Array.isArray(saved) ? saved.filter(item => typeof item === 'string' && item.trim()) : [];
@@ -5736,6 +6096,7 @@ function startPromptToolbox() {
 
     function renderBackupCategoryOptions(selected = '') {
       const categories = getBackupCategories();
+      renderBackupBoardSelect();
       const editorSelect = document.getElementById('backupCategory');
       const filterSelect = document.getElementById('backupCategoryFilter');
       const previousEditor = selected || editorSelect.value;
@@ -5872,7 +6233,9 @@ function applyBackupTemplate(template) {
       backupDraftBlocks = [makeBackupBlock('Prompt 1')];
       backupDraftImages = [];
       backupCropQueue = [];
-      document.getElementById('backupTemplate').value = 'general';
+      const newPostBoard = activeBackupBoardFilter && activeBackupBoardFilter !== 'all' ? activeBackupBoardFilter : 'general';
+      document.getElementById('backupTemplate').value = newPostBoard === 'wardrobe' ? 'wardrobe' : 'general';
+      renderBackupBoardSelect(newPostBoard);
       document.getElementById('backupCategory').value = '일반 프롬프트';
       document.getElementById('backupTitle').value = '';
       document.getElementById('backupDescription').value = '';
@@ -5880,7 +6243,7 @@ function applyBackupTemplate(template) {
       document.getElementById('backupImages').value = '';
       document.getElementById('backupSaveEntry').textContent = 'SAVE POST';
       document.getElementById('backupComposeHeading').textContent = 'NEW POST / EDIT';
-      applyBackupTemplate('general');
+      applyBackupTemplate(document.getElementById('backupTemplate').value);
       clearBackupPreviewUrls();
       renderBackupImagePreview();
       renderBackupDraftBlocks();
@@ -5904,6 +6267,7 @@ function applyBackupTemplate(template) {
         title,
         description: document.getElementById('backupDescription').value.trim(),
         category: document.getElementById('backupCategory').value,
+        board: (document.getElementById('backupTemplate').value === 'wardrobe' && document.getElementById('backupBoardSelect').value === 'general') ? 'wardrobe' : document.getElementById('backupBoardSelect').value,
         template: document.getElementById('backupTemplate').value,
         tags: document.getElementById('backupTags').value.split(/[,\n]/).map(tag => tag.trim().replace(/^#/, '')).filter(Boolean),
         images: backupDraftImages.map(image => ({ name: image.name || 'image', blob: image.blob, dataUrl: image.dataUrl, crop: getBackupImageCrop(image), ratio: '3/4' })),
@@ -5951,6 +6315,7 @@ function applyBackupTemplate(template) {
       backupEditingId = entry.id;
       document.getElementById('backupTemplate').value = entry.template || 'general';
       renderBackupCategoryOptions(entry.category);
+      renderBackupBoardSelect(getEntryBoard(entry));
       document.getElementById('backupCategory').value = entry.category;
       document.getElementById('backupTitle').value = entry.title || '';
       document.getElementById('backupDescription').value = entry.description || '';
@@ -6001,11 +6366,11 @@ function applyBackupTemplate(template) {
     function getFilteredBackupEntries() {
       const search = document.getElementById('backupSearch').value.trim().toLowerCase();
       const category = document.getElementById('backupCategoryFilter').value;
-      const filterMode = document.querySelector('[data-backup-filter].active')?.dataset.backupFilter || 'all';
+      const filterMode = activeBackupBoardFilter || 'all';
       return backupEntriesData.filter(entry => {
-        if (['photo','pair','pair-photo','pair-log'].includes(entry.kind)) return false;
+        if (['photo','pair','pair-photo','pair-log','backup-board'].includes(entry.kind)) return false;
         if (category && entry.category !== category) return false;
-        if (filterMode === 'wardrobe' && entry.template !== 'wardrobe') return false;
+        if (filterMode !== 'all' && getEntryBoard(entry) !== filterMode) return false;
         if (!search) return true;
         const searchable = [
           entry.title, entry.description, entry.category, ...(entry.tags || []),
@@ -6018,7 +6383,7 @@ function applyBackupTemplate(template) {
 
     function syncBackupDesignMode(view) {
       const detailEntry = backupEntriesData.find(entry => entry.id === backupCurrentEntryId);
-      const activeFilter = document.querySelector('[data-backup-filter].active')?.dataset.backupFilter || 'all';
+      const activeFilter = activeBackupBoardFilter || 'all';
       const wardrobeMode = (view === 'detail' && detailEntry?.template === 'wardrobe')
         || (view === 'compose' && document.getElementById('backupTemplate').value === 'wardrobe')
         || (view === 'gallery' && activeFilter === 'wardrobe');
@@ -6049,7 +6414,7 @@ function applyBackupTemplate(template) {
       container.replaceChildren();
       backupFilteredEntries = getFilteredBackupEntries();
 
-      document.getElementById('backupEntryCount').textContent = `${backupEntriesData.filter(entry => !['photo','pair','pair-photo','pair-log'].includes(entry.kind)).length} POSTS`;
+      document.getElementById('backupEntryCount').textContent = `${backupEntriesData.filter(entry => !['photo','pair','pair-photo','pair-log','backup-board'].includes(entry.kind)).length} POSTS`;
       document.getElementById('backupGalleryCount').textContent = `${backupFilteredEntries.length} items`;
 
       if (!backupFilteredEntries.length) {
@@ -6086,7 +6451,7 @@ function applyBackupTemplate(template) {
 
         const indexLabel = document.createElement('span');
         indexLabel.className = 'backup-cover-index';
-        indexLabel.textContent = entry.template === 'wardrobe' ? '♡ LOOK BOOK' : `NO. ${String(index + 1).padStart(2, '0')}`;
+        indexLabel.textContent = getEntryBoard(entry) === 'wardrobe' ? '♡ LOOK BOOK' : `NO. ${String(index + 1).padStart(2, '0')}`;
         cover.appendChild(indexLabel);
         cover.addEventListener('click', () => openBackupEntry(entry.id));
         card.appendChild(cover);
@@ -6115,7 +6480,7 @@ function applyBackupTemplate(template) {
         tagLine.textContent = (entry.tags || []).slice(0, 3).map(tag => `#${tag}`).join(' ');
         const kind = document.createElement('span');
         kind.className = 'backup-gallery-kind';
-        kind.textContent = entry.template === 'wardrobe' ? 'CLOSET' : (entry.category || 'POST');
+        kind.textContent = getAllBackupBoards().find(board => board.id === getEntryBoard(entry))?.name || entry.category || 'POST';
         subline.append(tagLine, kind);
         caption.append(titleRow, subline);
         card.appendChild(caption);
@@ -6747,6 +7112,82 @@ function applyBackupTemplate(template) {
       renderPairPhotos(); renderPairChatLogs();
     }
 
+    function openPairPhotoComposer() {
+      pairPhotoDraftImages = [];
+      revokePairUrls(pairPhotoObjectUrls);
+      document.getElementById('pairPhotoTitleInput').value = '';
+      document.getElementById('pairPhotoNoteInput').value = '';
+      document.getElementById('pairPhotoFiles').value = '';
+      renderPairPhotoPreview();
+      openPairView('photocompose');
+    }
+
+    function renderPairPhotoPreview() {
+      const wrap = document.getElementById('pairPhotoPreview');
+      wrap.replaceChildren();
+      revokePairUrls(pairPhotoObjectUrls);
+      pairPhotoDraftImages.forEach((image, index) => {
+        const item = document.createElement('div');
+        item.className = 'pair-photo-preview-item';
+        const frame = document.createElement('div');
+        frame.className = 'pair-photo-preview-frame';
+        frame.style.aspectRatio = getBackupImageRatio(image).replace('/', ' / ');
+        const img = document.createElement('img');
+        img.src = backupImageSource(image, pairPhotoObjectUrls);
+        img.alt = image.name || `PHOTO ${index + 1}`;
+        applyBackupImageCrop(img, image);
+        frame.appendChild(img);
+        const actions = document.createElement('div');
+        actions.className = 'pair-photo-preview-actions';
+        const ratio = document.createElement('select');
+        ratio.setAttribute('aria-label', `사진 ${index + 1} 비율`);
+        [['3/4','3:4'],['2/3','2:3'],['1/1','1:1'],['4/3','4:3'],['16/9','16:9']].forEach(([value,label]) => {
+          const option = document.createElement('option'); option.value = value; option.textContent = label; ratio.appendChild(option);
+        });
+        ratio.value = getBackupImageRatio(image);
+        ratio.addEventListener('change', () => { image.ratio = ratio.value; frame.style.aspectRatio = image.ratio.replace('/', ' / '); });
+        const crop = document.createElement('button'); crop.type = 'button'; crop.textContent = 'CROP';
+        crop.addEventListener('click', () => openBackupCropEditor('pairPhotoDraft', index));
+        const remove = document.createElement('button'); remove.type = 'button'; remove.textContent = 'REMOVE';
+        remove.addEventListener('click', () => { pairPhotoDraftImages.splice(index, 1); renderPairPhotoPreview(); });
+        actions.append(ratio, crop, remove);
+        const name = document.createElement('div'); name.className = 'photo-archive-draft-name'; name.textContent = image.name || `PHOTO ${index + 1}`;
+        item.append(frame, name, actions); wrap.appendChild(item);
+      });
+    }
+
+    async function savePairPhotos() {
+      if (!currentPairId) { setStatus('먼저 페어를 선택해주세요.'); return; }
+      if (!pairPhotoDraftImages.length) { setStatus('사진을 한 장 이상 추가해주세요.'); return; }
+      const now = new Date().toISOString();
+      const record = {
+        id: makePairId(), kind: 'pair-photo', pairId: currentPairId,
+        title: document.getElementById('pairPhotoTitleInput').value.trim(),
+        description: document.getElementById('pairPhotoNoteInput').value.trim(),
+        images: pairPhotoDraftImages.map(image => ({
+          name: image.name || 'image', blob: image.blob, dataUrl: image.dataUrl,
+          crop: getBackupImageCrop(image), ratio: getBackupImageRatio(image)
+        })),
+        createdAt: now, updatedAt: now
+      };
+      const button = document.getElementById('pairPhotoSaveButton');
+      button.disabled = true;
+      try {
+        await saveRoomRecord(record);
+        pairPhotoDraftImages = [];
+        revokePairUrls(pairPhotoObjectUrls);
+        document.getElementById('pairPhotoTitleInput').value = '';
+        document.getElementById('pairPhotoNoteInput').value = '';
+        document.getElementById('pairPhotoFiles').value = '';
+        renderPairPhotos();
+        renderPairCards();
+        openPairView('detail');
+        setStatus('페어 사진 게시글을 저장했습니다.');
+      } catch (error) {
+        setStatus(`페어 사진 저장 실패: ${error.message || '저장 공간을 확인해주세요.'}`);
+      } finally { button.disabled = false; }
+    }
+
     let pairPhotoPostUrls = [];
     function renderPairPhotos() {
       const wrap=document.getElementById('pairPhotoPosts'); wrap.replaceChildren();
@@ -6797,6 +7238,50 @@ function applyBackupTemplate(template) {
       renderPairPhotoPostDetail();
     }
 
+    function sanitizePairLogHtml(source, editable = false) {
+      const doc = new DOMParser().parseFromString(`<div>${String(source || '')}</div>`, 'text/html');
+      const root = doc.body.firstElementChild;
+      root.querySelectorAll('script,style,iframe,object,embed,form,input,button,link,meta,video,audio,svg,math').forEach(node => node.remove());
+      const allowed = new Set(['DIV','P','BR','SPAN','STRONG','B','EM','I','U','S','BLOCKQUOTE','PRE','UL','OL','LI','H2','H3','H4','IMG','A']);
+      [...root.querySelectorAll('*')].reverse().forEach(node => {
+        if (!allowed.has(node.tagName)) { node.replaceWith(...node.childNodes); return; }
+        [...node.attributes].forEach(attr => {
+          const name = attr.name.toLowerCase();
+          if (name.startsWith('on') || name === 'contenteditable' || name === 'data-pair-temp' || name === 'style') node.removeAttribute(attr.name);
+          else if (name === 'class') {
+            const classes = attr.value.split(/\s+/).filter(value => /^pair-log-(?:chat-layout|chat-head|chat-row|avatar|message|name|bubble)$/.test(value) || ((node.classList.contains('pair-log-chat-row')) && ['a','b'].includes(value)));
+            if (classes.length) node.className = classes.join(' '); else node.removeAttribute('class');
+          } else if (node.tagName === 'IMG' && name === 'src') {
+            if (!/^data:image\/(?:png|jpe?g|webp|gif);base64,/i.test(attr.value) && !/^https:\/\//i.test(attr.value)) node.removeAttribute('src');
+          } else if (node.tagName === 'A' && name === 'href') {
+            if (!/^https?:\/\//i.test(attr.value)) node.removeAttribute('href');
+          } else if (!['src','alt','title','href','target','rel'].includes(name)) node.removeAttribute(attr.name);
+        });
+        if (editable) {
+          if (node.classList.contains('pair-log-name') || node.classList.contains('pair-log-bubble')) node.setAttribute('contenteditable','true');
+          else if (node.classList.contains('pair-log-chat-layout') || node.classList.contains('pair-log-chat-head') || node.classList.contains('pair-log-chat-row') || node.classList.contains('pair-log-avatar')) node.setAttribute('contenteditable','false');
+        }
+        if (node.tagName === 'A') { node.setAttribute('target','_blank'); node.setAttribute('rel','noopener noreferrer'); }
+        if (node.tagName === 'IMG') { node.setAttribute('loading','lazy'); node.removeAttribute('width'); node.removeAttribute('height'); }
+      });
+      return root.innerHTML;
+    }
+
+    function pairLogPlainText(html) {
+      const doc = new DOMParser().parseFromString(String(html || ''), 'text/html');
+      const root = doc.body;
+      const blocks = new Set(['DIV','P','BLOCKQUOTE','PRE','LI','H2','H3','H4']);
+      function walk(node) {
+        if (node.nodeType === Node.TEXT_NODE) return node.nodeValue || '';
+        if (node.nodeType !== Node.ELEMENT_NODE && node.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) return '';
+        const before = blocks.has(node.tagName) ? '\n' : '';
+        const body = [...node.childNodes].map(walk).join('');
+        const after = blocks.has(node.tagName) ? '\n' : (node.tagName === 'BR' ? '\n' : '');
+        return before + body + after;
+      }
+      return walk(root).replace(/\u00a0/g,' ').replace(/\n{3,}/g,'\n\n').trim();
+    }
+
     function renderPairChatLogs() {
       const wrap=document.getElementById('pairChatLogs');wrap.replaceChildren();
       const logs=pairLogRecords(currentPairId);
@@ -6804,57 +7289,97 @@ function applyBackupTemplate(template) {
       logs.forEach(log=>{
         const details=document.createElement('details');details.className='pair-chat-item';
         const summary=document.createElement('summary');summary.textContent=log.title||'Untitled log';
-        const date=document.createElement('small');date.textContent=new Date(log.updatedAt||log.createdAt||Date.now()).toLocaleDateString('ko-KR');summary.appendChild(date);
+        const date=document.createElement('small');date.textContent=log.date||new Date(log.updatedAt||log.createdAt||Date.now()).toLocaleDateString('ko-KR');summary.appendChild(date);
         const body=document.createElement('div');body.className='pair-chat-body';
-        const pre=document.createElement('pre');pre.textContent=log.content||'';
+        const meta=document.createElement('div');meta.className='pair-chat-meta';
+        [log.subtitle,log.platform,log.category].filter(Boolean).forEach(value=>{const span=document.createElement('span');span.textContent=value;meta.appendChild(span);});
+        const tags=document.createElement('div');tags.className='pair-chat-tags';(log.tags||[]).forEach(value=>{const span=document.createElement('span');span.textContent=`#${value}`;tags.appendChild(span);});
+        const content=document.createElement('div');content.className='pair-chat-rich';
+        if(log.contentHtml) content.innerHTML=sanitizePairLogHtml(log.contentHtml);
+        else content.textContent=log.content||'';
         const actions=document.createElement('div');actions.className='pair-chat-actions';
-        const copy=document.createElement('button');copy.type='button';copy.textContent='COPY';copy.addEventListener('click',()=>copyText(log.content||'','대화 로그를 복사했습니다.'));
+        const copy=document.createElement('button');copy.type='button';copy.textContent='COPY';copy.addEventListener('click',()=>copyText(log.contentHtml?pairLogPlainText(log.contentHtml):(log.content||''),'대화 로그를 복사했습니다.'));
         const edit=document.createElement('button');edit.type='button';edit.textContent='EDIT';edit.addEventListener('click',()=>openPairLogEditor(log));
         const remove=document.createElement('button');remove.type='button';remove.textContent='DELETE';remove.addEventListener('click',async()=>{if(!confirm('이 대화 로그를 삭제할까요?'))return;try{await deleteRoomRecord(log.id);renderPairChatLogs();setStatus('대화 로그를 삭제했습니다.');}catch(e){setStatus(e.message||'삭제 실패');}});
-        actions.append(copy,edit,remove);body.append(pre,actions);details.append(summary,body);wrap.appendChild(details);
+        actions.append(copy,edit,remove);
+        body.append(meta,tags,content,actions);details.append(summary,body);wrap.appendChild(details);
       });
     }
 
-    function openPairPhotoComposer() {
-      pairPhotoDraftImages=[];document.getElementById('pairPhotoTitleInput').value='';document.getElementById('pairPhotoNoteInput').value='';document.getElementById('pairPhotoFiles').value='';
-      renderPairPhotoPreview();openPairView('photocompose');
+    let pairLogSavedRange = null;
+    function capturePairLogRange() {
+      const editor=document.getElementById('pairLogRichEditor');const selection=window.getSelection();
+      if(selection&&selection.rangeCount&&editor.contains(selection.anchorNode)&&editor.contains(selection.focusNode)) pairLogSavedRange=selection.getRangeAt(0).cloneRange();
     }
-
-    function renderPairPhotoPreview() {
-      revokePairUrls(pairPhotoObjectUrls);const wrap=document.getElementById('pairPhotoPreview');wrap.replaceChildren();
-      pairPhotoDraftImages.forEach((image,index)=>{
-        const item=document.createElement('div');item.className='pair-photo-preview-item';
-        const frame=document.createElement('div');frame.className='pair-photo-preview-frame';frame.style.aspectRatio=getBackupImageRatio(image).replace('/', ' / ');
-        const img=document.createElement('img');img.src=backupImageSource(image,pairPhotoObjectUrls);img.alt=image.name||`Photo ${index+1}`;applyBackupImageCrop(img,image);frame.appendChild(img);
-        const actions=document.createElement('div');actions.className='pair-photo-preview-actions';
-        const crop=document.createElement('button');crop.type='button';crop.textContent='CROP / RATIO';crop.addEventListener('click',()=>openBackupCropEditor('pairPhotoDraft',index));
-        const remove=document.createElement('button');remove.type='button';remove.textContent='REMOVE';remove.addEventListener('click',()=>{pairPhotoDraftImages.splice(index,1);renderPairPhotoPreview();});
-        actions.append(crop,remove);item.append(frame,actions);wrap.appendChild(item);
-      });
+    function restorePairLogRange() {
+      const editor=document.getElementById('pairLogRichEditor');editor.focus();
+      const selection=window.getSelection();
+      if(pairLogSavedRange&&editor.contains(pairLogSavedRange.commonAncestorContainer)){selection.removeAllRanges();selection.addRange(pairLogSavedRange);}
+      else {const range=document.createRange();range.selectNodeContents(editor);range.collapse(false);selection.removeAllRanges();selection.addRange(range);pairLogSavedRange=range.cloneRange();}
     }
-
-    async function savePairPhotos() {
-      if(!pairPhotoDraftImages.length){setStatus('사진을 한 장 이상 추가해주세요.');return;}
-      const now=new Date().toISOString();
-      const record={id:makePairId(),kind:'pair-photo',pairId:currentPairId,title:document.getElementById('pairPhotoTitleInput').value.trim(),description:document.getElementById('pairPhotoNoteInput').value.trim(),images:pairPhotoDraftImages.map(image=>({name:image.name||'image',blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:getBackupImageRatio(image)})),createdAt:now,updatedAt:now};
-      try{await saveRoomRecord(record);renderPairDetail();openPairView('detail');setStatus('페어 갤러리에 사진을 저장했습니다.');}
-      catch(error){setStatus(`사진 저장 실패: ${error.message||'다시 시도해주세요.'}`);}
+    function insertPairLogNode(node) {
+      restorePairLogRange();const selection=window.getSelection();let range=selection.rangeCount?selection.getRangeAt(0):null;
+      if(!range||!document.getElementById('pairLogRichEditor').contains(range.commonAncestorContainer)){range=document.createRange();range.selectNodeContents(document.getElementById('pairLogRichEditor'));range.collapse(false);}
+      range.deleteContents();range.insertNode(node);const after=document.createElement('p');after.innerHTML='<br>';node.after(after);
+      const next=document.createRange();next.setStart(after,0);next.collapse(true);selection.removeAllRanges();selection.addRange(next);pairLogSavedRange=next.cloneRange();
     }
-
+    function makePairLogChatRow(side,name='') {
+      const row=document.createElement('div');row.className=`pair-log-chat-row ${side}`;
+      const avatar=document.createElement('span');avatar.className='pair-log-avatar';avatar.contentEditable='false';avatar.textContent=side==='a'?'A':'B';avatar.dataset.pairSide=side;
+      const message=document.createElement('div');message.className='pair-log-message';
+      const speaker=document.createElement('div');speaker.className='pair-log-name';speaker.contentEditable='true';speaker.textContent=name||(side==='a'?'캐릭터 A':'캐릭터 B');
+      const bubble=document.createElement('div');bubble.className='pair-log-bubble';bubble.contentEditable='true';bubble.innerHTML='<br>';
+      message.append(speaker,bubble);
+      if(side==='a')row.append(avatar,message);else row.append(message,avatar);
+      return row;
+    }
+    function makePairLogChatLayout() {
+      const layout=document.createElement('div');layout.className='pair-log-chat-layout';layout.contentEditable='false';
+      const head=document.createElement('div');head.className='pair-log-chat-head';head.textContent='DIALOGUE / A × B';
+      layout.append(head,makePairLogChatRow('a'),makePairLogChatRow('b'));return layout;
+    }
+    function addPairLogChatSide(side) {
+      const editor=document.getElementById('pairLogRichEditor');let layout=null;
+      const selection=window.getSelection();let node=selection?.anchorNode;if(node&&node.nodeType===3)node=node.parentElement;
+      layout=node?.closest?.('.pair-log-chat-layout');
+      if(!layout||!editor.contains(layout)) layout=editor.querySelector('.pair-log-chat-layout:last-of-type');
+      if(!layout){layout=makePairLogChatLayout();insertPairLogNode(layout);return;}
+      const rows=[...layout.querySelectorAll('.pair-log-chat-row')];const same=rows.filter(row=>row.classList.contains(side));const name=same.length?same[same.length-1].querySelector('.pair-log-name')?.textContent:'';
+      const row=makePairLogChatRow(side,name);layout.appendChild(row);const bubble=row.querySelector('.pair-log-bubble');const range=document.createRange();range.selectNodeContents(bubble);range.collapse(false);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);pairLogSavedRange=range.cloneRange();
+    }
     function openPairLogEditor(log=null) {
       pairLogEditingId=log?.id||null;
       document.getElementById('pairLogTitleInput').value=log?.title||'';
-      document.getElementById('pairLogContentInput').value=log?.content||'';
-      document.getElementById('pairLogComposeHeading').textContent=log?'EDIT CHAT LOG':'NEW CHAT LOG';
-      openPairView('logcompose');
+      document.getElementById('pairLogSubtitleInput').value=log?.subtitle||'';
+      document.getElementById('pairLogDateInput').value=log?.date||new Date().toISOString().slice(0,10);
+      document.getElementById('pairLogPlatformInput').value=log?.platform||'';
+      document.getElementById('pairLogCategoryInput').value=log?.category||'';
+      document.getElementById('pairLogTagsInput').value=(log?.tags||[]).join(', ');
+      const editor=document.getElementById('pairLogRichEditor');
+      if(log?.contentHtml) editor.innerHTML=sanitizePairLogHtml(log.contentHtml, true);
+      else if(log?.content) editor.innerHTML=log.content.split(/\r?\n/).map(line=>`<p>${escapeHtml(line)||'<br>'}</p>`).join('');
+      else editor.innerHTML='';
+      document.getElementById('pairLogComposeHeading').textContent=log?'EDIT RP LOG':'NEW RP LOG';
+      pairLogSavedRange=null;openPairView('logcompose');
     }
 
     async function savePairLog() {
-      const content=document.getElementById('pairLogContentInput').value;
-      if(!content.trim()){setStatus('저장할 대화 로그를 입력해주세요.');return;}
+      const editor=document.getElementById('pairLogRichEditor');
+      const contentHtml=sanitizePairLogHtml(editor.innerHTML);
+      const content=pairLogPlainText(contentHtml);
+      if(!content.trim()&&!contentHtml.includes('<img')){setStatus('저장할 RP 로그를 입력해주세요.');return;}
       const existing=pairLogRecords(currentPairId).find(item=>item.id===pairLogEditingId);const now=new Date().toISOString();
-      const record={id:pairLogEditingId||makePairId(),kind:'pair-log',pairId:currentPairId,title:document.getElementById('pairLogTitleInput').value.trim()||`Chat log · ${new Date().toLocaleDateString('ko-KR')}`,content,createdAt:existing?.createdAt||now,updatedAt:now};
-      try{await saveRoomRecord(record);pairLogEditingId=null;renderPairChatLogs();openPairView('detail');setStatus('대화 로그를 저장했습니다.');}
+      const record={
+        id:pairLogEditingId||makePairId(),kind:'pair-log',pairId:currentPairId,
+        title:document.getElementById('pairLogTitleInput').value.trim()||`RP log · ${new Date().toLocaleDateString('ko-KR')}`,
+        subtitle:document.getElementById('pairLogSubtitleInput').value.trim(),
+        platform:document.getElementById('pairLogPlatformInput').value.trim(),
+        date:document.getElementById('pairLogDateInput').value||new Date().toISOString().slice(0,10),
+        category:document.getElementById('pairLogCategoryInput').value.trim(),
+        tags:[...new Set(document.getElementById('pairLogTagsInput').value.split(/[，,\n]/).map(value=>value.trim().replace(/^#/,'')).filter(Boolean))],
+        contentHtml,content,createdAt:existing?.createdAt||now,updatedAt:now
+      };
+      try{await saveRoomRecord(record);pairLogEditingId=null;renderPairChatLogs();openPairView('detail');setStatus('페어 RP 로그를 저장했습니다.');}
       catch(error){setStatus(`대화 로그 저장 실패: ${error.message||'다시 시도해주세요.'}`);}
     }
 
@@ -6898,6 +7423,31 @@ function applyBackupTemplate(template) {
       });
       document.getElementById('pairLogCancel').addEventListener('click',()=>{pairLogEditingId=null;openPairView('detail');});
       document.getElementById('pairLogSaveButton').addEventListener('click',savePairLog);
+      const logEditor=document.getElementById('pairLogRichEditor');
+      ['mouseup','keyup','input'].forEach(type=>logEditor.addEventListener(type,capturePairLogRange));
+      document.getElementById('pairLogToolbar').addEventListener('mousedown',event=>{if(event.target.closest('button'))capturePairLogRange();});
+      document.getElementById('pairLogToolbar').addEventListener('click',event=>{
+        const command=event.target.closest('[data-pair-log-command]');if(!command)return;
+        restorePairLogRange();const cmd=command.dataset.pairLogCommand;document.execCommand(cmd,false,command.dataset.pairLogValue||null);capturePairLogRange();
+      });
+      document.getElementById('pairLogInsertChat').addEventListener('mousedown',capturePairLogRange);
+      document.getElementById('pairLogInsertChat').addEventListener('click',()=>insertPairLogNode(makePairLogChatLayout()));
+      document.getElementById('pairLogAddA').addEventListener('mousedown',capturePairLogRange);
+      document.getElementById('pairLogAddA').addEventListener('click',()=>addPairLogChatSide('a'));
+      document.getElementById('pairLogAddB').addEventListener('mousedown',capturePairLogRange);
+      document.getElementById('pairLogAddB').addEventListener('click',()=>addPairLogChatSide('b'));
+      document.getElementById('pairLogInsertImage').addEventListener('mousedown',capturePairLogRange);
+      document.getElementById('pairLogInsertImage').addEventListener('click',()=>document.getElementById('pairLogImageInput').click());
+      document.getElementById('pairLogImageInput').addEventListener('change',event=>{
+        const file=event.target.files?.[0];if(!file)return;
+        if(file.size>8*1024*1024){setStatus('이미지는 8MB 이하 파일을 권장합니다.');event.target.value='';return;}
+        const reader=new FileReader();reader.onload=()=>{const image=document.createElement('img');image.src=String(reader.result);image.alt=file.name||'RP image';insertPairLogNode(image);};reader.readAsDataURL(file);event.target.value='';
+      });
+      logEditor.addEventListener('click',event=>{
+        const avatar=event.target.closest('.pair-log-avatar');if(!avatar)return;
+        const input=document.createElement('input');input.type='file';input.accept='image/*';
+        input.addEventListener('change',()=>{const file=input.files?.[0];if(!file)return;if(file.size>3*1024*1024){setStatus('프로필 이미지는 3MB 이하 파일을 권장합니다.');return;}const reader=new FileReader();reader.onload=()=>{avatar.textContent='';const img=document.createElement('img');img.src=String(reader.result);img.alt='캐릭터 프로필';avatar.replaceChildren(img);};reader.readAsDataURL(file);});input.click();
+      });
       renderPairCards();
     }
 
@@ -7090,6 +7640,8 @@ function applyBackupTemplate(template) {
         resetBackupDraft();
         showBackupView('compose');
       });
+      document.getElementById('backupAddBoard').addEventListener('click', addCustomBackupBoard);
+      renderBackupBoardTabs(); renderBackupBoardSelect();
       document.getElementById('backupCancelEdit').addEventListener('click', () => {
         if (backupEditingId) {
           const id = backupEditingId;
@@ -7110,14 +7662,6 @@ function applyBackupTemplate(template) {
 
       document.getElementById('backupSearch').addEventListener('input', renderBackupEntries);
       document.getElementById('backupCategoryFilter').addEventListener('change', renderBackupEntries);
-      document.querySelectorAll('[data-backup-filter]').forEach(button => {
-        button.addEventListener('click', () => {
-          document.querySelectorAll('[data-backup-filter]').forEach(item => item.classList.toggle('active', item === button));
-          renderBackupEntries();
-          syncBackupDesignMode('gallery');
-        });
-      });
-
       loadBackupEntries();
       initPhotoArchive();
     }
@@ -7139,6 +7683,7 @@ function applyBackupTemplate(template) {
       });
       if (view === 'backup') {
         switchBackupArchiveSection('prompts');
+        renderBackupBoardTabs();
         renderBackupEntries();
         if (typeof showBackupView === 'function') showBackupView('gallery');
       }

@@ -1,18 +1,18 @@
-P. TOOLBOX v37 / GitHub Pages 배포
+P. Toolbox v38 · GitHub Pages 배포
 
-1. 아래 파일을 모두 GitHub 저장소 최상위(root)에 업로드하세요.
-2. 폴더를 만들 필요가 없습니다. 아이콘 PNG 3개도 index.html과 같은 위치에 둡니다.
-3. Settings > Pages에서 브랜치와 /(root)를 선택합니다.
-4. 배포된 HTTPS 주소로 접속합니다.
-5. 기존 앱이 설치되어 있다면 기존 P. Toolbox 앱을 제거한 뒤, 배포된 새 주소에서 다시 설치하세요.
+1. 이 압축 파일을 풉니다.
+2. 안의 파일 6개(index.html, manifest.webmanifest, sw.js, p-toolbox-192.png, p-toolbox-512.png, p-toolbox-512-maskable.png)를 GitHub 저장소 최상위에 올립니다.
+3. 기존 저장소의 동일 파일은 교체합니다. 아이콘은 별도 폴더 없이 index.html과 같은 위치에 둡니다.
+4. GitHub Pages HTTPS 주소에서 새로고침합니다.
 
-포함 파일
-- index.html
-- manifest.webmanifest
-- sw.js
-- p-toolbox-192.png
-- p-toolbox-512.png
-- p-toolbox-512-maskable.png
+데이터 보존
+- 기존 방 ID, 방 로그인 메타데이터, IndexedDB 이름 및 localStorage 접두사는 유지했습니다.
+- 브라우저 저장 데이터는 자동으로 삭제하지 않습니다.
+- JSON 내보내기를 정기적으로 사용해 별도 백업을 보관하세요.
 
-아이콘은 기존 P. 모노그램을 사용합니다. 별도 아이콘 폴더는 필요하지 않습니다.
-기존 공간 저장 ID와 IndexedDB 이름은 변경하지 않았습니다.
+이번 업데이트
+- 페어별 RP 로그에 제목/부제/날짜/플랫폼/카테고리/태그와 서식 있는 본문 편집을 추가했습니다.
+- A/B 대화 블록, 이미지 삽입, 굵게/기울임/밑줄/인용/목록 기능을 추가했습니다.
+- 프롬프트 백업 게시판에 GENERAL/WARDROBE 및 사용자 게시판을 추가했습니다.
+- 테마·AU에 맞춰 배경/소품/액션/분위기 후보를 제한하고 관련 키워드 및 2인 상호작용을 확장했습니다.
+- 가중치 변환에 묶음 유지/태그별 분리 방식을 추가했습니다.
