@@ -7672,33 +7672,7 @@ function applyBackupTemplate(template) {
     window.__ptExportRoomJson = exportRoomJson;
     window.__ptImportRoomJson = importRoomJsonFile;
 
-    // Main navigation: home -> Random workspace or Backup gallery.
-    const toolRoutebar = document.getElementById('appRoutebar');
-    function navigateTool(view) {
-      const panel = document.getElementById(`${view}Panel`);
-      if (!panel) return;
-      document.querySelectorAll('.tab-panel').forEach(item => item.classList.toggle('active', item === panel));
-      toolRoutebar.classList.toggle('hidden', view === 'home');
-      document.querySelectorAll('[data-route]').forEach(button => {
-        button.classList.toggle('active', button.dataset.route === view);
-      });
-      if (view === 'backup') {
-        switchBackupArchiveSection('prompts');
-        renderBackupBoardTabs();
-        renderBackupEntries();
-        if (typeof showBackupView === 'function') showBackupView('gallery');
-      }
-      if (view === 'pair') { renderPairCards(); openPairView('gallery'); }
-      if (view === 'home') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    }
-    document.querySelectorAll('[data-route]').forEach(button => {
-      button.addEventListener('click', () => navigateTool(button.dataset.route));
-    });
-    document.querySelectorAll('[data-open-view]').forEach(button => {
-      button.addEventListener('click', () => navigateTool(button.dataset.openView));
-    });
+    // Navigation is delegated outside this initializer so it survives room-module errors.
 
     try { populateCustomCategories(); } catch (error) { console.error('Custom categories initialization failed:', error); }
     try { renderFavorites(); } catch (error) { console.error('Favorites initialization failed:', error); }
@@ -7706,8 +7680,34 @@ function applyBackupTemplate(template) {
   
 }
 </script>
+<script>
+// Independent navigation layer: remains active even if a toolbox module throws during startup.
+(() => {
+  const validViews = new Set(['home', 'randomizer', 'outfit', 'converter', 'backup', 'pair']);
+  function navigate(view) {
+    if (!validViews.has(view)) return;
+    const panel = document.getElementById(view + 'Panel');
+    if (!panel) return;
+    document.querySelectorAll('.tab-panel').forEach(el => el.classList.toggle('active', el === panel));
+    const routebar = document.getElementById('appRoutebar');
+    if (routebar) routebar.classList.toggle('hidden', view === 'home');
+    document.querySelectorAll('[data-route]').forEach(el => el.classList.toggle('active', el.dataset.route === view));
+    if (view === 'home') window.scrollTo({top: 0, behavior: 'smooth'});
+    else window.scrollTo({top: 0, behavior: 'instant'});
+    document.dispatchEvent(new CustomEvent('pt:routechange', {detail: {view}}));
+  }
+  document.addEventListener('click', event => {
+    const trigger = event.target.closest('[data-open-view], [data-route]');
+    if (!trigger) return;
+    const view = trigger.dataset.openView || trigger.dataset.route;
+    if (!validViews.has(view)) return;
+    event.preventDefault();
+    navigate(view);
+  }, true);
+})();
+</script>
 
-  <div id="backupCropDialog" class="backup-crop-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="backupCropTitle">
+  <div id="backupCropDialog class="backup-crop-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="backupCropTitle">
     <section class="backup-crop-window">
       <header class="backup-crop-titlebar"><span id="backupCropTitle">PHOTO CROP / 3:4</span><button type="button" id="backupCropClose" aria-label="닫기">×</button></header>
       <div class="backup-crop-content">
