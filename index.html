@@ -2072,7 +2072,7 @@
 
   <script>
 (() => {
-  // P. Toolbox v38: rich pair logs, custom backup boards, coherent theme pools, and grouped/separate weight conversion.
+  // P. Toolbox v41: repaired crop dialog markup; storage keys and data formats intentionally preserved.
   const ROOMS_KEY = 'promptToolbox.rooms.v28';
   const RESET_KEY = 'promptToolbox.v28.roomResetDone';
   const REMEMBERED_ROOM_KEY = 'promptToolbox.v30.rememberedRoom';
@@ -5906,11 +5906,13 @@ function startPromptToolbox() {
       document.getElementById('backupCropX').value = String(crop.x);
       document.getElementById('backupCropY').value = String(crop.y);
       updateBackupCropPreview();
+      document.getElementById('backupCropDialog').hidden = false;
       document.getElementById('backupCropDialog').classList.remove('hidden');
     }
 
     function closeBackupCropEditor(continueQueue = true) {
       document.getElementById('backupCropDialog').classList.add('hidden');
+      document.getElementById('backupCropDialog').hidden = true;
       document.getElementById('backupCropImage').removeAttribute('src');
       backupCropUrls.forEach(url => URL.revokeObjectURL(url));
       backupCropUrls = [];
@@ -7707,7 +7709,7 @@ function applyBackupTemplate(template) {
 })();
 </script>
 
-  <div id="backupCropDialog class="backup-crop-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="backupCropTitle">
+  <div id="backupCropDialog" class="backup-crop-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="backupCropTitle" hidden>
     <section class="backup-crop-window">
       <header class="backup-crop-titlebar"><span id="backupCropTitle">PHOTO CROP / 3:4</span><button type="button" id="backupCropClose" aria-label="닫기">×</button></header>
       <div class="backup-crop-content">
