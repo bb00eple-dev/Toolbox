@@ -11,7 +11,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" sizes="192x192" href="./p-toolbox-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="./p-toolbox-192.png">
-  <title>P. Toolbox v42</title>
+  <title>P. Toolbox v43</title>
   <style>
     :root {
       color-scheme: light;
@@ -1052,6 +1052,45 @@
     .pair-log-editor blockquote,.pair-chat-rich blockquote { margin:10px 0; padding:7px 12px; border-left:3px solid #b78fa5; background:#f8f0f4; color:#6b5864; }
     .pair-log-editor pre,.pair-chat-rich pre { max-width:100%; overflow:auto; padding:8px; background:#f0edf0; border:1px solid #ddd2d8; white-space:pre-wrap; }
     .pair-log-editor-note { margin-top:6px; color:#927e89; font:9px Tahoma,sans-serif; }
+    .pair-log-feature-panel { padding:8px; border:1px solid #cbb7c1; border-top:0; background:#fffdfb; }
+    .pair-log-feature-panel.hidden { display:none; }
+    .pair-log-palette-head,.pair-log-palette-pagebar,.pair-log-template-actions { display:flex; align-items:center; flex-wrap:wrap; gap:5px; }
+    .pair-log-palette-head input[type="text"] { width:92px; min-width:0; padding:4px 5px; border:1px solid #cbb7c1; }
+    .pair-log-palette-head input[type="color"] { width:27px; height:25px; padding:1px; }
+    .pair-log-palette-pagebar { margin:7px 0; }
+    .pair-log-palette-pagebar select { min-width:100px; flex:1; }
+    .pair-log-palette-grid { display:grid; grid-template-columns:repeat(10,minmax(0,1fr)); gap:3px; }
+    .pair-log-palette-grid button { min-width:0; aspect-ratio:1; padding:0; border:1px solid rgba(70,60,70,.18); }
+    .pair-log-palette-grid.neutral { grid-template-columns:repeat(6,minmax(0,1fr)); }
+    .pair-log-palette-saved { display:flex; flex-wrap:wrap; gap:4px; margin-top:7px; }
+    .pair-log-palette-saved button { min-width:24px; height:23px; padding:2px 6px; }
+    .pair-log-secret-settings { margin:8px 0; padding:7px 9px; border:1px solid #d7c4ce; background:#fffdfb; color:#76596d; font-size:10px; }
+    .pair-log-secret-settings label { display:flex; align-items:center; gap:6px; cursor:pointer; }
+    .pair-log-secret-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:5px; margin-top:7px; }
+    .pair-log-secret-fields.hidden { display:none; }
+    .pair-log-secret-fields input { min-width:0; width:100%; padding:6px; border:1px solid #cbb7c1; background:#fff; }
+    .pair-log-secret-fields small { grid-column:1/-1; color:#9b8190; line-height:1.6; }
+    .pair-log-template { margin:10px 0; padding:10px; border:1px solid #d7c4ce; background:#fffdfb; color:#594852; }
+    .pair-log-template > :first-child { margin-top:0; }
+    .pair-log-template > :last-child { margin-bottom:0; }
+    .pair-log-template [data-pair-log-template-label] { display:block; margin-bottom:6px; font-size:9px; font-weight:bold; letter-spacing:.08em; color:#98778c; }
+    .pair-log-template-section { padding:0; }
+    .pair-log-template-section summary { padding:8px 10px; cursor:pointer; font-weight:bold; }
+    .pair-log-template-section .pair-log-template-body { padding:8px 10px; border-top:1px solid #e6dce1; }
+    .pair-log-template-memo-lined { background:repeating-linear-gradient(to bottom,#fffdf5 0 24px,#e4e8ee 25px,#fffdf5 26px); }
+    .pair-log-template-sticky { width:min(100%,360px); margin:14px auto; padding:18px 14px; background:#fff4b8; border:0; box-shadow:2px 4px 10px rgba(55,45,30,.13); transform:rotate(-.4deg); }
+    .pair-log-template-email { border-top:4px solid #8aa9bf; background:#f7fafc; }
+    .pair-log-template-letter { padding:18px 16px; border:1px solid #d8cdbf; background:#fffdf8; font-family:Georgia,serif; }
+    .pair-log-template-polaroid { width:min(100%,320px); margin:14px auto; padding:10px 10px 18px; background:#fff; border:1px solid #e1e1e1; box-shadow:0 3px 10px rgba(0,0,0,.12); }
+    .pair-log-template-polaroid img { max-width:100%; }
+    .pair-log-template-dossier { border:1px solid #9b9b8a; border-left:5px solid #7d8070; background:#f1f1e9; font-family:monospace; }
+    .pair-log-template-receipt { width:min(100%,340px); margin:12px auto; padding:12px 10px; border:0; border-top:1px dashed #aaa; border-bottom:1px dashed #aaa; background:#faf9f2; font:12px/1.6 monospace; }
+    .pair-log-secret-overlay { position:fixed; inset:0; z-index:9999; display:grid; place-items:center; padding:16px; background:rgba(20,15,22,.58); }
+    .pair-log-secret-dialog { width:min(100%,340px); padding:16px; border:1px solid #b99aaa; background:#fffefa; color:#55434f; box-shadow:0 12px 34px rgba(0,0,0,.22); }
+    .pair-log-secret-dialog form { display:grid; gap:9px; }
+    .pair-log-secret-dialog input { width:100%; min-width:0; padding:8px; border:1px solid #cbb7c1; }
+    .pair-log-secret-error { min-height:1em; color:#a43f55; font-size:11px; }
+    .pair-log-locked-note { padding:8px; color:#98778c; font-size:10px; }
     .pair-log-chat-layout { margin:12px 0; padding:10px; border:1px dashed #c7aebd; background:#fbf5f8; }
     .pair-log-chat-head { margin-bottom:8px; color:#98778c; font:bold 9px Tahoma,sans-serif; letter-spacing:1px; }
     .pair-log-chat-row { display:flex; align-items:flex-start; gap:8px; margin:8px 0; }
@@ -1070,7 +1109,12 @@
     .pair-chat-tags span { padding:2px 6px; border:1px dotted #cdb8c4; color:#8d7182; font-size:8px; }
     .pair-chat-actions { display:flex; flex-wrap:wrap; gap:5px; margin-top:7px; }
     .pair-chat-actions button { min-height:22px; padding:2px 7px; border:1px solid #cbb7c1; background:#fff; color:#76596d; font-size:8px; }
-    @media(max-width:600px){.pair-log-meta-grid{grid-template-columns:1fr}.pair-log-editor{min-height:300px}.pair-log-toolbar{gap:3px}.pair-log-toolbar button{font-size:9px;padding:3px 6px}}
+    .pair-log-list-tools { display:flex; flex-wrap:wrap; align-items:center; gap:5px; margin:7px 0; }
+    .pair-log-list-tools input[type="search"] { min-width:120px; flex:1 1 150px; padding:6px 8px; border:1px solid #cbb7c1; background:#fffefa; color:#55434f; }
+    .pair-log-list-tools select { min-width:90px; padding:6px; border:1px solid #cbb7c1; background:#fffefa; color:#55434f; }
+    .pair-log-list-tools label { display:inline-flex; align-items:center; gap:4px; color:#76596d; font-size:9px; }
+    .pair-log-favorite.is-active { color:#a14d75!important; font-weight:bold; }
+    @media(max-width:600px){.pair-log-meta-grid{grid-template-columns:1fr}.pair-log-editor{min-height:300px}.pair-log-toolbar{gap:3px}.pair-log-toolbar button{font-size:9px;padding:3px 6px}.pair-log-secret-fields{grid-template-columns:1fr}.pair-log-palette-grid{grid-template-columns:repeat(10,minmax(0,1fr))}}
 
     .pair-site { max-width:900px; margin:0 auto; }
     .pair-home-header { margin-bottom:10px; }
@@ -1811,6 +1855,11 @@
 
               <section class="pair-subarchive">
                 <div class="pair-subarchive-heading"><div><small>02 / TEXT</small><h3>CHAT LOG</h3></div><button class="primary small" id="pairAddLogButton" type="button">＋ ADD LOG</button></div>
+                <div class="pair-log-list-tools">
+                  <input id="pairLogSearchInput" type="search" placeholder="이 페어의 로그 검색" aria-label="페어 로그 검색">
+                  <select id="pairLogSort" aria-label="로그 정렬"><option value="recent">최근 수정순</option><option value="oldest">오래된 순</option><option value="title">제목순</option></select>
+                  <label><input id="pairLogFavoritesOnly" type="checkbox"> 즐겨찾기만</label>
+                </div>
                 <div id="pairChatLogs" class="pair-chat-list"><div class="backup-empty">아직 저장된 대화 로그가 없습니다.</div></div>
               </section>
             </article>
@@ -1895,16 +1944,69 @@
                 <label class="field-label" for="pairLogTagsInput">TAGS<input class="backup-full" id="pairLogTagsInput" type="text" placeholder="태그 · 쉼표로 구분"></label>
               </div>
               <div class="pair-log-toolbar" id="pairLogToolbar">
+                <button type="button" data-pair-log-command="undo" id="pairLogUndo" title="실행 취소">↶</button>
+                <button type="button" data-pair-log-command="redo" id="pairLogRedo" title="다시 실행">↷</button>
                 <button type="button" data-pair-log-command="bold"><b>B</b></button>
                 <button type="button" data-pair-log-command="italic"><i>I</i></button>
                 <button type="button" data-pair-log-command="underline"><u>U</u></button>
+                <button type="button" data-pair-log-command="strikeThrough"><s>S</s></button>
                 <button type="button" data-pair-log-command="formatBlock" data-pair-log-value="blockquote">인용</button>
+                <button type="button" data-pair-log-command="formatBlock" data-pair-log-value="h2">제목</button>
                 <button type="button" data-pair-log-command="insertUnorderedList">목록</button>
+                <button type="button" data-pair-log-command="insertOrderedList">번호 목록</button>
+                <button type="button" data-pair-log-command="formatBlock" data-pair-log-value="pre">코드</button>
+                <select id="pairLogFontSelect" aria-label="글꼴 선택">
+                  <option value="system-ui, sans-serif">기본</option><option value="Arial, sans-serif">고딕</option><option value="Georgia, serif">명조</option><option value="Tahoma, sans-serif">Tahoma</option><option value="monospace">고정폭</option>
+                </select>
+                <button type="button" id="pairLogFontApply">글꼴 적용</button>
+                <button type="button" id="pairLogPaletteToggle" aria-expanded="false">팔레트</button>
+                <button type="button" id="pairLogDecorToggle" aria-expanded="false">기록물 꾸미기</button>
                 <button type="button" id="pairLogInsertImage">＋ 이미지</button>
+                <button type="button" id="pairLogInsertImageUrl">이미지 URL</button>
                 <button type="button" id="pairLogInsertChat">＋ A/B 대화</button>
                 <button type="button" id="pairLogAddA">＋ A 대사</button>
                 <button type="button" id="pairLogAddB">＋ B 대사</button>
                 <input id="pairLogImageInput" type="file" accept="image/*" hidden>
+              </div>
+              <div class="pair-log-feature-panel hidden" id="pairLogPalettePanel">
+                <div class="pair-log-palette-head">
+                  <button type="button" class="active" data-pair-log-color-target="text">글자색</button>
+                  <button type="button" data-pair-log-color-target="highlight">형광펜</button>
+                  <label title="직접 색 선택"><input type="color" id="pairLogPaletteColor" value="#7798aa" aria-label="직접 색 선택"></label>
+                  <input type="text" id="pairLogPaletteHex" maxlength="9" placeholder="#RRGGBB" aria-label="HEX 색상 코드">
+                  <button type="button" id="pairLogPaletteApply">적용</button>
+                  <button type="button" id="pairLogPaletteSave">＋ 색 저장</button>
+                </div>
+                <div class="pair-log-palette-pagebar">
+                  <button type="button" id="pairLogPalettePrev" aria-label="이전 색 계열">‹</button>
+                  <select id="pairLogPaletteJump" aria-label="색 계열 선택"></select>
+                  <span id="pairLogPalettePageCount">1 / 19</span>
+                  <button type="button" id="pairLogPaletteNext" aria-label="다음 색 계열">›</button>
+                </div>
+                <div class="pair-log-palette-grid" id="pairLogPaletteGrid"></div>
+                <div class="pair-log-palette-saved" id="pairLogPaletteSaved"></div>
+              </div>
+              <div class="pair-log-feature-panel hidden" id="pairLogDecorPanel">
+                <span>본문에 삽입할 기록물</span>
+                <div class="pair-log-template-actions">
+                  <button type="button" data-pair-log-template="memo">메모지</button>
+                  <button type="button" data-pair-log-template="memo-lined">줄노트</button>
+                  <button type="button" data-pair-log-template="sticky">포스트잇</button>
+                  <button type="button" data-pair-log-template="email">이메일</button>
+                  <button type="button" data-pair-log-template="letter">편지</button>
+                  <button type="button" data-pair-log-template="polaroid">폴라로이드</button>
+                  <button type="button" data-pair-log-template="dossier">기밀 문서</button>
+                  <button type="button" data-pair-log-template="receipt">영수증</button>
+                  <button type="button" data-pair-log-template="section">접이식 섹션</button>
+                </div>
+              </div>
+              <div class="pair-log-secret-settings">
+                <label><input type="checkbox" id="pairLogSecretToggle"> 🔒 비밀글로 저장</label>
+                <div class="pair-log-secret-fields hidden" id="pairLogSecretFields">
+                  <input type="password" id="pairLogSecretPassword" autocomplete="new-password" placeholder="비밀번호">
+                  <input type="password" id="pairLogSecretPasswordConfirm" autocomplete="new-password" placeholder="비밀번호 확인">
+                  <small>제목·부제·플랫폼·분류·태그·본문을 암호화해. 날짜와 페어 연결 정보는 목록에 표시돼. 비밀번호를 잊으면 복구할 수 없어.</small>
+                </div>
               </div>
               <div class="pair-log-editor" id="pairLogRichEditor" contenteditable="true" spellcheck="false" data-placeholder="RP 원문을 작성하거나 붙여 넣어 주세요. 긴 글, 이미지, A/B 대화 레이아웃을 함께 보관할 수 있어."></div>
               <div class="pair-log-editor-note">서식과 이미지, 캐릭터별 말풍선이 포함된 본문으로 저장됩니다.</div>
@@ -2072,7 +2174,7 @@
 
   <script>
 (() => {
-  // P. Toolbox v41: repaired crop dialog markup; storage keys and data formats intentionally preserved.
+  // P. Toolbox v43: pair-log editor feature import; storage keys and data formats intentionally preserved.
   const ROOMS_KEY = 'promptToolbox.rooms.v28';
   const RESET_KEY = 'promptToolbox.v28.roomResetDone';
   const REMEMBERED_ROOM_KEY = 'promptToolbox.v30.rememberedRoom';
@@ -7238,27 +7340,66 @@ function applyBackupTemplate(template) {
       renderPairPhotoPostDetail();
     }
 
+    function sanitizePairLogStyle(raw) {
+      const allowed = new Set(['color','background-color','font-family','font-size','font-weight','font-style','text-decoration','text-align']);
+      const safe = [];
+      String(raw || '').split(';').forEach(part => {
+        const colon = part.indexOf(':'); if (colon < 1) return;
+        const property = part.slice(0, colon).trim().toLowerCase();
+        let value = part.slice(colon + 1).trim();
+        if (!allowed.has(property) || !value || /url\s*\(|expression|javascript:|[{}<>]/i.test(value)) return;
+        if (property === 'color' || property === 'background-color') {
+          if (!/^(#[0-9a-f]{3,8}|rgba?\([0-9\s.,%]+\)|hsla?\([0-9\s.,%]+\)|transparent|inherit|currentcolor)$/i.test(value)) return;
+        } else if (property === 'font-family') {
+          if (!/^[a-z0-9 _,'"-]{1,100}$/i.test(value)) return;
+        } else if (property === 'font-size') {
+          if (!/^(\d+(\.\d+)?)(px|pt|em|rem|%)$/i.test(value)) return;
+        } else if (property === 'font-weight') {
+          if (!/^(normal|bold|[1-9]00)$/i.test(value)) return;
+        } else if (property === 'font-style') {
+          if (!/^(normal|italic|oblique)$/i.test(value)) return;
+        } else if (property === 'text-decoration') {
+          if (!/^(none|underline|line-through|overline)$/i.test(value)) return;
+        } else if (property === 'text-align') {
+          if (!/^(left|right|center|justify)$/i.test(value)) return;
+        }
+        safe.push(`${property}:${value}`);
+      });
+      return safe.join(';');
+    }
+
     function sanitizePairLogHtml(source, editable = false) {
       const doc = new DOMParser().parseFromString(`<div>${String(source || '')}</div>`, 'text/html');
       const root = doc.body.firstElementChild;
       root.querySelectorAll('script,style,iframe,object,embed,form,input,button,link,meta,video,audio,svg,math').forEach(node => node.remove());
-      const allowed = new Set(['DIV','P','BR','SPAN','STRONG','B','EM','I','U','S','BLOCKQUOTE','PRE','UL','OL','LI','H2','H3','H4','IMG','A']);
+      const allowed = new Set(['DIV','P','BR','SPAN','STRONG','B','EM','I','U','S','DEL','MARK','CODE','SMALL','BLOCKQUOTE','PRE','UL','OL','LI','H2','H3','H4','HR','IMG','A','DETAILS','SUMMARY','SECTION','ARTICLE']);
+      const templateClasses = new Set(['pair-log-template','pair-log-template-memo','pair-log-template-memo-lined','pair-log-template-sticky','pair-log-template-email','pair-log-template-letter','pair-log-template-polaroid','pair-log-template-dossier','pair-log-template-receipt','pair-log-template-section','pair-log-template-body']);
       [...root.querySelectorAll('*')].reverse().forEach(node => {
         if (!allowed.has(node.tagName)) { node.replaceWith(...node.childNodes); return; }
         [...node.attributes].forEach(attr => {
           const name = attr.name.toLowerCase();
-          if (name.startsWith('on') || name === 'contenteditable' || name === 'data-pair-temp' || name === 'style') node.removeAttribute(attr.name);
-          else if (name === 'class') {
-            const classes = attr.value.split(/\s+/).filter(value => /^pair-log-(?:chat-layout|chat-head|chat-row|avatar|message|name|bubble)$/.test(value) || ((node.classList.contains('pair-log-chat-row')) && ['a','b'].includes(value)));
+          if (name.startsWith('on') || name === 'contenteditable' || name === 'data-pair-temp') node.removeAttribute(attr.name);
+          else if (name === 'style') {
+            const clean = sanitizePairLogStyle(attr.value);
+            if (clean) node.setAttribute('style', clean); else node.removeAttribute('style');
+          } else if (name === 'class') {
+            const classes = attr.value.split(/\s+/).filter(value => /^pair-log-(?:chat-layout|chat-head|chat-row|avatar|message|name|bubble)$/.test(value) || templateClasses.has(value) || ((node.classList.contains('pair-log-chat-row')) && ['a','b'].includes(value)));
             if (classes.length) node.className = classes.join(' '); else node.removeAttribute('class');
+          } else if (name === 'data-pair-log-template-label') {
+            if (attr.value !== '1' && attr.value !== '') node.removeAttribute(attr.name);
+          } else if (name === 'data-pair-template') {
+            if (!['memo','memo-lined','sticky','email','letter','polaroid','dossier','receipt','section'].includes(attr.value)) node.removeAttribute(attr.name);
+          } else if (node.tagName === 'DETAILS' && name === 'open') {
+            node.setAttribute('open','');
           } else if (node.tagName === 'IMG' && name === 'src') {
-            if (!/^data:image\/(?:png|jpe?g|webp|gif);base64,/i.test(attr.value) && !/^https:\/\//i.test(attr.value)) node.removeAttribute('src');
+            if (!/^data:image\/(?:png|jpe?g|webp|gif|avif|bmp);base64,/i.test(attr.value) && !/^https:\/\//i.test(attr.value)) node.removeAttribute('src');
           } else if (node.tagName === 'A' && name === 'href') {
             if (!/^https?:\/\//i.test(attr.value)) node.removeAttribute('href');
           } else if (!['src','alt','title','href','target','rel'].includes(name)) node.removeAttribute(attr.name);
         });
         if (editable) {
-          if (node.classList.contains('pair-log-name') || node.classList.contains('pair-log-bubble')) node.setAttribute('contenteditable','true');
+          if (node.classList.contains('pair-log-name') || node.classList.contains('pair-log-bubble') || node.classList.contains('pair-log-template')) node.setAttribute('contenteditable','true');
+          else if (node.tagName === 'SUMMARY' && node.closest('.pair-log-template-section')) node.setAttribute('contenteditable','true');
           else if (node.classList.contains('pair-log-chat-layout') || node.classList.contains('pair-log-chat-head') || node.classList.contains('pair-log-chat-row') || node.classList.contains('pair-log-avatar')) node.setAttribute('contenteditable','false');
         }
         if (node.tagName === 'A') { node.setAttribute('target','_blank'); node.setAttribute('rel','noopener noreferrer'); }
@@ -7270,7 +7411,7 @@ function applyBackupTemplate(template) {
     function pairLogPlainText(html) {
       const doc = new DOMParser().parseFromString(String(html || ''), 'text/html');
       const root = doc.body;
-      const blocks = new Set(['DIV','P','BLOCKQUOTE','PRE','LI','H2','H3','H4']);
+      const blocks = new Set(['DIV','P','BLOCKQUOTE','PRE','LI','H2','H3','H4','SECTION','ARTICLE']);
       function walk(node) {
         if (node.nodeType === Node.TEXT_NODE) return node.nodeValue || '';
         if (node.nodeType !== Node.ELEMENT_NODE && node.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) return '';
@@ -7282,28 +7423,229 @@ function applyBackupTemplate(template) {
       return walk(root).replace(/\u00a0/g,' ').replace(/\n{3,}/g,'\n\n').trim();
     }
 
+    const PAIR_LOG_SECRET_ITERATIONS = 310000;
+    const pairLogSecretCache = new Map();
+    const pairLogPaletteDefaults = ['#7798aa','#6f7f91','#8c7aa8','#bb7c8f','#b78554','#4f9c91','#5d8ec1','#c65c68','#333333','#fff0a6','#f8d4df','#d8e8ff','#d4f0dc','#e8dafa','#ffdfc2','#cdeff1'];
+    const pairLogPaletteHues = [0,18,32,45,58,75,100,125,150,175,195,215,235,255,280,305,330,350];
+    const pairLogPaletteNames = ['빨강','코랄','주황','앰버','노랑','연두','라임','초록','민트','청록','시안','하늘','파랑','인디고','남보라','보라','자주','장미'];
+    const pairLogPaletteLightness = [94,86,78,70,62,54,46,38,30,22];
+    const pairLogPaletteSaturation = [16,25,34,43,52,61,70,79,88,100];
+    const pairLogPaletteNeutrals = ['#ffffff','#f4f4f4','#e1e3e5','#c9cdd0','#aeb4b9','#929ba1','#778188','#5b666e','#414b53','#2d343a','#171b1e','#000000'];
+    let pairLogPalettePage = 0;
+    let pairLogPaletteTarget = 'text';
+    let pairLogSavedColors = [];
+    let pairLogHistory = [];
+    let pairLogHistoryIndex = -1;
+    let pairLogHistoryTimer = null;
+    let pairLogOpenAfterUnlock = null;
+
+    function pairLogPaletteKey() {
+      return 'PToolboxPairLogPaletteV1_' + String(window.__ptRoomKey || 'default').replace(/[^a-zA-Z0-9_-]/g,'_');
+    }
+    function pairLogReadSavedColors() {
+      try {
+        const data = JSON.parse(localStorage.getItem(pairLogPaletteKey()) || '[]');
+        pairLogSavedColors = Array.isArray(data) ? [...new Set(data.map(pairLogNormalizeHex).filter(Boolean))].filter(c => !pairLogPaletteBuiltIns.has(c)).slice(0,128) : [];
+      } catch (_) { pairLogSavedColors = []; }
+    }
+    function pairLogStoreSavedColors() {
+      try { localStorage.setItem(pairLogPaletteKey(), JSON.stringify(pairLogSavedColors)); return true; }
+      catch (_) { setStatus('팔레트 저장 공간이 부족합니다.'); return false; }
+    }
+    function pairLogNormalizeHex(value) {
+      let c=String(value ?? '').trim().replace(/^#/,'');
+      if (/^[0-9a-f]{3}$/i.test(c)) c=c.split('').map(ch=>ch+ch).join('');
+      return /^[0-9a-f]{6}$/i.test(c) ? '#'+c.toLowerCase() : '';
+    }
+    function pairLogHslToHex(h,s,l) {
+      h=((h%360)+360)%360;s/=100;l/=100;
+      const a=s*Math.min(l,1-l),f=n=>{const k=(n+h/30)%12;return Math.round(255*(l-a*Math.max(-1,Math.min(k-3,Math.min(9-k,1))))).toString(16).padStart(2,'0')};
+      return '#'+f(0)+f(8)+f(4);
+    }
+    const pairLogPaletteBuiltIns=new Set([...pairLogPaletteDefaults,...pairLogPaletteNeutrals,...pairLogPaletteHues.flatMap(h=>pairLogPaletteLightness.flatMap(l=>pairLogPaletteSaturation.map(sat=>pairLogHslToHex(h,sat,l))))]);
+    function pairLogPaletteButton(color, saved=false) {
+      const button=document.createElement('button');button.type='button';button.style.background=color;button.title=color;button.setAttribute('aria-label',color+' 적용');button.dataset.pairLogPalettePick=color;
+      if(saved)button.className='is-saved';
+      return button;
+    }
+    function renderPairLogPalette() {
+      const grid=document.getElementById('pairLogPaletteGrid');if(!grid)return;
+      const total=pairLogPaletteHues.length+1;pairLogPalettePage=Math.max(0,Math.min(total-1,pairLogPalettePage));
+      const colors=pairLogPalettePage===0?pairLogPaletteNeutrals:pairLogPaletteLightness.flatMap(l=>pairLogPaletteSaturation.map(sat=>pairLogHslToHex(pairLogPaletteHues[pairLogPalettePage-1],sat,l)));
+      grid.classList.toggle('neutral',pairLogPalettePage===0);grid.replaceChildren(...colors.map(c=>pairLogPaletteButton(c)));
+      const jump=document.getElementById('pairLogPaletteJump');
+      if(jump && !jump.dataset.ready){jump.innerHTML='<option value="0">무채색</option>'+pairLogPaletteNames.map((name,i)=>`<option value="${i+1}">${name}</option>`).join('');jump.dataset.ready='1';}
+      if(jump)jump.value=String(pairLogPalettePage);
+      const count=document.getElementById('pairLogPalettePageCount');if(count)count.textContent=`${pairLogPalettePage+1} / ${total}`;
+      const prev=document.getElementById('pairLogPalettePrev'),next=document.getElementById('pairLogPaletteNext');if(prev)prev.disabled=pairLogPalettePage===0;if(next)next.disabled=pairLogPalettePage===total-1;
+      document.querySelectorAll('[data-pair-log-color-target]').forEach(button=>button.classList.toggle('active',button.dataset.pairLogColorTarget===pairLogPaletteTarget));
+      const saved=document.getElementById('pairLogPaletteSaved');if(saved){saved.replaceChildren();if(!pairLogSavedColors.length){const note=document.createElement('small');note.textContent='저장한 색이 여기에 표시됩니다.';saved.appendChild(note);}pairLogSavedColors.forEach(color=>{const item=document.createElement('span');item.className='pair-log-saved-color';const pick=pairLogPaletteButton(color,true);const remove=document.createElement('button');remove.type='button';remove.textContent='×';remove.title=color+' 삭제';remove.dataset.pairLogPaletteRemove=color;item.append(pick,remove);saved.appendChild(item);});}
+    }
+    function pairLogSetPaletteColor(color) {
+      const c=pairLogNormalizeHex(color);if(!c)return;
+      const input=document.getElementById('pairLogPaletteColor'),hex=document.getElementById('pairLogPaletteHex');if(input)input.value=c;if(hex)hex.value=c.toUpperCase();
+    }
+    function pairLogApplyColor(color) {
+      const c=pairLogNormalizeHex(color);if(!c){setStatus('올바른 HEX 색상 코드를 입력해주세요.');return;}
+      const editor=document.getElementById('pairLogRichEditor');restorePairLogRange();const selection=window.getSelection();
+      if(!selection||!selection.rangeCount||selection.isCollapsed||!editor.contains(selection.anchorNode)||!editor.contains(selection.focusNode)){setStatus('본문에서 글자를 먼저 선택해주세요.');return;}
+      try {
+        document.execCommand('styleWithCSS',false,true);
+        const command=pairLogPaletteTarget==='text'?'foreColor':'hiliteColor';
+        const before=editor.innerHTML;document.execCommand(command,false,c);
+        if(pairLogPaletteTarget==='highlight'&&editor.innerHTML===before)document.execCommand('backColor',false,c);
+      } catch (_) {}
+      capturePairLogRange();pairLogHistorySnapshot();
+    }
+    function pairLogSavePaletteColor() {
+      const color=pairLogNormalizeHex(document.getElementById('pairLogPaletteColor')?.value||'');
+      if(!color){setStatus('저장할 색을 선택해주세요.');return;}
+      if(pairLogPaletteBuiltIns.has(color)||pairLogSavedColors.includes(color)){setStatus('이미 팔레트에 있는 색입니다.');return;}
+      if(pairLogSavedColors.length>=128){setStatus('사용자 색상은 최대 128개까지 저장할 수 있습니다.');return;}
+      pairLogSavedColors.push(color);if(pairLogStoreSavedColors())renderPairLogPalette();
+    }
+    function pairLogPaletteRemove(color) {
+      const c=pairLogNormalizeHex(color);if(!c)return;pairLogSavedColors=pairLogSavedColors.filter(x=>x!==c);if(pairLogStoreSavedColors())renderPairLogPalette();
+    }
+    function pairLogCaptureSelectionOnToolbar(event) {
+      if(event.target.closest('button,select,input')){capturePairLogRange();if(event.type==='mousedown'&&event.target.tagName==='BUTTON')event.preventDefault();}
+    }
+    function pairLogHistoryUpdateButtons() {
+      const undo=document.getElementById('pairLogUndo'),redo=document.getElementById('pairLogRedo');
+      if(undo)undo.disabled=pairLogHistoryIndex<=0;if(redo)redo.disabled=pairLogHistoryIndex<0||pairLogHistoryIndex>=pairLogHistory.length-1;
+    }
+    function pairLogHistorySnapshot() {
+      const editor=document.getElementById('pairLogRichEditor');if(!editor)return;
+      const html=editor.innerHTML;
+      if(pairLogHistoryIndex>=0&&pairLogHistory[pairLogHistoryIndex]===html)return;
+      pairLogHistory=pairLogHistory.slice(0,pairLogHistoryIndex+1);pairLogHistory.push(html);
+      if(pairLogHistory.length>100){pairLogHistory.shift();}
+      pairLogHistoryIndex=pairLogHistory.length-1;pairLogHistoryUpdateButtons();
+    }
+    function pairLogHistoryInit() {
+      clearTimeout(pairLogHistoryTimer);const editor=document.getElementById('pairLogRichEditor');pairLogHistory=[editor?.innerHTML||''];pairLogHistoryIndex=0;pairLogHistoryUpdateButtons();
+    }
+    function pairLogHistoryQueue() {
+      clearTimeout(pairLogHistoryTimer);pairLogHistoryTimer=setTimeout(pairLogHistorySnapshot,220);
+    }
+    function pairLogHistoryMove(direction) {
+      clearTimeout(pairLogHistoryTimer);
+      if(direction<0) pairLogHistorySnapshot();
+      const next=pairLogHistoryIndex+direction;if(next<0||next>=pairLogHistory.length)return;
+      pairLogHistoryIndex=next;const editor=document.getElementById('pairLogRichEditor');editor.innerHTML=pairLogHistory[pairLogHistoryIndex];
+      pairLogSavedRange=null;const range=document.createRange();range.selectNodeContents(editor);range.collapse(false);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);pairLogSavedRange=range.cloneRange();pairLogHistoryUpdateButtons();
+    }
+    function pairLogMakeTemplate(type) {
+      const wrapper=document.createElement(type==='section'?'details':'div');
+      wrapper.className='pair-log-template pair-log-template-'+type;wrapper.dataset.pairTemplate=type;wrapper.contentEditable='true';
+      const label=(text)=>{const el=document.createElement('span');el.dataset.pairLogTemplateLabel='1';el.textContent=text;return el;};
+      const paragraph=(text)=>{const el=document.createElement('p');el.textContent=text;return el;};
+      if(type==='section'){
+        wrapper.open=true;const summary=document.createElement('summary');summary.textContent='SECTION · 제목을 입력';summary.contentEditable='true';const body=document.createElement('div');body.className='pair-log-template-body';body.textContent='이곳에 내용을 입력하세요.';wrapper.append(summary,body);
+      } else if(type==='memo'||type==='memo-lined'||type==='sticky') {
+        wrapper.append(label(type==='sticky'?'JUST A NOTE':type==='memo-lined'?'TEAR-OFF NOTE':'PERSONAL NOTE'),paragraph('이곳에 내용을 기록하세요.'),paragraph(new Date().toISOString().slice(0,10).replace(/-/g,'.')));
+      } else if(type==='email') {
+        wrapper.append(label('E-MAIL'));wrapper.append(paragraph('FROM · 발신자'),paragraph('TO · 수신자'),paragraph('SUBJECT · 제목'),paragraph('본문을 입력하세요.'));
+      } else if(type==='letter') {
+        wrapper.append(label('LETTER'));wrapper.append(paragraph('받는 사람에게,'),paragraph('편지 내용을 입력하세요.'),paragraph('보내는 사람'));
+      } else if(type==='polaroid') {
+        wrapper.append(label('PHOTO / MEMORY'));const photo=paragraph('사진은 상단의 이미지 삽입으로 추가하세요.');photo.dataset.pairLogTemplateLabel='';wrapper.append(photo,paragraph('사진 설명을 입력하세요.'));
+      } else if(type==='dossier') {
+        wrapper.append(label('CONFIDENTIAL DOSSIER'),paragraph('CASE NO. · 사건 번호'),paragraph('SUBJECT · 대상'),paragraph('기록 내용을 입력하세요.'));
+      } else if(type==='receipt') {
+        wrapper.append(label('RECEIPT'),paragraph('DATE · 날짜'),paragraph('ITEM · 항목'),paragraph('NOTE · 메모'));
+      }
+      return wrapper;
+    }
+    function insertPairLogTemplate(type) {
+      const allowed=['memo','memo-lined','sticky','email','letter','polaroid','dossier','receipt','section'];if(!allowed.includes(type))return;
+      insertPairLogNode(pairLogMakeTemplate(type));pairLogHistorySnapshot();
+      document.getElementById('pairLogDecorPanel')?.classList.add('hidden');document.getElementById('pairLogDecorToggle')?.setAttribute('aria-expanded','false');
+    }
+    function pairLogBytesToB64(bytes) { let binary='';for(let i=0;i<bytes.length;i+=0x8000)binary+=String.fromCharCode(...bytes.subarray(i,i+0x8000));return btoa(binary); }
+    function pairLogB64ToBytes(value) { const raw=atob(value);const bytes=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);return bytes; }
+    async function pairLogDeriveSecretKey(password,salt,iterations=PAIR_LOG_SECRET_ITERATIONS) {
+      if(!window.crypto?.subtle)throw new Error('이 브라우저에서는 비밀글 암호화를 사용할 수 없습니다. HTTPS 주소에서 다시 열어주세요.');
+      const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(password),'PBKDF2',false,['deriveKey']);
+      return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations,hash:'SHA-256' },material,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+    }
+    async function pairLogEncryptSecret(payload,password,existing=null) {
+      const salt=existing?.salt?pairLogB64ToBytes(existing.salt):crypto.getRandomValues(new Uint8Array(16));
+      const iv=crypto.getRandomValues(new Uint8Array(12));const iterations=existing?.iterations||PAIR_LOG_SECRET_ITERATIONS;
+      const key=existing?.key||await pairLogDeriveSecretKey(password,salt,iterations);
+      const plain=new TextEncoder().encode(JSON.stringify(payload));const cipher=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,plain);
+      return {record:{version:1,kdf:'PBKDF2-SHA-256',iterations,salt:pairLogBytesToB64(salt),iv:pairLogBytesToB64(iv),data:pairLogBytesToB64(new Uint8Array(cipher))},key,salt:pairLogBytesToB64(salt),iterations};
+    }
+    async function pairLogDecryptSecret(record,password) {
+      const payloadRecord=record?.secretPayload;if(!payloadRecord?.salt||!payloadRecord?.iv||!payloadRecord?.data)throw new Error('비밀글 암호 데이터가 올바르지 않습니다.');
+      const salt=pairLogB64ToBytes(payloadRecord.salt),iv=pairLogB64ToBytes(payloadRecord.iv),iterations=Number(payloadRecord.iterations)||PAIR_LOG_SECRET_ITERATIONS;
+      const key=await pairLogDeriveSecretKey(password,salt,iterations);const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv},key,pairLogB64ToBytes(payloadRecord.data));
+      return {payload:JSON.parse(new TextDecoder().decode(plain)),key,salt:payloadRecord.salt,iterations};
+    }
+    function pairLogPromptSecret(record,mode='view') {
+      const cached=pairLogSecretCache.get(record.id);if(cached){if(mode==='edit')openPairLogEditor(record,cached.payload);else{pairLogOpenAfterUnlock=record.id;renderPairChatLogs();}return;}
+      const overlay=document.createElement('div');overlay.className='pair-log-secret-overlay';overlay.innerHTML='<div class="pair-log-secret-dialog" role="dialog" aria-modal="true" aria-label="비밀글 잠금 해제"><form><strong>🔒 비밀글 잠금 해제</strong><p>이 게시글의 비밀번호를 입력하세요.</p><input type="password" name="pair-log-secret-password" autocomplete="current-password" placeholder="비밀번호"><div class="pair-log-secret-error" aria-live="polite"></div><div style="display:flex;justify-content:flex-end;gap:6px"><button type="button" data-secret-cancel>취소</button><button type="submit">열기</button></div></form></div>';
+      document.body.appendChild(overlay);const form=overlay.querySelector('form'),input=form.querySelector('input'),error=overlay.querySelector('.pair-log-secret-error');
+      const close=()=>overlay.remove();overlay.addEventListener('click',event=>{if(event.target===overlay)close();});overlay.querySelector('[data-secret-cancel]').addEventListener('click',close);
+      form.addEventListener('submit',async event=>{event.preventDefault();if(!input.value){error.textContent='비밀번호를 입력해주세요.';return;}const submit=form.querySelector('[type="submit"]');submit.disabled=true;
+        try {const result=await pairLogDecryptSecret(record,input.value);if(!result.payload||typeof result.payload!=='object'||Array.isArray(result.payload))throw new Error('비밀글 데이터 형식 오류');pairLogSecretCache.set(record.id,result);close();
+          if(mode==='edit')openPairLogEditor(record,result.payload);else{pairLogOpenAfterUnlock=record.id;renderPairChatLogs();}
+        } catch(errorValue) {error.textContent=String(errorValue?.message||'').includes('HTTPS')?'HTTPS 주소에서 다시 열어주세요.':'비밀번호가 틀렸습니다.';input.select();submit.disabled=false;}
+      });input.focus();
+    }
+
     function renderPairChatLogs() {
       const wrap=document.getElementById('pairChatLogs');wrap.replaceChildren();
-      const logs=pairLogRecords(currentPairId);
-      if(!logs.length){const empty=document.createElement('div');empty.className='backup-empty';empty.textContent='아직 저장된 대화 로그가 없습니다.';wrap.appendChild(empty);return;}
+      const query=(document.getElementById('pairLogSearchInput')?.value||'').trim().toLowerCase();
+      const sort=document.getElementById('pairLogSort')?.value||'recent';
+      const favoritesOnly=!!document.getElementById('pairLogFavoritesOnly')?.checked;
+      let logs=pairLogRecords(currentPairId).filter(log=>{
+        if(favoritesOnly&&!log.favorite)return false;
+        if(!query)return true;
+        const cached=log.secret?pairLogSecretCache.get(log.id):null;
+        const unlocked=!!cached?.payload;
+        const data=unlocked?{...log,...cached.payload}:log;
+        const safeTitle=log.secret&&!unlocked?'비밀글':(data.title||'');
+        const content=log.secret&&!unlocked?'':(data.contentHtml?pairLogPlainText(data.contentHtml):(data.content||''));
+        return [safeTitle,log.date,data.subtitle,data.platform,data.category,...(data.tags||[]),content].join(' ').toLowerCase().includes(query);
+      });
+      if(sort==='oldest')logs.sort((a,b)=>String(a.updatedAt||a.createdAt||'').localeCompare(String(b.updatedAt||b.createdAt||'')));
+      else if(sort==='title'){
+        const titleOf=item=>{const cached=item.secret?pairLogSecretCache.get(item.id):null;return item.secret&&!cached?.payload?'비밀글':(cached?.payload?.title||item.title||'');};
+        logs.sort((a,b)=>titleOf(a).localeCompare(titleOf(b),'ko'));
+      } else logs.sort((a,b)=>String(b.updatedAt||b.createdAt||'').localeCompare(String(a.updatedAt||a.createdAt||'')));
+      if(!logs.length){const empty=document.createElement('div');empty.className='backup-empty';empty.textContent=query||favoritesOnly?'조건에 맞는 RP 로그가 없습니다.':'아직 저장된 대화 로그가 없습니다.';wrap.appendChild(empty);pairLogOpenAfterUnlock=null;return;}
       logs.forEach(log=>{
+        const secretCache=log.secret?pairLogSecretCache.get(log.id):null;
+        const unlocked=!!(secretCache&&secretCache.payload);
         const details=document.createElement('details');details.className='pair-chat-item';
-        const summary=document.createElement('summary');summary.textContent=log.title||'Untitled log';
+        if(pairLogOpenAfterUnlock===log.id)details.open=true;
+        const summary=document.createElement('summary');
+        summary.textContent=(log.favorite?'★ ':'')+(log.secret&&!unlocked?'🔒 비밀글':(unlocked?secretCache.payload.title:(log.title||'Untitled log')));
         const date=document.createElement('small');date.textContent=log.date||new Date(log.updatedAt||log.createdAt||Date.now()).toLocaleDateString('ko-KR');summary.appendChild(date);
         const body=document.createElement('div');body.className='pair-chat-body';
+        const makeFavoriteButton=()=>{const favorite=document.createElement('button');favorite.type='button';favorite.className='pair-log-favorite'+(log.favorite?' is-active':'');favorite.textContent=log.favorite?'★ 즐겨찾기 해제':'☆ 즐겨찾기';favorite.addEventListener('click',async()=>{try{await saveRoomRecord({...log,favorite:!log.favorite,updatedAt:new Date().toISOString()});renderPairChatLogs();setStatus(log.favorite?'즐겨찾기를 해제했습니다.':'즐겨찾기에 추가했습니다.');}catch(error){setStatus(error.message||'즐겨찾기 변경 실패');}});return favorite;};
+        if(log.secret&&!unlocked){
+          const note=document.createElement('div');note.className='pair-log-locked-note';note.textContent='제목과 본문이 잠겨 있습니다. 비밀번호를 입력하면 내용을 확인할 수 있습니다.';
+          const unlock=document.createElement('button');unlock.type='button';unlock.textContent='UNLOCK';unlock.addEventListener('click',()=>pairLogPromptSecret(log,'view'));
+          const remove=document.createElement('button');remove.type='button';remove.textContent='DELETE';remove.addEventListener('click',async()=>{if(!confirm('이 비밀글을 삭제할까요?'))return;try{await deleteRoomRecord(log.id);pairLogSecretCache.delete(log.id);renderPairChatLogs();setStatus('비밀글을 삭제했습니다.');}catch(e){setStatus(e.message||'삭제 실패');}});
+          const actions=document.createElement('div');actions.className='pair-chat-actions';actions.append(unlock,makeFavoriteButton(),remove);body.append(note,actions);details.append(summary,body);wrap.appendChild(details);return;
+        }
+        const data=unlocked?{...log,...secretCache.payload}:log;
         const meta=document.createElement('div');meta.className='pair-chat-meta';
-        [log.subtitle,log.platform,log.category].filter(Boolean).forEach(value=>{const span=document.createElement('span');span.textContent=value;meta.appendChild(span);});
-        const tags=document.createElement('div');tags.className='pair-chat-tags';(log.tags||[]).forEach(value=>{const span=document.createElement('span');span.textContent=`#${value}`;tags.appendChild(span);});
+        [data.subtitle,data.platform,data.category].filter(Boolean).forEach(value=>{const span=document.createElement('span');span.textContent=value;meta.appendChild(span);});
+        const tags=document.createElement('div');tags.className='pair-chat-tags';(data.tags||[]).forEach(value=>{const span=document.createElement('span');span.textContent=`#${value}`;tags.appendChild(span);});
         const content=document.createElement('div');content.className='pair-chat-rich';
-        if(log.contentHtml) content.innerHTML=sanitizePairLogHtml(log.contentHtml);
-        else content.textContent=log.content||'';
+        if(data.contentHtml) content.innerHTML=sanitizePairLogHtml(data.contentHtml);
+        else content.textContent=data.content||'';
         const actions=document.createElement('div');actions.className='pair-chat-actions';
-        const copy=document.createElement('button');copy.type='button';copy.textContent='COPY';copy.addEventListener('click',()=>copyText(log.contentHtml?pairLogPlainText(log.contentHtml):(log.content||''),'대화 로그를 복사했습니다.'));
-        const edit=document.createElement('button');edit.type='button';edit.textContent='EDIT';edit.addEventListener('click',()=>openPairLogEditor(log));
-        const remove=document.createElement('button');remove.type='button';remove.textContent='DELETE';remove.addEventListener('click',async()=>{if(!confirm('이 대화 로그를 삭제할까요?'))return;try{await deleteRoomRecord(log.id);renderPairChatLogs();setStatus('대화 로그를 삭제했습니다.');}catch(e){setStatus(e.message||'삭제 실패');}});
-        actions.append(copy,edit,remove);
+        const copy=document.createElement('button');copy.type='button';copy.textContent='COPY';copy.addEventListener('click',()=>copyText(data.contentHtml?pairLogPlainText(data.contentHtml):(data.content||''),'대화 로그를 복사했습니다.'));
+        const edit=document.createElement('button');edit.type='button';edit.textContent='EDIT';edit.addEventListener('click',()=>openPairLogEditor(log,unlocked?data:null));
+        const remove=document.createElement('button');remove.type='button';remove.textContent='DELETE';remove.addEventListener('click',async()=>{if(!confirm('이 대화 로그를 삭제할까요?'))return;try{await deleteRoomRecord(log.id);pairLogSecretCache.delete(log.id);renderPairChatLogs();setStatus('대화 로그를 삭제했습니다.');}catch(e){setStatus(e.message||'삭제 실패');}});
+        actions.append(copy,edit,makeFavoriteButton(),remove);
         body.append(meta,tags,content,actions);details.append(summary,body);wrap.appendChild(details);
       });
+      pairLogOpenAfterUnlock=null;
     }
 
     let pairLogSavedRange = null;
@@ -7321,7 +7663,7 @@ function applyBackupTemplate(template) {
       restorePairLogRange();const selection=window.getSelection();let range=selection.rangeCount?selection.getRangeAt(0):null;
       if(!range||!document.getElementById('pairLogRichEditor').contains(range.commonAncestorContainer)){range=document.createRange();range.selectNodeContents(document.getElementById('pairLogRichEditor'));range.collapse(false);}
       range.deleteContents();range.insertNode(node);const after=document.createElement('p');after.innerHTML='<br>';node.after(after);
-      const next=document.createRange();next.setStart(after,0);next.collapse(true);selection.removeAllRanges();selection.addRange(next);pairLogSavedRange=next.cloneRange();
+      const next=document.createRange();next.setStart(after,0);next.collapse(true);selection.removeAllRanges();selection.addRange(next);pairLogSavedRange=next.cloneRange();pairLogHistorySnapshot();
     }
     function makePairLogChatRow(side,name='') {
       const row=document.createElement('div');row.className=`pair-log-chat-row ${side}`;
@@ -7345,22 +7687,31 @@ function applyBackupTemplate(template) {
       if(!layout||!editor.contains(layout)) layout=editor.querySelector('.pair-log-chat-layout:last-of-type');
       if(!layout){layout=makePairLogChatLayout();insertPairLogNode(layout);return;}
       const rows=[...layout.querySelectorAll('.pair-log-chat-row')];const same=rows.filter(row=>row.classList.contains(side));const name=same.length?same[same.length-1].querySelector('.pair-log-name')?.textContent:'';
-      const row=makePairLogChatRow(side,name);layout.appendChild(row);const bubble=row.querySelector('.pair-log-bubble');const range=document.createRange();range.selectNodeContents(bubble);range.collapse(false);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);pairLogSavedRange=range.cloneRange();
+      const row=makePairLogChatRow(side,name);layout.appendChild(row);const bubble=row.querySelector('.pair-log-bubble');const range=document.createRange();range.selectNodeContents(bubble);range.collapse(false);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);pairLogSavedRange=range.cloneRange();pairLogHistorySnapshot();
     }
-    function openPairLogEditor(log=null) {
+    function openPairLogEditor(log=null, unlockedPayload=null) {
+      if(log?.secret&&!unlockedPayload){
+        const cached=pairLogSecretCache.get(log.id);if(cached?.payload)unlockedPayload=cached.payload;
+        else {pairLogPromptSecret(log,'edit');return;}
+      }
       pairLogEditingId=log?.id||null;
-      document.getElementById('pairLogTitleInput').value=log?.title||'';
-      document.getElementById('pairLogSubtitleInput').value=log?.subtitle||'';
-      document.getElementById('pairLogDateInput').value=log?.date||new Date().toISOString().slice(0,10);
-      document.getElementById('pairLogPlatformInput').value=log?.platform||'';
-      document.getElementById('pairLogCategoryInput').value=log?.category||'';
-      document.getElementById('pairLogTagsInput').value=(log?.tags||[]).join(', ');
+      const data=unlockedPayload?{...log,...unlockedPayload}:log;
+      document.getElementById('pairLogTitleInput').value=data?.title||'';
+      document.getElementById('pairLogSubtitleInput').value=data?.subtitle||'';
+      document.getElementById('pairLogDateInput').value=data?.date||new Date().toISOString().slice(0,10);
+      document.getElementById('pairLogPlatformInput').value=data?.platform||'';
+      document.getElementById('pairLogCategoryInput').value=data?.category||'';
+      document.getElementById('pairLogTagsInput').value=(data?.tags||[]).join(', ');
       const editor=document.getElementById('pairLogRichEditor');
-      if(log?.contentHtml) editor.innerHTML=sanitizePairLogHtml(log.contentHtml, true);
-      else if(log?.content) editor.innerHTML=log.content.split(/\r?\n/).map(line=>`<p>${escapeHtml(line)||'<br>'}</p>`).join('');
+      if(data?.contentHtml) editor.innerHTML=sanitizePairLogHtml(data.contentHtml, true);
+      else if(data?.content) editor.innerHTML=data.content.split(/\r?\n/).map(line=>`<p>${escapeHtml(line)||'<br>'}</p>`).join('');
       else editor.innerHTML='';
+      const secretToggle=document.getElementById('pairLogSecretToggle');secretToggle.checked=!!log?.secret;
+      document.getElementById('pairLogSecretFields').classList.toggle('hidden',!secretToggle.checked);
+      document.getElementById('pairLogSecretPassword').value='';document.getElementById('pairLogSecretPasswordConfirm').value='';
       document.getElementById('pairLogComposeHeading').textContent=log?'EDIT RP LOG':'NEW RP LOG';
-      pairLogSavedRange=null;openPairView('logcompose');
+      pairLogSavedRange=null;openPairView('logcompose');pairLogHistoryInit();
+      pairLogReadSavedColors();renderPairLogPalette();
     }
 
     async function savePairLog() {
@@ -7369,7 +7720,7 @@ function applyBackupTemplate(template) {
       const content=pairLogPlainText(contentHtml);
       if(!content.trim()&&!contentHtml.includes('<img')){setStatus('저장할 RP 로그를 입력해주세요.');return;}
       const existing=pairLogRecords(currentPairId).find(item=>item.id===pairLogEditingId);const now=new Date().toISOString();
-      const record={
+      const plain={
         id:pairLogEditingId||makePairId(),kind:'pair-log',pairId:currentPairId,
         title:document.getElementById('pairLogTitleInput').value.trim()||`RP log · ${new Date().toLocaleDateString('ko-KR')}`,
         subtitle:document.getElementById('pairLogSubtitleInput').value.trim(),
@@ -7377,17 +7728,42 @@ function applyBackupTemplate(template) {
         date:document.getElementById('pairLogDateInput').value||new Date().toISOString().slice(0,10),
         category:document.getElementById('pairLogCategoryInput').value.trim(),
         tags:[...new Set(document.getElementById('pairLogTagsInput').value.split(/[，,\n]/).map(value=>value.trim().replace(/^#/,'')).filter(Boolean))],
-        contentHtml,content,createdAt:existing?.createdAt||now,updatedAt:now
+        favorite:!!existing?.favorite,contentHtml,content,createdAt:existing?.createdAt||now,updatedAt:now
       };
-      try{await saveRoomRecord(record);pairLogEditingId=null;renderPairChatLogs();openPairView('detail');setStatus('페어 RP 로그를 저장했습니다.');}
-      catch(error){setStatus(`대화 로그 저장 실패: ${error.message||'다시 시도해주세요.'}`);}
+      const protect=document.getElementById('pairLogSecretToggle').checked;
+      let record=plain;
+      if(protect){
+        const password=document.getElementById('pairLogSecretPassword').value;
+        const confirmPassword=document.getElementById('pairLogSecretPasswordConfirm').value;
+        let encrypted;
+        try {
+          if(password||confirmPassword){
+            if(password!==confirmPassword){setStatus('비밀번호 확인이 일치하지 않습니다.');document.getElementById('pairLogSecretPasswordConfirm').focus();return;}
+            if(password.length<1){setStatus('비밀번호를 입력해주세요.');return;}
+            encrypted=await pairLogEncryptSecret({title:plain.title,subtitle:plain.subtitle,platform:plain.platform,category:plain.category,tags:plain.tags,contentHtml:plain.contentHtml,content:plain.content},password);
+          } else {
+            const cached=existing?.secret?pairLogSecretCache.get(existing.id):null;
+            if(!cached?.key){setStatus('비밀글 비밀번호를 입력해주세요.');document.getElementById('pairLogSecretPassword').focus();return;}
+            encrypted=await pairLogEncryptSecret({title:plain.title,subtitle:plain.subtitle,platform:plain.platform,category:plain.category,tags:plain.tags,contentHtml:plain.contentHtml,content:plain.content},'',{key:cached.key,salt:cached.salt,iterations:cached.iterations});
+          }
+          record={id:plain.id,kind:'pair-log',pairId:currentPairId,title:'비밀글',subtitle:'',platform:'',date:plain.date,category:'',tags:[],favorite:plain.favorite,contentHtml:'',content:'',createdAt:plain.createdAt,updatedAt:plain.updatedAt,secret:true,secretPayload:encrypted.record};
+          pairLogSecretCache.set(record.id,{payload:{title:plain.title,subtitle:plain.subtitle,platform:plain.platform,category:plain.category,tags:plain.tags,contentHtml:plain.contentHtml,content:plain.content},key:encrypted.key,salt:encrypted.salt,iterations:encrypted.iterations});
+        } catch(error) {setStatus(error?.message||'비밀글 암호화에 실패했습니다.');return;}
+      } else if(existing?.secret) {
+        if(!pairLogSecretCache.has(existing.id)){setStatus('비밀글을 먼저 잠금 해제해주세요.');return;}
+        if(!confirm('비밀글 잠금을 해제하고 일반 로그로 저장할까요?'))return;
+        pairLogSecretCache.delete(existing.id);
+      }
+      try {
+        await saveRoomRecord(record);pairLogEditingId=null;renderPairChatLogs();openPairView('detail');setStatus(protect?'비밀글을 암호화해 저장했습니다.':'페어 RP 로그를 저장했습니다.');
+      } catch(error) {setStatus(`대화 로그 저장 실패: ${error.message||'다시 시도해주세요.'}`);}
     }
 
     async function deletePair() {
       const pair=pairRecords().find(item=>item.id===currentPairId);if(!pair)return;
       if(!confirm(`"${pair.title||'페어'}"와 전용 사진·대화 로그를 모두 삭제할까요?`))return;
       const related=backupEntriesData.filter(item=>item.id===currentPairId||((item.kind==='pair-photo'||item.kind==='pair-log')&&item.pairId===currentPairId));
-      try{for(const item of related) await deleteRoomRecord(item.id);currentPairId=null;renderPairCards();openPairView('gallery');setStatus('페어와 연결된 자료를 삭제했습니다.');}
+      try{for(const item of related){await deleteRoomRecord(item.id);if(item.kind==='pair-log')pairLogSecretCache.delete(item.id);}currentPairId=null;renderPairCards();openPairView('gallery');setStatus('페어와 연결된 자료를 삭제했습니다.');}
       catch(error){setStatus(`삭제 실패: ${error.message||'다시 시도해주세요.'}`);}
     }
 
@@ -7405,6 +7781,9 @@ function applyBackupTemplate(template) {
       document.getElementById('pairDeleteButton').addEventListener('click',deletePair);
       document.getElementById('pairAddPhotosButton').addEventListener('click',openPairPhotoComposer);
       document.getElementById('pairAddLogButton').addEventListener('click',()=>openPairLogEditor());
+      document.getElementById('pairLogSearchInput').addEventListener('input',renderPairChatLogs);
+      document.getElementById('pairLogSort').addEventListener('change',renderPairChatLogs);
+      document.getElementById('pairLogFavoritesOnly').addEventListener('change',renderPairChatLogs);
       document.getElementById('pairPhotoCancel').addEventListener('click',()=>openPairView('detail'));
       document.getElementById('pairPhotoSaveButton').addEventListener('click',savePairPhotos);
       document.getElementById('pairPhotoFiles').addEventListener('change',event=>{const files=Array.from(event.target.files||[]).filter(file=>file.type.startsWith('image/'));files.forEach(file=>pairPhotoDraftImages.push({name:file.name,blob:file,crop:{x:50,y:50,zoom:1},ratio:'3/4'}));renderPairPhotoPreview();event.target.value='';});
@@ -7425,11 +7804,49 @@ function applyBackupTemplate(template) {
       document.getElementById('pairLogSaveButton').addEventListener('click',savePairLog);
       const logEditor=document.getElementById('pairLogRichEditor');
       ['mouseup','keyup','input'].forEach(type=>logEditor.addEventListener(type,capturePairLogRange));
+      logEditor.addEventListener('input',pairLogHistoryQueue);
+      logEditor.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'){event.preventDefault();pairLogHistoryMove(event.shiftKey?1:-1);}else if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='y'){event.preventDefault();pairLogHistoryMove(1);}});
       document.getElementById('pairLogToolbar').addEventListener('mousedown',event=>{if(event.target.closest('button'))capturePairLogRange();});
+      document.getElementById('pairLogToolbar').addEventListener('mousedown',pairLogCaptureSelectionOnToolbar);
       document.getElementById('pairLogToolbar').addEventListener('click',event=>{
         const command=event.target.closest('[data-pair-log-command]');if(!command)return;
-        restorePairLogRange();const cmd=command.dataset.pairLogCommand;document.execCommand(cmd,false,command.dataset.pairLogValue||null);capturePairLogRange();
+        const cmd=command.dataset.pairLogCommand;
+        if(cmd==='undo'){pairLogHistoryMove(-1);return;}
+        if(cmd==='redo'){pairLogHistoryMove(1);return;}
+        restorePairLogRange();
+        if(cmd==='formatBlock')document.execCommand('formatBlock',false,command.dataset.pairLogValue||'p');
+        else document.execCommand(cmd,false,command.dataset.pairLogValue||null);
+        capturePairLogRange();pairLogHistorySnapshot();
       });
+      document.getElementById('pairLogPaletteToggle').addEventListener('click',()=>{
+        const panel=document.getElementById('pairLogPalettePanel'),next=panel.classList.contains('hidden');panel.classList.toggle('hidden',!next);
+        document.getElementById('pairLogPaletteToggle').setAttribute('aria-expanded',String(next));if(next){capturePairLogRange();renderPairLogPalette();}
+      });
+      document.getElementById('pairLogDecorToggle').addEventListener('click',()=>{
+        const panel=document.getElementById('pairLogDecorPanel'),next=panel.classList.contains('hidden');panel.classList.toggle('hidden',!next);
+        document.getElementById('pairLogDecorToggle').setAttribute('aria-expanded',String(next));if(next)capturePairLogRange();
+      });
+      document.getElementById('pairLogDecorPanel').addEventListener('mousedown',capturePairLogRange);
+      document.getElementById('pairLogDecorPanel').addEventListener('click',event=>{const button=event.target.closest('[data-pair-log-template]');if(button)insertPairLogTemplate(button.dataset.pairLogTemplate);});
+      document.getElementById('pairLogFontApply').addEventListener('click',()=>{
+        const editor=document.getElementById('pairLogRichEditor');restorePairLogRange();const sel=window.getSelection();
+        if(!sel||!sel.rangeCount||sel.isCollapsed||!editor.contains(sel.anchorNode)||!editor.contains(sel.focusNode)){setStatus('본문에서 글자를 선택한 뒤 글꼴을 적용해주세요.');return;}
+        document.execCommand('styleWithCSS',false,true);document.execCommand('fontName',false,document.getElementById('pairLogFontSelect').value);capturePairLogRange();pairLogHistorySnapshot();
+      });
+      document.getElementById('pairLogPalettePanel').addEventListener('mousedown',capturePairLogSelectionOnToolbar);
+      document.getElementById('pairLogPalettePanel').addEventListener('click',event=>{
+        const target=event.target.closest('[data-pair-log-color-target]');if(target){pairLogPaletteTarget=target.dataset.pairLogColorTarget;renderPairLogPalette();return;}
+        const remove=event.target.closest('[data-pair-log-palette-remove]');if(remove){pairLogPaletteRemove(remove.dataset.pairLogPaletteRemove);return;}
+        const pick=event.target.closest('[data-pair-log-palette-pick]');if(pick){pairLogSetPaletteColor(pick.dataset.pairLogPalettePick);pairLogApplyColor(pick.dataset.pairLogPalettePick);return;}
+      });
+      document.getElementById('pairLogPaletteColor').addEventListener('input',event=>pairLogSetPaletteColor(event.target.value));
+      document.getElementById('pairLogPaletteHex').addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();const c=pairLogNormalizeHex(event.target.value);if(c)pairLogSetPaletteColor(c);else setStatus('HEX 코드를 확인해주세요.');}});
+      document.getElementById('pairLogPaletteApply').addEventListener('click',()=>pairLogApplyColor(document.getElementById('pairLogPaletteColor').value));
+      document.getElementById('pairLogPaletteSave').addEventListener('click',pairLogSavePaletteColor);
+      document.getElementById('pairLogPalettePrev').addEventListener('click',()=>{pairLogPalettePage=Math.max(0,pairLogPalettePage-1);renderPairLogPalette();});
+      document.getElementById('pairLogPaletteNext').addEventListener('click',()=>{pairLogPalettePage=Math.min(pairLogPaletteHues.length,pairLogPalettePage+1);renderPairLogPalette();});
+      document.getElementById('pairLogPaletteJump').addEventListener('change',event=>{pairLogPalettePage=Math.max(0,Math.min(pairLogPaletteHues.length,Number(event.target.value)||0));renderPairLogPalette();});
+      document.getElementById('pairLogSecretToggle').addEventListener('change',event=>document.getElementById('pairLogSecretFields').classList.toggle('hidden',!event.target.checked));
       document.getElementById('pairLogInsertChat').addEventListener('mousedown',capturePairLogRange);
       document.getElementById('pairLogInsertChat').addEventListener('click',()=>insertPairLogNode(makePairLogChatLayout()));
       document.getElementById('pairLogAddA').addEventListener('mousedown',capturePairLogRange);
@@ -7438,6 +7855,11 @@ function applyBackupTemplate(template) {
       document.getElementById('pairLogAddB').addEventListener('click',()=>addPairLogChatSide('b'));
       document.getElementById('pairLogInsertImage').addEventListener('mousedown',capturePairLogRange);
       document.getElementById('pairLogInsertImage').addEventListener('click',()=>document.getElementById('pairLogImageInput').click());
+      document.getElementById('pairLogInsertImageUrl').addEventListener('click',()=>{
+        capturePairLogRange();const raw=prompt('삽입할 HTTPS 이미지 주소를 입력해주세요.');if(raw===null)return;
+        let url='';try{const parsed=new URL(raw.trim());if(parsed.protocol!=='https:')throw new Error();url=parsed.href;}catch(_){setStatus('https://로 시작하는 이미지 주소를 입력해주세요.');return;}
+        const image=document.createElement('img');image.src=url;image.alt='RP image';insertPairLogNode(image);
+      });
       document.getElementById('pairLogImageInput').addEventListener('change',event=>{
         const file=event.target.files?.[0];if(!file)return;
         if(file.size>8*1024*1024){setStatus('이미지는 8MB 이하 파일을 권장합니다.');event.target.value='';return;}
@@ -7446,7 +7868,7 @@ function applyBackupTemplate(template) {
       logEditor.addEventListener('click',event=>{
         const avatar=event.target.closest('.pair-log-avatar');if(!avatar)return;
         const input=document.createElement('input');input.type='file';input.accept='image/*';
-        input.addEventListener('change',()=>{const file=input.files?.[0];if(!file)return;if(file.size>3*1024*1024){setStatus('프로필 이미지는 3MB 이하 파일을 권장합니다.');return;}const reader=new FileReader();reader.onload=()=>{avatar.textContent='';const img=document.createElement('img');img.src=String(reader.result);img.alt='캐릭터 프로필';avatar.replaceChildren(img);};reader.readAsDataURL(file);});input.click();
+        input.addEventListener('change',()=>{const file=input.files?.[0];if(!file)return;if(file.size>3*1024*1024){setStatus('프로필 이미지는 3MB 이하 파일을 권장합니다.');return;}const reader=new FileReader();reader.onload=()=>{avatar.textContent='';const img=document.createElement('img');img.src=String(reader.result);img.alt='캐릭터 프로필';avatar.replaceChildren(img);pairLogHistorySnapshot();};reader.readAsDataURL(file);});input.click();
       });
       renderPairCards();
     }
