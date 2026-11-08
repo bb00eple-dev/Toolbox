@@ -2072,7 +2072,7 @@
 
   <script>
 (() => {
-  // P. Toolbox v41: repaired crop dialog markup; storage keys and data formats intentionally preserved.
+  // P. Toolbox v42: per-room, non-destructive legacy recovery; existing storage keys and data formats preserved.
   const ROOMS_KEY = 'promptToolbox.rooms.v28';
   const RESET_KEY = 'promptToolbox.v28.roomResetDone';
   const REMEMBERED_ROOM_KEY = 'promptToolbox.v30.rememberedRoom';
@@ -2259,25 +2259,70 @@
   }
 
   async function migrateLegacyData(roomKey) {
-    const previousTarget = localStorage.getItem(LEGACY_MIGRATION_TARGET_KEY);
-    if (previousTarget && previousTarget !== roomKey) return;
+    // Migration status is tracked per room. The previous single global marker could
+    // block migration for a different room on the same browser.
     const prefix = `promptToolbox.v28.room.${roomKey}.`;
     const v27Prefix = `promptToolbox.room.${roomKey}.`;
 
-    // Prefer an older room-specific value, then fall back to the original v26 global value.
     LEGACY_STORAGE_KEYS.forEach(key => {
       const targetKey = prefix + key;
-      if (localStorage.getItem(targetKey) !== null) return;
+      const currentValue = localStorage.getItem(targetKey);
       const roomValue = localStorage.getItem(v27Prefix + key);
       const globalValue = localStorage.getItem(key);
+
+      // Backup arrays are merged by id instead of treating an existing empty [] as final.
+      if (key === 'promptToolbox.backupEntries') {
+        const parseArray = value => {
+          try { const parsed = JSON.parse(value || 'null'); return Array.isArray(parsed) ? parsed : []; }
+          catch (_) { return []; }
+        };
+        const merged = parseArray(currentValue);
+        const seen = new Set(merged.map(item => item && item.id ? `id:${item.id}` : `json:${JSON.stringify(item)}`));
+        [roomValue, globalValue].forEach(value => {
+          parseArray(value).forEach(item => {
+            const key = item && item.id ? `id:${item.id}` : `json:${JSON.stringify(item)}`;
+            if (!seen.has(key)) { merged.push(item); seen.add(key); }
+          });
+        });
+        if (merged.length && merged.length !== parseArray(currentValue).length) {
+          localStorage.setItem(targetKey, JSON.stringify(merged));
+        } else if (currentValue === null && merged.length) {
+          localStorage.setItem(targetKey, JSON.stringify(merged));
+        }
+        return;
+      }
+
+      if (currentValue !== null) return;
       const value = roomValue !== null ? roomValue : globalValue;
       if (value !== null) localStorage.setItem(targetKey, value);
     });
 
     const targetDb = `PromptToolboxBackupLibrary_v28_${roomKey}`;
-    // The original v26 database is deliberately read-only; the v27 room DB is also copied, never deleted.
-    await copyDatabaseRecords('PromptToolboxBackupLibrary', targetDb);
-    await copyDatabaseRecords(`PromptToolboxBackupLibrary_${roomKey}`, targetDb);
+    // Copy from prior stores only. Never delete or clear a source database.
+    const sourceNames = new Set([
+      'PromptToolboxBackupLibrary',
+      `PromptToolboxBackupLibrary_${roomKey}`,
+      `PromptToolboxBackupLibrary_v27_${roomKey}`
+    ]);
+    // Include any older versioned database tied to this exact room key.
+    try {
+      if (typeof indexedDB.databases === 'function') {
+        const known = await indexedDB.databases();
+        known.forEach(info => {
+          const name = String(info && info.name || '');
+          if (name && name !== targetDb && name.startsWith('PromptToolboxBackupLibrary_') && name.endsWith(roomKey)) {
+            sourceNames.add(name);
+          }
+        });
+      }
+    } catch (error) { console.warn('Could not enumerate older backup databases:', error); }
+
+    for (const sourceName of sourceNames) {
+      if (sourceName === targetDb) continue;
+      try { await copyDatabaseRecords(sourceName, targetDb); }
+      catch (error) { console.warn('Backup recovery source could not be copied:', sourceName, error); }
+    }
+    localStorage.setItem(`${LEGACY_MIGRATION_TARGET_KEY}.${roomKey}`, new Date().toISOString());
     localStorage.setItem(LEGACY_MIGRATION_TARGET_KEY, roomKey);
   }
 
