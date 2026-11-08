@@ -7666,8 +7666,9 @@ function applyBackupTemplate(template) {
       initPhotoArchive();
     }
 
-    initPromptBackup();
-    initPairBoard();
+    // Keep the main navigation available even if an individual room module fails to initialize.
+    try { initPromptBackup(); } catch (error) { console.error('Prompt backup initialization failed:', error); setStatus('프롬프트 백업 초기화에 실패했습니다. 새로고침 후 다시 시도해주세요.'); }
+    try { initPairBoard(); } catch (error) { console.error('Pair board initialization failed:', error); setStatus('페어 게시판 초기화에 실패했습니다. 새로고침 후 다시 시도해주세요.'); }
     window.__ptExportRoomJson = exportRoomJson;
     window.__ptImportRoomJson = importRoomJsonFile;
 
@@ -7699,9 +7700,9 @@ function applyBackupTemplate(template) {
       button.addEventListener('click', () => navigateTool(button.dataset.openView));
     });
 
-    populateCustomCategories();
-    renderFavorites();
-    syncSpecialToggle();
+    try { populateCustomCategories(); } catch (error) { console.error('Custom categories initialization failed:', error); }
+    try { renderFavorites(); } catch (error) { console.error('Favorites initialization failed:', error); }
+    try { syncSpecialToggle(); } catch (error) { console.error('Special toggle initialization failed:', error); }
   
 }
 </script>
