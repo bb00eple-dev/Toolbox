@@ -11,7 +11,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" sizes="192x192" href="./p-toolbox-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="./p-toolbox-192.png">
-  <title>P. Toolbox v38</title>
+  <title>P. Toolbox v42</title>
   <style>
     :root {
       color-scheme: light;
@@ -2072,7 +2072,7 @@
 
   <script>
 (() => {
-  // P. Toolbox v42: per-room, non-destructive legacy recovery; existing storage keys and data formats preserved.
+  // P. Toolbox v41: repaired crop dialog markup; storage keys and data formats intentionally preserved.
   const ROOMS_KEY = 'promptToolbox.rooms.v28';
   const RESET_KEY = 'promptToolbox.v28.roomResetDone';
   const REMEMBERED_ROOM_KEY = 'promptToolbox.v30.rememberedRoom';
@@ -2259,70 +2259,25 @@
   }
 
   async function migrateLegacyData(roomKey) {
-    // Migration status is tracked per room. The previous single global marker could
-    // block migration for a different room on the same browser.
+    const previousTarget = localStorage.getItem(LEGACY_MIGRATION_TARGET_KEY);
+    if (previousTarget && previousTarget !== roomKey) return;
     const prefix = `promptToolbox.v28.room.${roomKey}.`;
     const v27Prefix = `promptToolbox.room.${roomKey}.`;
 
+    // Prefer an older room-specific value, then fall back to the original v26 global value.
     LEGACY_STORAGE_KEYS.forEach(key => {
       const targetKey = prefix + key;
-      const currentValue = localStorage.getItem(targetKey);
+      if (localStorage.getItem(targetKey) !== null) return;
       const roomValue = localStorage.getItem(v27Prefix + key);
       const globalValue = localStorage.getItem(key);
-
-      // Backup arrays are merged by id instead of treating an existing empty [] as final.
-      if (key === 'promptToolbox.backupEntries') {
-        const parseArray = value => {
-          try { const parsed = JSON.parse(value || 'null'); return Array.isArray(parsed) ? parsed : []; }
-          catch (_) { return []; }
-        };
-        const merged = parseArray(currentValue);
-        const seen = new Set(merged.map(item => item && item.id ? `id:${item.id}` : `json:${JSON.stringify(item)}`));
-        [roomValue, globalValue].forEach(value => {
-          parseArray(value).forEach(item => {
-            const key = item && item.id ? `id:${item.id}` : `json:${JSON.stringify(item)}`;
-            if (!seen.has(key)) { merged.push(item); seen.add(key); }
-          });
-        });
-        if (merged.length && merged.length !== parseArray(currentValue).length) {
-          localStorage.setItem(targetKey, JSON.stringify(merged));
-        } else if (currentValue === null && merged.length) {
-          localStorage.setItem(targetKey, JSON.stringify(merged));
-        }
-        return;
-      }
-
-      if (currentValue !== null) return;
       const value = roomValue !== null ? roomValue : globalValue;
       if (value !== null) localStorage.setItem(targetKey, value);
     });
 
     const targetDb = `PromptToolboxBackupLibrary_v28_${roomKey}`;
-    // Copy from prior stores only. Never delete or clear a source database.
-    const sourceNames = new Set([
-      'PromptToolboxBackupLibrary',
-      `PromptToolboxBackupLibrary_${roomKey}`,
-      `PromptToolboxBackupLibrary_v27_${roomKey}`
-    ]);
-    // Include any older versioned database tied to this exact room key.
-    try {
-      if (typeof indexedDB.databases === 'function') {
-        const known = await indexedDB.databases();
-        known.forEach(info => {
-          const name = String(info && info.name || '');
-          if (name && name !== targetDb && name.startsWith('PromptToolboxBackupLibrary_') && name.endsWith(roomKey)) {
-            sourceNames.add(name);
-          }
-        });
-      }
-    } catch (error) { console.warn('Could not enumerate older backup databases:', error); }
-
-    for (const sourceName of sourceNames) {
-      if (sourceName === targetDb) continue;
-      try { await copyDatabaseRecords(sourceName, targetDb); }
-      catch (error) { console.warn('Backup recovery source could not be copied:', sourceName, error); }
-    }
-    localStorage.setItem(`${LEGACY_MIGRATION_TARGET_KEY}.${roomKey}`, new Date().toISOString());
+    // The original v26 database is deliberately read-only; the v27 room DB is also copied, never deleted.
+    await copyDatabaseRecords('PromptToolboxBackupLibrary', targetDb);
+    await copyDatabaseRecords(`PromptToolboxBackupLibrary_${roomKey}`, targetDb);
     localStorage.setItem(LEGACY_MIGRATION_TARGET_KEY, roomKey);
   }
 
@@ -2992,9 +2947,7 @@ function startPromptToolbox() {
 
 
     categoryData.expression.values.push('focused expression', 'fierce expression');
-    categoryData.interaction.values.push(["one adjusting the other’s scarf", "one fastening the other’s coat", "one brushing rain from the other’s shoulder", "one sharing an earbud with the other", "one showing the other something on a phone", "one taking a candid photo of the other", "one holding the other’s hand behind their back", "one wrapping a blanket around the other", "one offering the other a warm drink", "one wiping a smudge from the other’s cheek", "one fixing the other’s tie", "one straightening the other’s sleeve", "one leaning against the other while waiting", "one falling asleep against the other", "one waking the other gently", "one pulling a chair out for the other", "one helping the other put on a coat", "one shielding the other from rain", "one holding the door open for the other", "one guiding the other through a crowd", "one catching the other’s falling belongings", "one passing a note to the other", "one pointing something out to the other", "one sharing a book between them", "one holding the other’s wrist to check a watch", "one resting a hand over the other’s hand", "one placing a scarf around the other’s neck", "one leaning over to read the other’s book", "one playfully stealing the other’s hat", "one reaching up to remove something from the other’s hair", "one standing on tiptoe to reach the other", "one sitting close with their shoulders touching", "both looking at the same photograph", "both holding opposite ends of the same umbrella", "one guiding the other through a doorway", "one offering their hand to help the other stand", "one turning the other toward the camera", "one hiding behind the other while peeking out", "one leaning over the other’s shoulder to look at a screen", "one holding the other’s hand while crossing the street", "one sharing a blanket on a bench", "one offering their seat to the other"]);
-    categoryData.roleA.values.push(["A gently tucks B’s hair behind their ear", "A places a warm cup into B’s hands", "A holds an umbrella above B", "A checks B’s sleeve for rain", "A offers B their coat", "A steadies B by the elbow", "A points out a distant landmark to B", "A shares one side of their headphones with B", "A takes B’s hand while stepping down", "A brushes dust from B’s shoulder", "A ties B’s scarf loosely", "A rests their chin on B’s shoulder", "A nudges B playfully with an elbow", "A waits beside B at a station platform", "A holds the elevator door for B", "A turns a page for B", "A fixes B’s collar before a photograph", "A offers B the last piece of food", "A catches B’s sleeve before they walk away", "A gives B a reassuring nod", "A covers B’s hand with their own", "A carries the heavier bag for B", "A leans closer to hear B speak"]);
-    categoryData.roleB.values.push(["B accepts A’s offered coat", "B leans closer under A’s umbrella", "B looks up at A while holding the cup", "B reaches for A’s hand", "B turns toward A with a small smile", "B rests their head against A’s shoulder", "B points toward something outside the frame", "B shares an earbud with A", "B steadies themself with A’s arm", "B brushes a loose strand from A’s face", "B adjusts A’s scarf in return", "B looks down at the note A handed over", "B waits beside A with their hands in their pockets", "B holds the door for A", "B turns the page while A reads", "B closes their eyes as A fixes their collar", "B offers A the last piece in return", "B catches A’s hand before they leave", "B nods back to reassure A", "B rests their hand over A’s", "B reaches for the lighter bag", "B leans in to hear A better", "B glances at A from the corner of their eye"]);
+    categoryData.interaction.values.push(...["one adjusting the other’s scarf", "one fastening the other’s coat", "one brushing rain from the other’s shoulder", "one sharing an earbud with the other", "one showing the other something on a phone", "one taking a candid photo of the other", "one holding the other’s hand behind their back", "one wrapping a blanket around the other", "one offering the other a warm drink", "one wiping a smudge from the other’s cheek", "one fixing the other’s tie", "one straightening the other’s sleeve", "one leaning against the other while waiting", "one falling asleep against the other", "one waking the other gently", "one pulling a chair out for the other", "one helping the other put on a coat", "one shielding the other from rain", "one holding the door open for the other", "one guiding the other through a crowd", "one catching the other’s falling belongings", "one passing a note to the other", "one pointing something out to the other", "one sharing a book between them", "one holding the other’s wrist to check a watch", "one resting a hand over the other’s hand", "one placing a scarf around the other’s neck", "one leaning over to read the other’s book", "one playfully stealing the other’s hat", "one reaching up to remove something from the other’s hair", "one standing on tiptoe to reach the other", "one sitting close with their shoulders touching", "both looking at the same photograph", "both holding opposite ends of the same umbrella", "one guiding the other through a doorway", "one offering their hand to help the other stand", "one turning the other toward the camera", "one hiding behind the other while peeking out", "one leaning over the other’s shoulder to look at a screen", "one holding the other’s hand while crossing the street", "one sharing a blanket on a bench", "one offering their seat to the other"]);
 
     // 기본 태그의 한국어 자연어 표기입니다. 영어 원문은 출력용으로 별도 보존합니다.
     categoryData.roleA = {

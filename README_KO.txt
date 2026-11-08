@@ -1,4 +1,4 @@
-P. Toolbox v38 · GitHub Pages 배포
+P. Toolbox v42 · GitHub Pages 배포
 
 1. 이 압축 파일을 풉니다.
 2. 안의 파일 6개(index.html, manifest.webmanifest, sw.js, p-toolbox-192.png, p-toolbox-512.png, p-toolbox-512-maskable.png)를 GitHub 저장소 최상위에 올립니다.
@@ -11,6 +11,9 @@ P. Toolbox v38 · GitHub Pages 배포
 - JSON 내보내기를 정기적으로 사용해 별도 백업을 보관하세요.
 
 이번 업데이트
+- 로그인 후 앱 초기화가 중단되던 A/B 행동 태그 초기화 순서 오류를 수정했습니다.
+- A/B 행동 추가 항목을 이미 생성된 카테고리에 추가하도록 정리하고, 2인 상호작용 태그가 개별 항목으로 등록되도록 수정했습니다.
+- 서비스 워커 캐시 버전을 v42로 갱신했습니다.
 - 페어별 RP 로그에 제목/부제/날짜/플랫폼/카테고리/태그와 서식 있는 본문 편집을 추가했습니다.
 - A/B 대화 블록, 이미지 삽입, 굵게/기울임/밑줄/인용/목록 기능을 추가했습니다.
 - 프롬프트 백업 게시판에 GENERAL/WARDROBE 및 사용자 게시판을 추가했습니다.
