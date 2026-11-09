@@ -11,7 +11,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" sizes="192x192" href="./p-toolbox-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="./p-toolbox-192.png">
-  <title>P. Toolbox v48</title>
+  <title>P. Toolbox v49</title>
   <style>
     :root {
       color-scheme: light;
@@ -1634,6 +1634,104 @@
     .pair-log-editor .rt-settings-open > .rt-controls.rt-controls-visible { display:flex; }
     .pair-log-editor .rt-controls button { cursor:pointer; }
 
+
+/* v49 desktop wallpaper and theme controls */
+body{position:relative;isolation:isolate;background:var(--pt-wallpaper-color,var(--desktop))}
+body::before{content:"";position:fixed;z-index:-1;inset:-14px;pointer-events:none;background-image:var(--pt-wallpaper-pattern,none);opacity:var(--pt-wallpaper-opacity,.18);filter:blur(var(--pt-wallpaper-blur,0px));}
+.pt-theme-open{min-height:23px;padding:3px 8px;border:1px solid;border-color:#fff #555 #555 #fff;background:#c0c0c0;color:#222;font:10px Tahoma,sans-serif}
+.pt-theme-overlay,.pair-status-overlay{position:fixed;z-index:10000;inset:0;display:grid;place-items:center;padding:12px;background:rgba(22,25,26,.42);backdrop-filter:blur(4px)}
+.pt-theme-overlay.hidden,.pair-status-overlay.hidden{display:none}
+.pt-theme-dialog,.pair-status-dialog{width:min(540px,100%);max-height:min(90dvh,850px);overflow:auto;padding:16px;border:1px solid #8f8a78;background:#f7f5e9;color:#4d5043;box-shadow:5px 6px 0 rgba(35,38,32,.2);font-family:Tahoma,Arial,sans-serif}
+.pt-theme-dialog header,.pair-status-dialog header{display:flex;align-items:center;gap:12px;padding-bottom:10px;border-bottom:1px solid #c7c4b1}
+.pt-theme-dialog header small,.pair-status-dialog header small{font-size:9px;letter-spacing:1.5px;color:#8b8b74}
+.pt-theme-dialog h2,.pair-status-dialog h2{margin:3px 0 0;font:20px Georgia,serif;letter-spacing:1px}
+.pt-theme-dialog header button,.pair-status-dialog header button{margin-left:auto;width:28px;height:28px;border:1px solid #9b998b;background:#efede2;color:#56594b;font-size:20px}
+.pt-theme-dialog>p,.pair-status-help{font-size:11px;line-height:1.7;color:#777866}
+.pt-theme-presets{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:12px 0}
+.pt-theme-swatch{min-height:54px;border:1px solid #a8a58f;padding:5px;text-align:left;font-size:9px;color:#42483d}
+.pt-theme-swatch i{display:block;height:22px;margin-bottom:5px;border:1px solid #ffffffa0}
+.pt-theme-row{display:grid;grid-template-columns:115px minmax(0,1fr) auto;align-items:center;gap:8px;margin:10px 0;font-size:10px}
+.pt-theme-row input[type=color]{width:38px;height:28px;padding:2px;border:1px solid #a8a58f;background:#fff}
+.pt-theme-row input[type=text],.pt-theme-row select{min-width:0;width:100%;height:29px;border:1px solid #c3c0ae;background:#fff;padding:4px 7px}
+.pt-theme-row input[type=range]{width:100%}
+.pt-theme-row output{font-size:10px;min-width:38px;text-align:right}
+.pt-theme-saved{border-top:1px dotted #c1beab;padding-top:9px;margin-top:12px;font-size:9px}
+#ptThemeSavedColors{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.pt-theme-color-chip{width:25px;height:25px;border:1px solid #999;position:relative}
+.pt-theme-color-chip button{position:absolute;inset:-5px -5px auto auto;width:14px;height:14px;padding:0;border:1px solid #777;background:#fff;font-size:10px;line-height:10px}
+.pt-board-dialog{width:min(430px,100%)}
+.pt-theme-dialog footer,.pair-status-dialog footer{display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:10px;border-top:1px solid #c7c4b1}
+.pt-theme-dialog footer span,.pair-status-dialog footer span{flex:1}
+.pt-theme-dialog footer button,.pair-status-dialog footer button,.pair-status-inline button{min-height:29px;padding:5px 10px;border:1px solid #aaa58f;background:#efede2;color:#555746;font-size:10px}
+#ptThemeSave,.pair-status-dialog #pairStatusInsert{background:#626d55;color:white;border-color:#626d55}
+@media(max-width:420px){.pt-theme-presets{grid-template-columns:repeat(2,minmax(0,1fr))}.pt-theme-row{grid-template-columns:92px minmax(0,1fr) auto}.pt-theme-dialog,.pair-status-dialog{padding:12px}}
+/* v49 backup board polish */
+.backup-section-switch{background:#eadde4!important;border-color:#b99eae!important}
+.backup-section-switch button{background:#fffafc!important;color:#795c70!important;border-color:#c7afbd!important}
+.backup-section-switch button.active{background:#7d5a70!important;color:#fff!important;border-color:#7d5a70!important}
+#backupDeleteBoard{min-height:25px;padding:4px 8px;border:1px dashed #c7aab4;background:#fff8fa;color:#916b77;font-size:9px}
+
+#backupNewEntry{flex:0 0 auto;width:auto;min-width:108px;max-width:150px;min-height:30px;padding:6px 11px;font-size:10px;line-height:1.15;white-space:nowrap;align-self:center}
+.backup-home-toolbar-top{align-items:center}
+.backup-home-toolbar-top #backupNewEntry{margin-left:auto}
+.backup-ratio-setting{display:grid;grid-template-columns:1fr;gap:4px;margin:4px 0 10px;padding:8px;border:1px dotted var(--bp-line);background:#fffaf5}
+.backup-ratio-setting label{font-size:9px;font-weight:bold;letter-spacing:.7px;color:var(--bp-ink)}
+.backup-ratio-setting small{font-size:9px;line-height:1.55;color:#9b8790}
+.backup-ratio-setting select{max-width:230px}
+.backup-gallery-cover,.backup-detail-photo,.backup-image-thumb{aspect-ratio:var(--backup-image-ratio,3 / 4)}
+.backup-gallery-cover{height:auto}
+.backup-detail-photo{height:auto}
+.backup-image-thumb{height:auto}
+#backupSubnav button{transition:background .15s,color .15s}
+#backupSubnav button.active{background:#7d5a70!important;color:#fff!important;border-color:#7d5a70!important}
+.backup-category-add{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
+.backup-category-add #backupDeleteCategory{border-style:dashed;color:#916b77}
+.backup-category-add #backupDeleteCategory:hover{background:#f6e9ed}
+.backup-home-toolbar .backup-filter-shortcuts button.active{background:#7d5a70;border-color:#7d5a70}
+.backup-site .backup-home-tabs button{border-color:#bda6b2}
+.backup-site .backup-home-tabs button.active{background:#7d5a70;color:#fff;border-color:#7d5a70}
+/* v49 native status window */
+.rp-status-window{--st-bg:#fffefa;--st-text:#687b68;--st-accent:#687b68;--st-cell-bg:#fff;--st-border:#c9d0b8;--st-columns:2;width:100%;max-width:100%;margin:13px auto;padding:clamp(12px,2.5vw,20px);border:1px solid var(--st-border);border-radius:var(--st-radius,4px);background:var(--st-bg);box-shadow:0 3px 12px #687b6818;color:var(--st-text);font-family:Arial,"Malgun Gothic",sans-serif;overflow-wrap:anywhere}
+.rp-status-window *{box-sizing:border-box;max-width:100%}
+.rp-status-window .st-head,.rp-status-window .st-foot{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:0 0 9px;border-bottom:1px solid var(--st-border);font-size:9px;letter-spacing:1.2px;color:var(--st-accent)}
+.rp-status-window .st-identity{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin:13px 0}
+.rp-status-window .st-name{font-size:clamp(18px,4vw,25px);font-weight:600;color:var(--st-accent);overflow-wrap:anywhere}
+.rp-status-window .st-sub{font-size:11px;color:var(--st-text);opacity:.75;margin-top:4px}
+.rp-status-window .st-emblem{width:43px;height:43px;flex:0 0 43px;display:grid;place-items:center;border:1px solid var(--st-border);background:var(--st-cell-bg);font:22px Georgia,serif}
+.rp-status-window .st-scene{margin:12px 0;padding:9px 11px;border-left:3px solid var(--st-accent);background:var(--st-cell-bg)}
+.rp-status-window .st-scene-title{font-size:12px;font-weight:bold;color:var(--st-accent);margin-bottom:4px}
+.rp-status-window .st-scene-text{font-size:11px;line-height:1.7}
+.rp-status-window .st-grid{display:grid;grid-template-columns:repeat(var(--st-columns,2),minmax(0,1fr));gap:7px}
+.rp-status-window .st-cell{min-width:0;padding:9px;border:1px solid var(--st-border);background:var(--st-cell-bg)}
+.rp-status-window .st-label{font-size:9px;letter-spacing:.5px;color:var(--st-accent);font-weight:bold;margin-bottom:5px}
+.rp-status-window .st-value{font-size:11px;line-height:1.7;color:var(--st-text);white-space:pre-wrap;overflow-wrap:anywhere}
+.rp-status-window .st-foot{margin-top:12px;padding:8px 0 0;border-top:1px solid var(--st-border);border-bottom:0;font-size:8px;opacity:.8}
+.rp-status-window.st-theme-cyber{--st-bg:#171b25;--st-text:#c6d7dc;--st-accent:#4de0d2;--st-border:#35505b;--st-cell-bg:#202b38}
+.rp-status-window.st-theme-celestial{--st-bg:#f3f0f8;--st-accent:#71618e;--st-border:#c9bfdc;--st-cell-bg:#fbf9ff}
+.rp-status-window.st-theme-botanical{--st-bg:#f1f4e9;--st-accent:#657b55;--st-border:#c3cfb5;--st-cell-bg:#fbfcf6}
+.rp-status-window.st-theme-gothic{--st-bg:#292733;--st-text:#e5dce7;--st-accent:#c7a9c8;--st-border:#6b5d70;--st-cell-bg:#393442}
+.rp-status-window.st-theme-glass{--st-bg:#edf5f4;--st-accent:#588b8b;--st-border:#b5d2d0;--st-cell-bg:#f9ffff}
+.rp-status-window.st-theme-romance{--st-bg:#fbf0f2;--st-accent:#a66d82;--st-border:#e2c2cd;--st-cell-bg:#fffafb}
+.rp-status-window.st-theme-minimal{--st-bg:#fff;--st-accent:#555;--st-border:#ddd;--st-cell-bg:#fafafa}
+.rp-status-window.st-theme-velvet{--st-bg:#f1e9e7;--st-accent:#76514e;--st-border:#c9b0a9;--st-cell-bg:#fffaf8}
+.rp-status-window.st-theme-ocean{--st-bg:#edf4f5;--st-accent:#547b88;--st-border:#bdd2d8;--st-cell-bg:#faffff}
+.pair-status-overlay{z-index:10020}
+.pair-status-dialog{width:min(680px,100%)}
+.pair-status-dialog input,.pair-status-dialog textarea,.pair-status-dialog select{width:100%;min-width:0;padding:7px;border:1px solid #c7c4b1;background:#fff;color:#4d5043;font-size:11px}
+.pair-status-dialog label{display:flex;flex-direction:column;gap:5px;font-size:10px;color:#6e705f}
+.pair-status-dialog input[type=color]{height:31px;padding:2px}
+.pair-status-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0}
+.pair-status-label{display:flex;flex-direction:column;gap:5px;margin:10px 0;font-size:10px;color:#6e705f}
+.pair-status-inline{display:flex;align-items:center;gap:6px;margin:11px 0 7px;font-size:10px;font-weight:bold;color:#626d55}
+.pair-status-inline span{margin-right:auto}
+.pair-status-fields-row{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.5fr) 28px;gap:6px;margin:6px 0}
+.pair-status-fields-row button{border:1px solid #c7b8ad;background:#f4e8e7;color:#845e62}
+.pair-status-design{margin-top:12px;border:1px solid #d0cbb8;padding:9px}
+.pair-status-design summary{font-size:10px;font-weight:bold;letter-spacing:.8px;cursor:pointer;color:#626d55}
+.pair-status-preview{margin-top:12px;padding:10px;border:1px dashed #c3c0ae;background:#fff}
+.pair-status-preview .rp-status-window{margin:0}
+@media(max-width:480px){.pair-status-grid{grid-template-columns:1fr}.pair-status-fields-row{grid-template-columns:minmax(0,.8fr) minmax(0,1.5fr) 28px}.backup-home-toolbar-top{flex-wrap:wrap}#backupNewEntry{margin-left:auto}}
+
 </style>
 </head>
 <body>
@@ -1687,7 +1785,7 @@
       <span class="titlebar-mark">P.</span>
       P. Toolbox
       <span class="titlebar-spacer"></span>
-      <span class="titlebar-room-label" id="activeRoomLabel" title=""></span>
+      <span class="titlebar-room-label" id="activeRoomLabel" title=""></span><button class="pt-theme-open" id="ptThemeOpen" type="button">THEME</button>
       <button class="titlebar-settings" id="openRoomSettings" type="button">설정</button>
       <button class="titlebar-lock" type="button" onclick="window.lockPromptRoom()">LOCK / CHANGE</button>
       <span class="window-controls" aria-hidden="true">
@@ -1910,7 +2008,7 @@
                   <button class="small" type="button" data-backup-filter="general">GENERAL</button>
                   <button class="small" type="button" data-backup-filter="wardrobe">WARDROBE</button>
                 </div>
-                <button class="small" id="backupAddBoard" type="button">＋ BOARD</button>
+                <button class="small" id="backupAddBoard" type="button">＋ BOARD</button><button class="small" id="backupDeleteBoard" type="button" title="사용자 게시판 삭제">− BOARD</button>
                 <span class="backup-hint" id="backupGalleryCount">0 items</span>
               </div>
               <button class="primary" id="backupNewEntry" type="button">＋ NEW POST</button>
@@ -2002,7 +2100,7 @@
 
               <div class="backup-category-add">
                 <input id="backupNewCategory" type="text" placeholder="새 카테고리" maxlength="32">
-                <button class="small" id="backupAddCategory" type="button">ADD</button>
+                <button class="small" id="backupAddCategory" type="button">ADD</button><button class="small" id="backupDeleteCategory" type="button" title="선택한 사용자 카테고리 삭제">DELETE</button>
               </div>
 
               <label class="field-label" for="backupTitle">TITLE <span class="backup-optional">OPTIONAL</span></label>
@@ -2017,6 +2115,7 @@
               <div class="backup-upload-zone">
                 <div class="backup-image-heading">
                   <label class="field-label" for="backupImages">PHOTO / IMAGE</label>
+              <div class="backup-ratio-setting"><label for="backupPhotoRatio">PHOTO RATIO</label><select id="backupPhotoRatio" class="backup-full"><option value="3/4">3:4 · Portrait</option><option value="2/3">2:3 · Tall</option><option value="1/1">1:1 · Square</option><option value="4/3">4:3 · Landscape</option><option value="16/9">16:9 · Wide</option></select><small>선택한 카테고리의 기본 사진 비율로 저장됩니다. 사진마다 자르기 화면에서 따로 바꿀 수도 있습니다.</small></div>
                   <span class="backup-hint">사진을 중심으로 기록해요</span>
                 </div>
                 <input id="backupImages" class="backup-full backup-file-input" type="file" accept="image/*" multiple>
@@ -2265,7 +2364,7 @@
                 <button type="button" id="pairLogPaletteToggle" aria-expanded="false">팔레트</button>
                 <button type="button" id="pairLogDecorToggle" aria-expanded="false">기록물 꾸미기</button>
                 <button type="button" id="pairLogMarkdownConvert" title="본문의 Markdown 문법을 서식으로 변환">MD → 서식</button>
-                <button type="button" id="pairLogMarkdownToggle" aria-expanded="false">Markdown 입력</button>
+                <button type="button" id="pairLogMarkdownToggle" aria-expanded="false">Markdown 입력</button><button type="button" id="pairLogStatusOpen">＋ 상태창</button>
                 <button type="button" id="pairLogInsertImage">＋ 이미지</button>
                 <button type="button" id="pairLogInsertImageUrl">이미지 URL</button>
                 <button type="button" id="pairLogInsertChat">＋ A/B 대화</button>
@@ -2369,7 +2468,7 @@
                 <label for="promptWeightFormat" style="font-size:10px;font-weight:bold;white-space:nowrap;">가중치 형식</label>
                 <select id="promptWeightFormat">
                   <option value="paren">(tag:1.2) 형식</option>
-                  <option value="nai">1.2::tag:: 형식</option>
+                  <option value="nai">1.2::tag:: 형식</option><option value="brace">괄호 강조 {{tag}} / {tag}</option>
                 </select>
               </div>
             </div>
@@ -4757,6 +4856,46 @@ function startPromptToolbox() {
       }
     }
 
+
+    // v49: 일반 PROMPT RANDOM 태그 사전 확장. 의상/착장 태그는 포함하지 않음.
+    Object.assign(categoryData, {
+      gaze: {label:'시선 / GAZE',en:'GAZE',enabled:true,values:[
+        'direct eye contact','looking at the viewer','looking away','averted gaze','looking over the shoulder','looking down through the lashes','looking up from beneath the brows','sideways glance','eyes half-lidded','eyes closed','eyes wide open','distant gaze','unfocused gaze','gazing into the distance','looking at their own hands','looking at the other person','watching something off-screen','glancing back','upward gaze','downward gaze','eyes following movement','subtle eye contact','avoiding eye contact','staring into the camera','looking past the viewer'
+      ]},
+      framing: {label:'프레이밍 / SHOT',en:'FRAMING',enabled:true,values:[
+        'extreme close-up portrait','tight headshot','head and shoulders portrait','chest-up portrait','waist-up portrait','thigh-up shot','knees-up shot','full-length portrait','wide environmental portrait','two-shot composition','three-quarter body framing','subject at the edge of the frame','cropped composition','partial face framing','face partially obscured','foreground framing','overhead framing','low camera framing','cinematic establishing shot','intimate close framing','distant long shot','negative-space portrait','off-center framing','overlapping foreground elements'
+      ]},
+      lighting: {label:'조명 / LIGHTING',en:'LIGHTING',enabled:true,values:[
+        'soft natural window light','overcast daylight','golden hour lighting','blue hour lighting','late afternoon sunlight','harsh noon sunlight','soft diffused lighting','dramatic side lighting','Rembrandt lighting','split lighting','rim lighting','backlit silhouette','volumetric lighting','god rays','neon lighting','candlelight','candlelit interior','moonlight','streetlight illumination','fluorescent lighting','studio softbox lighting','high-key lighting','low-key lighting','chiaroscuro lighting','dappled sunlight','reflected light','soft ambient glow','flickering light','light through blinds','colored gel lighting'
+      ]},
+      atmosphere: {label:'분위기 / MOOD',en:'MOOD',enabled:true,values:[
+        'quiet contemplative mood','dreamlike atmosphere','nostalgic atmosphere','melancholic mood','bittersweet atmosphere','tense atmosphere','eerie silence','serene atmosphere','romantic atmosphere','intimate atmosphere','unsettling atmosphere','mysterious atmosphere','ethereal atmosphere','lonely atmosphere','warm nostalgic mood','subdued atmosphere','whimsical atmosphere','ominous atmosphere','peaceful stillness','charged atmosphere','surreal atmosphere','cinematic tension','fleeting moment','poignant atmosphere','soft dreamy mood'
+      ]},
+      weather: {label:'날씨 / WEATHER',en:'WEATHER',enabled:true,values:[
+        'gentle snowfall','heavy snowfall','drizzling rain','pouring rain','rain-soaked street','misty morning','dense fog','sea mist','windy day','strong gusts of wind','clear winter sky','overcast sky','summer haze','humid rainy evening','thunderstorm in the distance','lightning in the sky','after the rain','sun shower','autumn breeze','frost-covered surroundings','heat haze','falling autumn leaves','floating dust in sunlight','soft spring rain'
+      ]},
+      environment: {label:'공간 디테일 / ENVIRONMENT',en:'ENVIRONMENT',enabled:true,values:[
+        'sunlit empty room','narrow corridor','stairwell landing','quiet library interior','abandoned station platform','rain-streaked window','open doorway','dimly lit hallway','rooftop at dusk','empty theater','glass greenhouse','old hotel lobby','quiet cafe interior','subway carriage','underground passage','hotel room at night','moonlit garden','overgrown courtyard','seaside promenade','foggy bridge','sunlit classroom','archive room with shelves','ornate ballroom','empty swimming pool','industrial stairway','train compartment','flooded street reflections','city skyline through glass'
+      ]},
+      visualEffects: {label:'시각 연출 / VISUAL FX',en:'VISUAL FX',enabled:true,values:[
+        'subtle motion blur','long exposure light trails','lens flare','anamorphic lens flare','soft bloom','halation','film grain','chromatic aberration','double exposure','refraction through glass','prism light dispersion','floating dust particles','backlit particles','bokeh highlights','shallow depth of field','deep focus','soft focus','selective focus','reflection in glass','mirror reflection','water reflections','light leaks','vignette','foreground blur','ghosting effect','cinematic color grading','muted color palette','desaturated colors','soft pastel color grading'
+      ]},
+      bodyLanguage: {label:'몸짓 / BODY LANGUAGE',en:'BODY LANGUAGE',enabled:true,values:[
+        'fingers loosely intertwined','hands clasped together','one hand covering the mouth','fingertips touching','hand resting against the cheek','fingers brushing the hair','hand resting on the windowsill','one hand in a pocket','hands resting on the knees','shoulders slightly hunched','relaxed shoulders','tense shoulders','head turned slightly','chin tilted upward','chin lowered','subtle weight shift','leaning forward','leaning backward','kneeling posture','crouching posture','reaching with one hand','arms loosely folded','hands behind the head','one hand gripping the wrist','fidgeting with fingers','still and motionless'
+      ]},
+      timeOfDay: {label:'시간대 / TIME',en:'TIME OF DAY',enabled:true,values:[
+        'early morning','sunrise','late morning','high noon','afternoon','late afternoon','golden hour','sunset','blue hour','twilight','early evening','midnight','late night','pre-dawn darkness','first light of dawn','overcast afternoon','rainy evening','quiet winter morning'
+      ]}
+    });
+    categoryData.pose.values.push('sitting on the floor','kneeling on one knee','leaning forward with elbows on knees','resting chin on hand','looking back while seated','standing with weight on one leg','turning the head toward the light','reaching toward the camera','one hand resting on a railing','lying on one side','reclining with one arm supporting the body','walking toward the camera','walking away from the camera','pausing mid-step','sitting at the edge of a bed','leaning against a window','looking through a doorway','hands gently folded','arms extended outward','head resting against a surface');
+    categoryData.expression.values.push('faint smile','wry smile','strained smile','tender expression','wistful expression','guarded expression','vulnerable expression','knowing look','playful expression','disbelieving expression','disappointed expression','resigned expression','pained expression','restrained anger','quiet determination','sleepy half-smile','bittersweet smile','softly amused expression','distant expression','intense gaze');
+    categoryData.camera.values.push('tilted close-up','overhead close-up','extreme low angle','extreme high angle','rear three-quarter view','side profile close-up','frontal portrait','compressed telephoto perspective','wide establishing view','intimate eye-level close-up','camera behind foreground subject','camera at waist height','camera near floor level');
+    categoryData.composition.values.push('strong foreground blur','subject framed by architecture','subject framed by foliage','subject reflected in a window','subject partially hidden by shadow','large negative space above subject','large negative space beside subject','layered depth composition','diagonal leading lines','repeating architectural lines','isolated subject in a large space','foreground silhouette framing','balanced asymmetrical composition');
+    Object.keys(categoryData).forEach(id=>{
+      if(!excludedValues[id])excludedValues[id]=new Set();
+      if(categoryEnabled[id]===undefined)categoryEnabled[id]=categoryData[id].enabled!==false;
+    });
+
     function setStatus(message) { status.textContent = message; }
     function escapeHtml(value) {
       return String(value).replace(/[&<>"']/g, char => ({
@@ -5478,6 +5617,10 @@ function startPromptToolbox() {
       if (nai) return { text: nai[2].trim(), weight: nai[1], sourceFormat: 'nai' };
       const paren = text.match(/^\(([\s\S]*):\s*(-?(?:\d+(?:\.\d*)?|\.\d+))\)$/);
       if (paren) return { text: paren[1].trim(), weight: paren[2], sourceFormat: 'paren' };
+      const doubleBrace = text.match(/^\{\{([\s\S]+)\}\}$/);
+      if (doubleBrace) return { text: doubleBrace[1].trim(), weight: '1.21', sourceFormat: 'brace' };
+      const singleBrace = text.match(/^\{([^{}]+)\}$/);
+      if (singleBrace) return { text: singleBrace[1].trim(), weight: '0.91', sourceFormat: 'brace' };
       return { text, weight: '', sourceFormat: 'plain' };
     }
 
@@ -5489,9 +5632,13 @@ function startPromptToolbox() {
       const numericWeight = Number(weightText);
       if (!Number.isFinite(numericWeight)) return text;
       const normalizedWeight = String(numericWeight);
-      return promptWeightFormat.value === 'nai'
-        ? `${normalizedWeight}::${text}::`
-        : `(${text}:${normalizedWeight})`;
+      if (promptWeightFormat.value === 'nai') return `${normalizedWeight}::${text}::`;
+      if (promptWeightFormat.value === 'brace') {
+        if (numericWeight > 1) return `{{${text}}}`;
+        if (numericWeight < 1) return `{${text}}`;
+        return text;
+      }
+      return `(${text}:${normalizedWeight})`;
     }
 
     function formatPromptItemSeparate(item) {
@@ -6504,22 +6651,39 @@ function startPromptToolbox() {
     }
 
     function addCustomBackupBoard() {
-      const raw = window.prompt('새 게시판 이름을 입력해주세요.');
-      if (raw === null) return;
-      const name = raw.trim().slice(0, 24);
-      if (!name) return;
-      const existing = getAllBackupBoards().find(board => board.name.toLocaleLowerCase() === name.toLocaleLowerCase());
-      if (existing) {
-        activeBackupBoardFilter = existing.id; renderBackupBoardTabs(); renderBackupEntries(); renderBackupBoardSelect(existing.id);
-        setStatus('이미 있는 게시판을 선택했습니다.'); return;
-      }
-      const boards = getCustomBackupBoards();
-      const id = `custom-${Date.now()}-${Math.random().toString(36).slice(2,7)}`;
-      boards.push({id, name});
-      saveStorage('promptToolbox.customBackupBoards', boards);
-      activeBackupBoardFilter = id;
-      renderBackupBoardTabs(); renderBackupBoardSelect(id); renderBackupEntries();
-      setStatus(`${name} 게시판을 추가했습니다.`);
+      const modal=document.getElementById('ptBoardModal');
+      const input=document.getElementById('ptBoardName');
+      if(!modal||!input)return;
+      input.value='';modal.classList.remove('hidden');input.focus();
+    }
+
+    function ptCreateBackupBoard() {
+      const input=document.getElementById('ptBoardName');
+      const name=input.value.trim().slice(0,24);
+      if(!name){setStatus('게시판 이름을 입력해주세요.');input.focus();return;}
+      const existing=getAllBackupBoards().find(board=>board.name.toLocaleLowerCase()===name.toLocaleLowerCase());
+      if(existing){activeBackupBoardFilter=existing.id;renderBackupBoardTabs();renderBackupEntries();renderBackupBoardSelect(existing.id);document.getElementById('ptBoardModal').classList.add('hidden');setStatus('이미 있는 게시판을 선택했습니다.');return;}
+      const boards=getCustomBackupBoards(),id=`custom-${Date.now()}-${Math.random().toString(36).slice(2,7)}`;
+      boards.push({id,name});saveStorage('promptToolbox.customBackupBoards',boards);
+      activeBackupBoardFilter=id;renderBackupBoardTabs();renderBackupBoardSelect(id);renderBackupEntries();
+      document.getElementById('ptBoardModal').classList.add('hidden');setStatus(`${name} 게시판을 추가했습니다.`);
+    }
+
+    async function ptDeleteCustomBackupBoard(){
+      const id=activeBackupBoardFilter;
+      const board=getCustomBackupBoards().find(item=>item.id===id);
+      if(!board){setStatus('삭제할 사용자 게시판을 먼저 선택해주세요.');return;}
+      if(!confirm(`"${board.name}" 게시판을 삭제할까요?\n게시글과 이미지는 삭제하지 않고 GENERAL 게시판으로 이동합니다.`))return;
+      const changed=[];
+      backupEntriesData.forEach(entry=>{if(getEntryBoard(entry)===id){entry.board='general';entry.updatedAt=new Date().toISOString();changed.push(entry);}});
+      try{
+        if(backupStorageMode==='indexedDB')for(const entry of changed)await backupDBRequest('readwrite','put',entry);
+        const local=getLocalBackupRecords().map(entry=>getEntryBoard(entry)===id?{...entry,board:'general',updatedAt:new Date().toISOString()}:entry);
+        saveLocalBackupRecords(local);
+        saveStorage('promptToolbox.customBackupBoards',getCustomBackupBoards().filter(item=>item.id!==id));
+        activeBackupBoardFilter='general';renderBackupBoardTabs();renderBackupBoardSelect('general');renderBackupEntries();syncBackupDesignMode('gallery');
+        setStatus(`"${board.name}" 게시판 삭제 완료. 게시글 ${changed.length}개를 GENERAL로 이동했습니다.`);
+      }catch(error){setStatus(`게시판 삭제 중 저장 오류: ${error.message||'다시 시도해주세요.'}`);}
     }
 
     function getBackupCategories() {
@@ -6585,6 +6749,7 @@ function applyBackupTemplate(template) {
       backupDraftImages.forEach((image, index) => {
         const item = document.createElement('div');
         item.className = 'backup-image-thumb';
+        item.style.aspectRatio = getBackupImageRatio(image).replace('/', ' / ');
         const img = document.createElement('img');
         img.alt = image.name || `업로드 이미지 ${index + 1}`;
         img.src = backupImageSource(image, backupPreviewUrls);
@@ -6671,6 +6836,7 @@ function applyBackupTemplate(template) {
       document.getElementById('backupTemplate').value = newPostBoard === 'wardrobe' ? 'wardrobe' : 'general';
       renderBackupBoardSelect(newPostBoard);
       document.getElementById('backupCategory').value = '일반 프롬프트';
+      if(typeof ptApplyCategoryRatio==='function')ptApplyCategoryRatio();
       document.getElementById('backupTitle').value = '';
       document.getElementById('backupDescription').value = '';
       document.getElementById('backupTags').value = '';
@@ -6704,7 +6870,7 @@ function applyBackupTemplate(template) {
         board: (document.getElementById('backupTemplate').value === 'wardrobe' && document.getElementById('backupBoardSelect').value === 'general') ? 'wardrobe' : document.getElementById('backupBoardSelect').value,
         template: document.getElementById('backupTemplate').value,
         tags: document.getElementById('backupTags').value.split(/[,\n]/).map(tag => tag.trim().replace(/^#/, '')).filter(Boolean),
-        images: backupDraftImages.map(image => ({ name: image.name || 'image', blob: image.blob, dataUrl: image.dataUrl, crop: getBackupImageCrop(image), ratio: '3/4' })),
+        images: backupDraftImages.map(image => ({ name: image.name || 'image', blob: image.blob, dataUrl: image.dataUrl, crop: getBackupImageCrop(image), ratio: getBackupImageRatio(image) })),
         prompts,
         pinned: !!existing?.pinned,
         createdAt: existing?.createdAt || now,
@@ -6871,6 +7037,7 @@ function applyBackupTemplate(template) {
         cover.className = 'backup-gallery-cover';
         cover.setAttribute('aria-label', '사진 크게 보기');
         const firstImage = (entry.images || []).find(image => image.blob || image.dataUrl);
+        if(firstImage) cover.style.aspectRatio=getBackupImageRatio(firstImage).replace('/',' / ');
         if (firstImage) {
           const img = document.createElement('img');
           img.alt = entry.title || '프롬프트 백업 이미지';
@@ -7005,12 +7172,14 @@ function applyBackupTemplate(template) {
       photo.replaceChildren();
       if (images.length) {
         backupCurrentImageIndex = Math.min(backupCurrentImageIndex, images.length - 1);
+        photo.style.aspectRatio = getBackupImageRatio(images[backupCurrentImageIndex]).replace('/', ' / ');
         const img = document.createElement('img');
         img.alt = entry.title || `이미지 ${backupCurrentImageIndex + 1}`;
         img.src = backupImageSource(images[backupCurrentImageIndex], backupDetailUrls);
         applyBackupImageCrop(img, images[backupCurrentImageIndex]);
         photo.appendChild(img);
       } else {
+        photo.style.aspectRatio = '4 / 3';
         const noPhoto = document.createElement('div');
         noPhoto.className = 'backup-no-photo';
         noPhoto.textContent = 'NO IMAGE';
@@ -7673,7 +7842,7 @@ function applyBackupTemplate(template) {
     }
 
     function sanitizePairLogStyle(raw) {
-      const allowed = new Set(['color','background-color','font-family','font-size','font-weight','font-style','text-decoration','text-align','box-shadow','transform','width','min-height']);
+      const allowed = new Set(['color','background-color','font-family','font-size','font-weight','font-style','text-decoration','text-align','box-shadow','transform','width','min-height','height','max-width','display','object-fit','aspect-ratio','border-color','--st-bg','--st-accent','--st-border','--st-cell-bg','--st-columns']);
       const safe = [];
       String(raw || '').split(';').forEach(part => {
         const colon = part.indexOf(':'); if (colon < 1) return;
@@ -7702,6 +7871,17 @@ function applyBackupTemplate(template) {
           if (!/^\d{1,3}%$/i.test(value)) return;
         } else if (property === 'min-height') {
           if (!/^\d{1,3}px$/i.test(value)) return;
+        } else if (property === 'height' || property === 'max-width') {
+          if (!/^(auto|100%|[0-9]+(?:\.[0-9]+)?(?:px|%|rem))$/i.test(value)) return;
+        } else if (property === 'display') {
+          if (!/^(block|inline-block|flex|grid|none)$/i.test(value)) return;
+        } else if (property === 'object-fit') {
+          if (!/^(contain|cover|fill|none|scale-down)$/i.test(value)) return;
+        } else if (property === 'aspect-ratio') {
+          if (!/^\d+(?:\.\d+)?\s*\/\s*\d+(?:\.\d+)?$/.test(value)) return;
+        } else if (property === 'border-color' || property.startsWith('--st-')) {
+          if (property === '--st-columns') { if (!/^[123]$/.test(value)) return; }
+          else if (!/^(#[0-9a-f]{3,8}|rgba?\([0-9\s.,%]+\)|[a-z]+)$/i.test(value)) return;
         }
         safe.push(`${property}:${value}`);
       });
@@ -7714,7 +7894,7 @@ function applyBackupTemplate(template) {
       root.querySelectorAll('script,style,iframe,object,embed,form,input,button,link,meta,video,audio,svg,math,.rt-controls').forEach(node => node.remove());
       const allowed = new Set(['DIV','P','BR','SPAN','STRONG','B','EM','I','U','S','DEL','MARK','CODE','SMALL','BLOCKQUOTE','PRE','UL','OL','LI','H1','H2','H3','H4','H5','H6','HR','IMG','A','DETAILS','SUMMARY','SECTION','ARTICLE','HEADER','FOOTER','FIGURE','TABLE','THEAD','TBODY','TR','TH','TD']);
       const legacyTemplateClasses = new Set(['pair-log-template','pair-log-template-memo','pair-log-template-memo-lined','pair-log-template-sticky','pair-log-template-email','pair-log-template-letter','pair-log-template-polaroid','pair-log-template-dossier','pair-log-template-receipt','pair-log-template-section','pair-log-template-body']);
-      const allowedData = new Set(['data-pair-log-template-label','data-pair-template','data-rp-type','data-rt-kind','data-rt-shadow','data-rt-tilt','data-rt-logo-hidden','data-rt-memo-width','data-rt-memo-height','data-rt-photo','data-rt-main']);
+      const allowedData = new Set(['data-pair-log-template-label','data-pair-template','data-rp-type','data-rt-kind','data-rt-shadow','data-rt-tilt','data-rt-logo-hidden','data-rt-memo-width','data-rt-memo-height','data-rt-photo','data-rt-main','data-pair-status']);
       [...root.querySelectorAll('*')].reverse().forEach(node => {
         if (!allowed.has(node.tagName)) { node.replaceWith(...node.childNodes); return; }
         [...node.attributes].forEach(attr => {
@@ -7726,7 +7906,7 @@ function applyBackupTemplate(template) {
           } else if (name === 'class') {
             const classes = attr.value.split(/\s+/).filter(value =>
               /^pair-log-(?:chat-layout|chat-head|chat-row|avatar|message|name|bubble)$/.test(value) ||
-              legacyTemplateClasses.has(value) || value === 'rp-markdown-content' ||
+              legacyTemplateClasses.has(value) || value === 'rp-markdown-content' || value === 'rp-status-window' || /^st-theme-[a-z]+$/.test(value) || /^st-(?:head|identity|name|sub|emblem|scene|scene-title|scene-text|grid|cell|label|value|foot)$/.test(value) ||
               (/^rt-[a-z0-9-]+$/i.test(value) && !['rt-settings-open','rt-pushed-up','rt-controls-visible'].includes(value)) ||
               (node.classList.contains('pair-log-chat-row') && ['a','b'].includes(value))
             );
@@ -8071,6 +8251,10 @@ function pairLogRecordTemplateMarkup(type){
       sections.forEach(section=>section.querySelectorAll('.rt-editable').forEach(el=>{
         if(editing)el.setAttribute('contenteditable','true'); else el.removeAttribute('contenteditable');
       }));
+      const statusBlocks=[];
+      if(root.matches?.('.rp-status-window[data-pair-status]'))statusBlocks.push(root);
+      statusBlocks.push(...root.querySelectorAll('.rp-status-window[data-pair-status]'));
+      statusBlocks.forEach(block=>block.setAttribute('contenteditable','false'));
     }
     function pairLogClearRecordControls() {
       const editor=document.getElementById('pairLogRichEditor');if(!editor)return;
@@ -8137,7 +8321,7 @@ function pairLogRecordTemplateMarkup(type){
     function pairLogMarkdownInline(source) {
       let text=escapeHtml(source),stash=[];
       const hold=html=>{const token='@@PT-MD-'+stash.length+'@@';stash.push(html);return token;};
-      text=text.replace(/!\[([^\]]*)\]\((https?:\/\/[^\s)]+)(?:\s+['"]([^'"]*)['"])?\)/g,(_,alt,url,title)=>hold('<img src="'+escapeHtml(url)+'" alt="'+escapeHtml(alt)+'"'+(title?' title="'+escapeHtml(title)+'"':'')+' loading="lazy">'));
+      text=text.replace(/!\[([^\]]*)\]\((https?:\/\/[^\s)]+)(?:\s+['"]([^'"]*)['"])?\)/g,(_,alt,url,title)=>hold('<img src="'+escapeHtml(url)+'" alt="'+escapeHtml(alt)+'"'+(title?' title="'+escapeHtml(title)+'"':'')+' loading="lazy" decoding="async" style="display:block;width:100%;max-width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background-color:rgba(120,130,110,.06)">'));
       text=text.replace(/`([^`]+)`/g,(_,value)=>hold('<code>'+value+'</code>'));
       text=text.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+|mailto:[^\s)]+)\)/g,(_,label,url)=>hold('<a href="'+escapeHtml(url)+'" target="_blank" rel="noopener noreferrer">'+label+'</a>'));
       text=text.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/__(.+?)__/g,'<strong>$1</strong>').replace(/~~(.+?)~~/g,'<del>$1</del>').replace(/(?<!\*)\*([^*\n]+)\*(?!\*)/g,'<em>$1</em>').replace(/(?<!_)_([^_\n]+)_(?!_)/g,'<em>$1</em>');
@@ -8191,6 +8375,10 @@ function pairLogRecordTemplateMarkup(type){
       if(!range){range=document.createRange();range.selectNodeContents(editor);range.collapse(false);}
       const wrapper=document.createElement('div');wrapper.className='rp-markdown-content';wrapper.innerHTML=sanitizePairLogHtml(html,true);
       range.deleteContents();range.insertNode(wrapper);
+      wrapper.querySelectorAll('img').forEach(img=>{
+        const restore=()=>pairLogRestoreScrollStateDeferred(scrollState);
+        if(img.complete)restore();else{img.addEventListener('load',restore,{once:true});img.addEventListener('error',restore,{once:true});}
+      });
       const after=document.createElement('p');after.innerHTML='<br>';wrapper.after(after);
       const caret=document.createRange();caret.setStart(after,0);caret.collapse(true);pairLogSavedRange=caret.cloneRange();
       pairLogHydrateRecordTemplates(editor,true);pairLogHistorySnapshot();pairLogRestoreScrollStateDeferred(scrollState);
@@ -8886,6 +9074,9 @@ function pairLogRecordTemplateMarkup(type){
         setStatus(`카테고리 "${value}"를 추가했습니다.`);
       });
 
+      document.getElementById('backupDeleteCategory')?.addEventListener('click', ptDeleteBackupCategory);
+      document.getElementById('backupDeleteBoard')?.addEventListener('click',ptDeleteCustomBackupBoard);
+
       document.getElementById('backupNewCategory').addEventListener('keydown', event => {
         if (event.key === 'Enter') document.getElementById('backupAddCategory').click();
       });
@@ -8957,7 +9148,208 @@ function pairLogRecordTemplateMarkup(type){
     try { populateCustomCategories(); } catch (error) { console.error('Custom categories initialization failed:', error); }
     try { renderFavorites(); } catch (error) { console.error('Favorites initialization failed:', error); }
     try { syncSpecialToggle(); } catch (error) { console.error('Special toggle initialization failed:', error); }
-  
+
+    // ===== v49 appearance settings =====
+    const PT_THEME_PRESETS = [
+      ['Sage','#d7ddc8'],['Oat','#e5dfd0'],['Dusty Rose','#dfcbd0'],['Lavender','#d8d2e4'],
+      ['Powder Blue','#ccdbe0'],['Warm Grey','#cfcfc9'],['Butter','#e7dfb9'],['Plum Mist','#d7c8d3'],
+      ['Olive','#cbd0b8'],['Charcoal','#777b78'],['Night','#555b65'],['Cream','#eee9d9']
+    ];
+    const PT_THEME_DEFAULT={color:'#d7ddc8',pattern:'stripe',blur:2,opacity:18,saved:[]};
+    let ptThemeState={...PT_THEME_DEFAULT};
+    const ptThemeEl=id=>document.getElementById(id);
+    function ptThemeHex(value){const m=String(value||'').trim().match(/^#?([0-9a-f]{6})$/i);return m?'#'+m[1].toLowerCase():null;}
+    function ptThemePatternCss(pattern,color){
+      if(pattern==='stripe')return `repeating-linear-gradient(90deg, ${color} 0 18px, rgba(255,255,255,.22) 18px 20px, ${color} 20px 38px)`;
+      if(pattern==='grid')return `linear-gradient(rgba(255,255,255,.22) 1px, transparent 1px),linear-gradient(90deg,rgba(255,255,255,.22) 1px,transparent 1px)`;
+      if(pattern==='grain')return `repeating-linear-gradient(45deg,rgba(255,255,255,.25) 0 1px,transparent 1px 7px),repeating-linear-gradient(-45deg,rgba(60,60,50,.05) 0 1px,transparent 1px 7px)`;
+      return 'none';
+    }
+    function ptThemeApply(value){
+      const color=ptThemeHex(value.color)||PT_THEME_DEFAULT.color;
+      const pattern=ptThemePatternCss(value.pattern,color);
+      document.documentElement.style.setProperty('--pt-wallpaper-color',color);
+      document.documentElement.style.setProperty('--pt-wallpaper-pattern',pattern);
+      document.documentElement.style.setProperty('--pt-wallpaper-blur',Math.max(0,Math.min(12,Number(value.blur)||0))+'px');
+      document.documentElement.style.setProperty('--pt-wallpaper-opacity',String(Math.max(0,Math.min(45,Number(value.opacity)||0))/100));
+      document.documentElement.style.setProperty('--desktop',color);
+    }
+    function ptThemeRenderPresets(){
+      const host=ptThemeEl('ptThemePresets');if(!host)return;host.replaceChildren();
+      PT_THEME_PRESETS.forEach(([name,color])=>{const b=document.createElement('button');b.type='button';b.className='pt-theme-swatch';b.innerHTML='<i></i>'+name;b.querySelector('i').style.background=color;b.addEventListener('click',()=>{ptThemeState.color=color;ptThemeEl('ptThemeColor').value=color;ptThemeEl('ptThemeHex').value=color.toUpperCase();ptThemeApply(ptThemeState);});host.appendChild(b);});
+    }
+    function ptThemeRenderSaved(){
+      const host=ptThemeEl('ptThemeSavedColors');if(!host)return;host.replaceChildren();
+      (ptThemeState.saved||[]).forEach((color,index)=>{const wrap=document.createElement('span');wrap.className='pt-theme-color-chip';wrap.style.background=color;const b=document.createElement('button');b.type='button';b.textContent='×';b.title='저장 색상 삭제';b.addEventListener('click',()=>{ptThemeState.saved.splice(index,1);ptThemeRenderSaved();});wrap.appendChild(b);wrap.addEventListener('click',e=>{if(e.target===b)return;ptThemeState.color=color;ptThemeEl('ptThemeColor').value=color;ptThemeEl('ptThemeHex').value=color.toUpperCase();ptThemeApply(ptThemeState);});host.appendChild(wrap);});
+    }
+    function ptThemeFill(){
+      ptThemeEl('ptThemeColor').value=ptThemeState.color;ptThemeEl('ptThemeHex').value=ptThemeState.color.toUpperCase();
+      ptThemeEl('ptThemePattern').value=ptThemeState.pattern;ptThemeEl('ptThemeBlur').value=ptThemeState.blur;ptThemeEl('ptThemeBlurOut').textContent=ptThemeState.blur+'px';
+      ptThemeEl('ptThemeOpacity').value=ptThemeState.opacity;ptThemeEl('ptThemeOpacityOut').textContent=ptThemeState.opacity+'%';ptThemeRenderSaved();
+    }
+    function ptThemeInit(){
+      try{ptThemeState={...PT_THEME_DEFAULT,...(loadStorage('promptToolbox.desktopTheme',{})||{})};}catch(_){ptThemeState={...PT_THEME_DEFAULT};}
+      ptThemeState.saved=Array.isArray(ptThemeState.saved)?ptThemeState.saved:[];
+      ptThemeApply(ptThemeState);ptThemeRenderPresets();ptThemeFill();
+      ptThemeEl('ptThemeOpen')?.addEventListener('click',()=>{ptThemeFill();ptThemeEl('ptThemeModal').classList.remove('hidden');});
+      ptThemeEl('ptThemeClose')?.addEventListener('click',()=>ptThemeEl('ptThemeModal').classList.add('hidden'));
+      ptThemeEl('ptThemeColor')?.addEventListener('input',e=>{const c=ptThemeHex(e.target.value);if(c){ptThemeState.color=c;ptThemeEl('ptThemeHex').value=c.toUpperCase();ptThemeApply(ptThemeState);}});
+      ptThemeEl('ptThemeHex')?.addEventListener('change',e=>{const c=ptThemeHex(e.target.value);if(!c){e.target.value=ptThemeState.color.toUpperCase();return;}ptThemeEl('ptThemeColor').value=c;ptThemeState.color=c;ptThemeApply(ptThemeState);});
+      ptThemeEl('ptThemePattern')?.addEventListener('change',e=>{ptThemeState.pattern=e.target.value;ptThemeApply(ptThemeState);});
+      ptThemeEl('ptThemeBlur')?.addEventListener('input',e=>{ptThemeState.blur=Number(e.target.value);ptThemeEl('ptThemeBlurOut').textContent=e.target.value+'px';ptThemeApply(ptThemeState);});
+      ptThemeEl('ptThemeOpacity')?.addEventListener('input',e=>{ptThemeState.opacity=Number(e.target.value);ptThemeEl('ptThemeOpacityOut').textContent=e.target.value+'%';ptThemeApply(ptThemeState);});
+      ptThemeEl('ptThemeSave')?.addEventListener('click',()=>{const c=ptThemeHex(ptThemeEl('ptThemeColor').value);if(!c)return;ptThemeState={color:c,pattern:ptThemeEl('ptThemePattern').value,blur:Number(ptThemeEl('ptThemeBlur').value),opacity:Number(ptThemeEl('ptThemeOpacity').value),saved:ptThemeState.saved||[]};if(!ptThemeState.saved.includes(c)&&!PT_THEME_PRESETS.some(x=>x[1]===c))ptThemeState.saved.push(c);saveStorage('promptToolbox.desktopTheme',ptThemeState);ptThemeApply(ptThemeState);ptThemeRenderSaved();ptThemeEl('ptThemeModal').classList.add('hidden');setStatus('바탕 테마를 저장했습니다.');});
+      ptThemeEl('ptThemeReset')?.addEventListener('click',()=>{ptThemeState={...PT_THEME_DEFAULT,saved:ptThemeState.saved||[]};ptThemeFill();ptThemeApply(ptThemeState);saveStorage('promptToolbox.desktopTheme',ptThemeState);});
+      ptThemeEl('ptThemeModal')?.addEventListener('click',e=>{if(e.target===ptThemeEl('ptThemeModal'))ptThemeEl('ptThemeModal').classList.add('hidden');});
+    }
+
+    // ===== v49 per-category photo ratio =====
+    const PT_PHOTO_RATIOS=['3/4','2/3','1/1','4/3','16/9'];
+    function ptCategoryRatioMap(){const v=loadStorage('promptToolbox.backupCategoryRatios',{});return v&&typeof v==='object'?v:{};}
+    function ptApplyCategoryRatio(){
+      const category=ptThemeEl('backupCategory')?.value||'일반 프롬프트';
+      const map=ptCategoryRatioMap(),ratio=PT_PHOTO_RATIOS.includes(map[category])?map[category]:'3/4';
+      const select=ptThemeEl('backupPhotoRatio');if(select)select.value=ratio;
+      (backupDraftImages||[]).forEach(image=>image.ratio=ratio);
+      document.querySelectorAll('.backup-image-thumb').forEach(el=>el.style.aspectRatio=ratio.replace('/',' / '));
+    }
+    function ptInitCategoryRatio(){
+      const select=ptThemeEl('backupPhotoRatio');if(!select)return;
+      ptApplyCategoryRatio();
+      ptThemeEl('backupCategory')?.addEventListener('change',ptApplyCategoryRatio);
+      select.addEventListener('change',()=>{
+        const category=ptThemeEl('backupCategory')?.value||'일반 프롬프트',map=ptCategoryRatioMap();
+        map[category]=select.value;saveStorage('promptToolbox.backupCategoryRatios',map);
+        (backupDraftImages||[]).forEach(image=>image.ratio=select.value);
+        document.querySelectorAll('.backup-image-thumb').forEach(el=>el.style.aspectRatio=select.value.replace('/',' / '));
+      });
+    }
+
+    // ===== v49 custom backup category deletion =====
+    async function ptDeleteBackupCategory(){
+      const category=ptThemeEl('backupCategory')?.value||'';
+      if(!category||DEFAULT_BACKUP_CATEGORIES.includes(category)){setStatus('기본 카테고리는 삭제할 수 없습니다.');return;}
+      if(!confirm(`"${category}" 카테고리를 삭제할까요?\n이 카테고리에 저장된 게시글은 삭제하지 않고 "일반 프롬프트"로 이동합니다.`))return;
+      const fallback='일반 프롬프트';
+      const changed=[];
+      for(const entry of backupEntriesData){
+        if(entry.kind!=='photo'&&entry.category===category){entry.category=fallback;entry.updatedAt=new Date().toISOString();changed.push(entry);}
+      }
+      try{
+        if(backupStorageMode==='indexedDB'){
+          for(const entry of changed)await backupDBRequest('readwrite','put',entry);
+        }
+        const local=getLocalBackupRecords().map(entry=>entry.category===category?{...entry,category:fallback,updatedAt:new Date().toISOString()}:entry);
+        saveLocalBackupRecords(local);
+        const categories=getBackupCategories().filter(value=>value!==category);
+        saveStorage('promptToolbox.backupCategories',categories);
+        const ratios=ptCategoryRatioMap();delete ratios[category];saveStorage('promptToolbox.backupCategoryRatios',ratios);
+        renderBackupCategoryOptions(fallback);ptThemeEl('backupCategory').value=fallback;
+        renderBackupEntries();setStatus(`"${category}" 삭제 완료. 기존 게시글 ${changed.length}개를 일반 프롬프트로 이동했습니다.`);
+      }catch(error){setStatus(`카테고리 삭제 중 저장 오류: ${error.message||'다시 시도해주세요.'}`);}
+    }
+
+    // ===== v49 Pair Log status window builder =====
+    const PAIR_STATUS_THEMES={classic:['✧ CHARACTER FILE','CHARACTER RECORD'],cyber:['龍 NINE DRAGONS / 09','SEALED MEMORY // 009'],celestial:['☾ CELESTIAL RECORD','STARDUST INDEX'],botanical:['❧ HERBARIUM · VOL. I','BOTANICAL NOTES'],gothic:['† NOCTURNE · DOSSIER','CONFIDENTIAL RECORD'],glass:['◇ MIRROR OF DREAMS','FRAGMENTS OF LIGHT'],romance:['♡ À LA LUNE','LETTRES & SOUVENIRS'],minimal:['— INDEX','ARCHIVE NOTE'],velvet:['♜ THE VELVET ROOM','GILDED MEMOIR'],ocean:['〰 ABYSSAL LOG','BELOW THE SURFACE']};
+    let pairStatusEditingBlock=null;
+    const pairStatusEsc=value=>String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    function pairStatusAddField(label='',value=''){
+      const row=document.createElement('div');row.className='pair-status-fields-row';
+      const a=document.createElement('input');a.placeholder='항목명';a.value=label;
+      const b=document.createElement('textarea');b.placeholder='내용';b.rows=2;b.value=value;
+      const del=document.createElement('button');del.type='button';del.textContent='×';del.title='항목 삭제';del.addEventListener('click',()=>row.remove());
+      row.append(a,b,del);ptThemeEl('pairStatusFields').appendChild(row);
+    }
+    function pairStatusParse(){
+      const src=ptThemeEl('pairStatusSource').value,found=[];
+      for(const m of src.matchAll(/\[([^\]\n]+)\]/g)){const value=m[1],sep=value.search(/[:：]/);if(sep<0)continue;const label=value.slice(0,sep).trim(),content=value.slice(sep+1).trim();if(label)found.push({label,value:content});}
+      if(!found.length){setStatus('[항목명: 내용] 형식의 항목을 찾지 못했습니다.');return;}
+      ptThemeEl('pairStatusFields').replaceChildren();found.forEach(x=>pairStatusAddField(x.label,x.value));setStatus(`${found.length}개 상태 항목을 추출했습니다.`);
+    }
+    function pairStatusReadFields(){
+      return [...ptThemeEl('pairStatusFields').querySelectorAll('.pair-status-fields-row')].map(row=>({label:row.querySelector('input').value.trim(),value:row.querySelector('textarea').value.trim()})).filter(x=>x.label||x.value);
+    }
+    function pairStatusBuild(){
+      const theme=ptThemeEl('pairStatusTheme').value||'classic',colors={bg:ptThemeEl('pairStatusBg').value,accent:ptThemeEl('pairStatusAccent').value,border:ptThemeEl('pairStatusBorder').value,cell:ptThemeEl('pairStatusCell').value};
+      const name=ptThemeEl('pairStatusName').value.trim(),sub=ptThemeEl('pairStatusSub').value.trim(),sceneTitle=ptThemeEl('pairStatusSceneTitle').value.trim(),sceneText=ptThemeEl('pairStatusSceneText').value.trim(),columns=ptThemeEl('pairStatusColumns').value;
+      const preset=PAIR_STATUS_THEMES[theme]||PAIR_STATUS_THEMES.classic,head=ptThemeEl('pairStatusHead').value||preset[0],foot=ptThemeEl('pairStatusFoot').value||preset[1];
+      const fields=pairStatusReadFields();
+      const cells=fields.map(x=>`<div class="st-cell"><div class="st-label">${pairStatusEsc(x.label)}</div><div class="st-value">${pairStatusEsc(x.value).replace(/\n/g,'<br>')}</div></div>`).join('');
+      const block=document.createElement('section');block.className=`rp-status-window st-theme-${theme}`;block.setAttribute('data-pair-status','1');block.setAttribute('contenteditable','false');
+      block.style.setProperty('--st-bg',colors.bg);block.style.setProperty('--st-accent',colors.accent);block.style.setProperty('--st-border',colors.border);block.style.setProperty('--st-cell-bg',colors.cell);block.style.setProperty('--st-columns',columns);
+      block.innerHTML=`<div class="st-head"><span>${pairStatusEsc(head)}</span><span>PAIR LOG / STATUS</span></div><div class="st-identity"><div><div class="st-name">${pairStatusEsc(name||'CHARACTER NAME')}</div><div class="st-sub">${pairStatusEsc(sub)}</div></div><div class="st-emblem">${pairStatusEsc(preset[0].slice(0,1))}</div></div>${sceneTitle||sceneText?`<div class="st-scene"><div class="st-scene-title">${pairStatusEsc(sceneTitle)}</div><div class="st-scene-text">${pairStatusEsc(sceneText)}</div></div>`:''}<div class="st-grid">${cells}</div><div class="st-foot"><span>${pairStatusEsc(foot)}</span><span>✧ END OF RECORD ✧</span></div>`;
+      return block;
+    }
+    function pairStatusOpen(block=null){
+      pairStatusEditingBlock=block;
+      const ids=['pairStatusName','pairStatusSub','pairStatusSceneTitle','pairStatusSceneText','pairStatusSource'];
+      ids.forEach(id=>ptThemeEl(id).value='');ptThemeEl('pairStatusFields').replaceChildren();
+      ptThemeEl('pairStatusTheme').value='classic';ptThemeEl('pairStatusColumns').value='2';
+      ptThemeEl('pairStatusBg').value='#fffefa';ptThemeEl('pairStatusAccent').value='#739bb0';ptThemeEl('pairStatusBorder').value='#c9e2ed';ptThemeEl('pairStatusCell').value='#ffffff';
+      ptThemeEl('pairStatusHead').value=PAIR_STATUS_THEMES.classic[0];ptThemeEl('pairStatusFoot').value=PAIR_STATUS_THEMES.classic[1];
+      if(block){
+        ptThemeEl('pairStatusName').value=block.querySelector('.st-name')?.textContent||'';
+        ptThemeEl('pairStatusSub').value=block.querySelector('.st-sub')?.textContent||'';
+        ptThemeEl('pairStatusSceneTitle').value=block.querySelector('.st-scene-title')?.textContent||'';
+        ptThemeEl('pairStatusSceneText').value=block.querySelector('.st-scene-text')?.textContent||'';
+        [...block.querySelectorAll('.st-cell')].forEach(cell=>pairStatusAddField(cell.querySelector('.st-label')?.textContent||'',cell.querySelector('.st-value')?.textContent||''));
+        const theme=[...block.classList].find(x=>x.startsWith('st-theme-'))?.slice(9)||'classic';ptThemeEl('pairStatusTheme').value=PAIR_STATUS_THEMES[theme]?theme:'classic';
+        ptThemeEl('pairStatusColumns').value=block.style.getPropertyValue('--st-columns')||'2';
+        ptThemeEl('pairStatusBg').value=block.style.getPropertyValue('--st-bg').trim()||'#fffefa';ptThemeEl('pairStatusAccent').value=block.style.getPropertyValue('--st-accent').trim()||'#739bb0';ptThemeEl('pairStatusBorder').value=block.style.getPropertyValue('--st-border').trim()||'#c9e2ed';ptThemeEl('pairStatusCell').value=block.style.getPropertyValue('--st-cell-bg').trim()||'#ffffff';
+        ptThemeEl('pairStatusHead').value=block.querySelector('.st-head span')?.textContent||PAIR_STATUS_THEMES[theme][0];ptThemeEl('pairStatusFoot').value=block.querySelector('.st-foot span')?.textContent||PAIR_STATUS_THEMES[theme][1];
+      }else pairStatusAddField();
+      ptThemeEl('pairStatusTitle').textContent=block?'상태창 수정':'상태창 만들기';ptThemeEl('pairStatusInsert').textContent=block?'수정 적용':'본문에 삽입';
+      ptThemeEl('pairStatusPreview').classList.add('hidden');ptThemeEl('pairStatusModal').classList.remove('hidden');
+    }
+    function pairStatusPreview(){const host=ptThemeEl('pairStatusPreview');host.replaceChildren(pairStatusBuild());host.classList.remove('hidden');}
+    function pairStatusInsert(){
+      const block=pairStatusBuild(),editor=ptThemeEl('pairLogRichEditor'),scrollState=pairLogCaptureScrollState();
+      if(pairStatusEditingBlock&&editor.contains(pairStatusEditingBlock)){
+        pairStatusEditingBlock.replaceWith(block);pairStatusEditingBlock=null;
+      }else{
+        const selection=window.getSelection();let range=null;
+        if(selection?.rangeCount&&editor.contains(selection.anchorNode)&&editor.contains(selection.focusNode))range=selection.getRangeAt(0).cloneRange();
+        if((!range||!editor.contains(range.commonAncestorContainer))&&pairLogSavedRange&&editor.contains(pairLogSavedRange.commonAncestorContainer))range=pairLogSavedRange.cloneRange();
+        if(!range){range=document.createRange();range.selectNodeContents(editor);range.collapse(false);}
+        range.deleteContents();range.insertNode(block);
+        const after=document.createElement('p');after.innerHTML='<br>';block.after(after);
+        const caret=document.createRange();caret.setStart(after,0);caret.collapse(true);pairLogSavedRange=caret.cloneRange();
+      }
+      pairLogHistorySnapshot();pairLogRestoreScrollStateDeferred(scrollState);ptThemeEl('pairStatusModal').classList.add('hidden');setStatus('상태창을 본문에 반영했습니다.');
+    }
+    function pairStatusInit(){
+      ptThemeEl('pairLogStatusOpen')?.addEventListener('click',()=>{const editor=ptThemeEl('pairLogRichEditor');const sel=window.getSelection();if(sel?.rangeCount&&editor.contains(sel.anchorNode))pairLogSavedRange=sel.getRangeAt(0).cloneRange();pairStatusOpen();});
+      ptThemeEl('pairStatusClose')?.addEventListener('click',()=>ptThemeEl('pairStatusModal').classList.add('hidden'));
+      ptThemeEl('pairStatusAdd')?.addEventListener('click',()=>pairStatusAddField());
+      ptThemeEl('pairStatusParse')?.addEventListener('click',pairStatusParse);
+      ptThemeEl('pairStatusPreviewButton')?.addEventListener('click',pairStatusPreview);
+      ptThemeEl('pairStatusInsert')?.addEventListener('click',pairStatusInsert);
+      ptThemeEl('pairStatusTheme')?.addEventListener('change',e=>{
+        const theme=e.target.value,preset=PAIR_STATUS_THEMES[theme]||PAIR_STATUS_THEMES.classic;
+        const palette={classic:['#fffefa','#739bb0','#c9e2ed','#ffffff'],cyber:['#171b25','#4de0d2','#35505b','#202b38'],celestial:['#f3f0f8','#71618e','#c9bfdc','#fbf9ff'],botanical:['#f1f4e9','#657b55','#c3cfb5','#fbfcf6'],gothic:['#292733','#c7a9c8','#6b5d70','#393442'],glass:['#edf5f4','#588b8b','#b5d2d0','#f9ffff'],romance:['#fbf0f2','#a66d82','#e2c2cd','#fffafb'],minimal:['#ffffff','#555555','#dddddd','#fafafa'],velvet:['#f1e9e7','#76514e','#c9b0a9','#fffaf8'],ocean:['#edf4f5','#547b88','#bdd2d8','#faffff']}[theme]||['#fffefa','#739bb0','#c9e2ed','#ffffff'];
+        ['pairStatusBg','pairStatusAccent','pairStatusBorder','pairStatusCell'].forEach((id,i)=>ptThemeEl(id).value=palette[i]);
+        ptThemeEl('pairStatusHead').value=preset[0];ptThemeEl('pairStatusFoot').value=preset[1];
+      });
+      ptThemeEl('pairStatusModal')?.addEventListener('click',e=>{if(e.target===ptThemeEl('pairStatusModal'))ptThemeEl('pairStatusModal').classList.add('hidden');});
+      ptThemeEl('pairLogRichEditor')?.addEventListener('dblclick',e=>{const block=e.target.closest('.rp-status-window[data-pair-status]');if(block){e.preventDefault();pairStatusOpen(block);}});
+      ptThemeEl('pairLogRichEditor')?.addEventListener('click',e=>{const block=e.target.closest('.rp-status-window[data-pair-status]');if(block){e.preventDefault();}});
+    }
+
+    const initV49Features=()=>{
+      try { ptThemeInit(); } catch(error){console.error('Theme initialization failed:',error);}
+      try { ptInitCategoryRatio(); } catch(error){console.error('Category ratio initialization failed:',error);}
+      try { pairStatusInit(); } catch(error){console.error('Status window initialization failed:',error);}
+      try {
+        document.getElementById('ptBoardCreate')?.addEventListener('click',ptCreateBackupBoard);
+        document.getElementById('ptBoardClose')?.addEventListener('click',()=>document.getElementById('ptBoardModal').classList.add('hidden'));
+        document.getElementById('ptBoardCancel')?.addEventListener('click',()=>document.getElementById('ptBoardModal').classList.add('hidden'));
+        document.getElementById('ptBoardName')?.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();ptCreateBackupBoard();}});
+        document.getElementById('ptBoardModal')?.addEventListener('click',event=>{if(event.target.id==='ptBoardModal')event.currentTarget.classList.add('hidden');});
+      } catch(error){console.error('Board modal initialization failed:',error);}
+    };
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initV49Features,{once:true});
+    else initV49Features();
+
 }
 </script>
 <script>
@@ -9035,6 +9427,61 @@ function pairLogRecordTemplateMarkup(type){
   }
 })();
 </script>
+
+
+
+<div id="ptBoardModal" class="pt-theme-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="ptBoardTitle">
+ <section class="pt-theme-dialog pt-board-dialog">
+  <header><div><small>PROMPT BACKUP / BOARD SETTINGS</small><h2 id="ptBoardTitle">NEW BOARD</h2></div><button type="button" id="ptBoardClose">×</button></header>
+  <p>새 게시판의 이름을 정합니다. 게시판을 추가해도 기존 게시글과 이미지에는 영향이 없습니다.</p>
+  <label class="pair-status-label">BOARD NAME<input id="ptBoardName" maxlength="24" placeholder="예: CHARACTER NOTES"></label>
+  <footer><button type="button" id="ptBoardCancel">CANCEL</button><span></span><button type="button" id="ptBoardCreate">CREATE BOARD</button></footer>
+ </section>
+</div>
+
+<div id="ptThemeModal" class="pt-theme-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="ptThemeTitle">
+  <section class="pt-theme-dialog">
+    <header><div><small>P. TOOLBOX / APPEARANCE</small><h2 id="ptThemeTitle">DESKTOP THEME</h2></div><button type="button" id="ptThemeClose" aria-label="닫기">×</button></header>
+    <p>바탕색과 패턴을 조합해 작업 공간의 분위기를 조정합니다. 기본 견본은 언제든 다시 선택할 수 있습니다.</p>
+    <div class="pt-theme-presets" id="ptThemePresets"></div>
+    <div class="pt-theme-row"><label for="ptThemeColor">CUSTOM COLOR</label><input type="color" id="ptThemeColor" value="#d9d6c8"><input type="text" id="ptThemeHex" value="#D9D6C8" maxlength="7" aria-label="HEX 색상"></div>
+    <div class="pt-theme-row"><label for="ptThemePattern">BACKGROUND PATTERN</label><select id="ptThemePattern"><option value="solid">Solid</option><option value="stripe">Vertical Stripes</option><option value="grid">Fine Grid</option><option value="grain">Diagonal Grain</option></select></div>
+    <div class="pt-theme-row"><label for="ptThemeBlur">PATTERN BLUR</label><input type="range" id="ptThemeBlur" min="0" max="12" step="1" value="0"><output id="ptThemeBlurOut">0px</output></div>
+    <div class="pt-theme-row"><label for="ptThemeOpacity">PATTERN OPACITY</label><input type="range" id="ptThemeOpacity" min="5" max="45" step="1" value="18"><output id="ptThemeOpacityOut">18%</output></div>
+    <div class="pt-theme-saved"><strong>SAVED COLORS</strong><div id="ptThemeSavedColors"></div></div>
+    <footer><button type="button" id="ptThemeReset">RESET</button><span></span><button type="button" id="ptThemeSave">APPLY & SAVE</button></footer>
+  </section>
+</div>
+<div id="pairStatusModal" class="pair-status-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pairStatusTitle">
+ <section class="pair-status-dialog">
+  <header><div><small>PAIR LOG / STATUS WINDOW</small><h2 id="pairStatusTitle">상태창 만들기</h2></div><button type="button" id="pairStatusClose">×</button></header>
+  <p class="pair-status-help">항목을 입력하거나 [항목명: 내용] 형식의 원문을 붙여 넣어 자동 추출할 수 있습니다.</p>
+  <div class="pair-status-grid">
+   <label>이름<input id="pairStatusName" placeholder="이름"></label><label>소속 / 직함<input id="pairStatusSub" placeholder="소속 / 직함"></label>
+  </div>
+  <label class="pair-status-label">상태창 원문에서 항목 추출<textarea id="pairStatusSource" rows="3" placeholder="[현재 위치: 응접실]&#10;[복장: 흰 셔츠]"></textarea></label>
+  <div class="pair-status-inline"><span>STATUS FIELDS</span><button type="button" id="pairStatusParse">원문에서 추출</button><button type="button" id="pairStatusAdd">＋ 항목 추가</button></div>
+  <div id="pairStatusFields"></div>
+  <div class="pair-status-grid">
+   <label>작은 제목<input id="pairStatusSceneTitle" placeholder="SCENE / TODAY"></label>
+   <label>추가 설명<input id="pairStatusSceneText" placeholder="짧은 설명"></label>
+  </div>
+  <details class="pair-status-design" open><summary>DESIGN SETTINGS</summary>
+   <div class="pair-status-grid">
+    <label>테마<select id="pairStatusTheme"><option value="classic">Classic</option><option value="celestial">Celestial</option><option value="cyber">Cyber</option><option value="botanical">Botanical</option><option value="gothic">Gothic</option><option value="glass">Glass</option><option value="romance">Romance</option><option value="minimal">Minimal</option><option value="velvet">Velvet</option><option value="ocean">Ocean</option></select></label>
+    <label>항목 배열<select id="pairStatusColumns"><option value="2">2 Columns</option><option value="1">1 Column</option><option value="3">3 Columns</option></select></label>
+    <label>배경색<input type="color" id="pairStatusBg" value="#fffefa"></label>
+    <label>강조색<input type="color" id="pairStatusAccent" value="#739bb0"></label>
+    <label>테두리색<input type="color" id="pairStatusBorder" value="#c9e2ed"></label>
+    <label>카드색<input type="color" id="pairStatusCell" value="#ffffff"></label>
+   </div>
+   <label class="pair-status-label">상단 문구<input id="pairStatusHead" value="✧ CHARACTER FILE"></label>
+   <label class="pair-status-label">하단 문구<input id="pairStatusFoot" value="CHARACTER RECORD"></label>
+  </details>
+  <div id="pairStatusPreview" class="pair-status-preview hidden"></div>
+  <footer><button type="button" id="pairStatusPreviewButton">미리보기</button><span></span><button type="button" id="pairStatusInsert">본문에 삽입</button></footer>
+ </section>
+</div>
 
 </body>
 </html>
