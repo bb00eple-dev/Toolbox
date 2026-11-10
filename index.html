@@ -11,7 +11,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" sizes="192x192" href="./p-toolbox-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="./p-toolbox-192.png">
-  <title>P. Toolbox v51 · Stage 2 Enhancements</title>
+  <title>P. Toolbox v52 · Reader & Prompt Expansion</title>
   <style>
     :root {
       color-scheme: light;
@@ -1791,6 +1791,64 @@ body::before{z-index:0!important;inset:0!important;background-color:var(--pt-wal
 
     .backup-image-thumb.ratio-original{height:auto!important;min-height:0!important}
     .backup-image-thumb.ratio-original img{height:auto!important;object-fit:contain!important}
+
+/* v52 reader skins, layout polish, titlebar palette and randomizer multi-selects */
+#toolboxWindow .titlebar{background:var(--pt-titlebar-color,var(--navy))!important;}
+.backup-version-tabs,.backup-detail-version-tabs{justify-content:flex-start!important;align-items:center;flex-wrap:wrap;overflow:visible}
+.backup-version-tabs button,.backup-detail-version-tabs button{flex:0 0 auto;white-space:nowrap}
+.backup-version-photo-box{margin-top:9px;padding:9px;border:1px dashed var(--bp-line);background:rgba(255,255,255,.64)}
+.backup-version-photo-box .backup-image-preview{grid-template-columns:repeat(auto-fill,minmax(76px,1fr));}
+.backup-version-image-thumb{min-height:100px;max-height:150px;overflow:hidden}
+.backup-version-image-thumb img{width:100%;height:auto;max-height:140px;object-fit:contain;background:#f3f0ea}
+.category-controls{display:flex;gap:5px;align-items:center}
+.category-controls .category-select{min-width:0;flex:1}
+.add-category-select{flex:0 0 27px;min-width:27px;padding:2px!important;font-weight:bold!important}
+.category-extra-selects{display:grid;gap:5px;margin-top:5px}
+.category-extra-row{display:flex;gap:5px;align-items:center}
+.category-extra-row select{min-width:0;flex:1}
+.remove-category-select{flex:0 0 27px;min-width:27px;padding:2px!important}
+.pair-chat-item.pair-chat-card{display:block;margin:9px 0;padding:0;border:1px solid var(--bp-line);background:#fffdf9;box-shadow:3px 3px 0 rgba(90,70,80,.12);overflow:hidden}
+.pair-chat-open{display:flex;width:100%;flex-direction:column;gap:7px;padding:14px 15px;border:0!important;background:transparent!important;color:var(--bp-ink)!important;text-align:left;box-shadow:none!important}
+.pair-chat-card-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;width:100%}
+.pair-chat-card-head strong{font:600 15px/1.35 Georgia,'Malgun Gothic',serif;overflow-wrap:anywhere}
+.pair-chat-card-head time{flex:0 0 auto;color:var(--bp-muted);font:10px Tahoma,Arial,sans-serif}
+.pair-chat-card-sub{color:var(--bp-muted);font-size:10px;letter-spacing:.04em}
+.pair-chat-card-excerpt{display:-webkit-box;max-width:100%;overflow:hidden;color:#655f62;font-size:11px;line-height:1.65;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow-wrap:anywhere}
+.pair-chat-card .pair-chat-tags{padding:0 14px 8px;margin:0}
+.pair-chat-card .pair-chat-actions{display:flex;justify-content:flex-end;gap:5px;padding:8px 12px;border-top:1px dotted var(--bp-line);background:#faf6f5}
+.pair-chat-card.is-locked .pair-chat-open{background:repeating-linear-gradient(135deg,#fffaf3 0 8px,#f7f0e8 8px 16px)!important}
+.pt-theme-accent-presets{display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin:-3px 0 10px 120px}
+.pt-theme-accent-presets span{width:100%;color:#777566;font-size:9px}
+.pt-theme-accent-presets button{min-height:25px;padding:4px 7px 4px 23px;border:1px solid #a9a69b;background:linear-gradient(90deg,var(--swatch) 0 15px,#f8f6ef 15px);color:#4e4c45;font:9px Tahoma,'Malgun Gothic',sans-serif}
+.pair-log-reader-window{transition:background .18s ease,border-color .18s ease}
+.pair-reader-skin-picker{display:flex;align-items:center;gap:7px;margin-top:9px;color:var(--bp-muted);font:9px Tahoma,'Malgun Gothic',sans-serif;letter-spacing:.04em}
+.pair-reader-skin-picker select{max-width:min(260px,65vw);min-height:27px;padding:4px 7px;border:1px solid var(--bp-line);background:#fff;color:var(--bp-ink);font:10px Tahoma,'Malgun Gothic',sans-serif}
+.pair-log-reader-window[data-skin="diner"]{border:7px double #b46d70;background:#fff8ed;box-shadow:9px 9px 0 rgba(69,44,42,.24)}
+.pair-log-reader-window[data-skin="diner"] .pair-log-reader-header{margin:-3px -3px 12px;padding:18px;background:repeating-linear-gradient(90deg,#f7e5d4 0 14px,#fff7ec 14px 28px);border-bottom:3px solid #b46d70}
+.pair-log-reader-window[data-skin="diner"] .pair-log-reader-header h2{color:#9d5059;font:bold 26px/1.2 Georgia,serif;letter-spacing:.04em;text-transform:uppercase}
+.pair-log-reader-window[data-skin="diner"] .pair-log-reader-content{border:2px dashed #c98f8d;background:#fffdf8;color:#4f4944;font-family:Georgia,'Malgun Gothic',serif;line-height:1.9}
+.pair-log-reader-window[data-skin="diner"] .pair-log-reader-meta span{border-radius:14px;background:#f7e7dc;color:#98545d;border-color:#d9b3a4}
+.pair-log-reader-window[data-skin="letter"]{border:1px solid #cdbda0;background:#f5eddb;box-shadow:10px 10px 0 rgba(53,57,47,.22);font-family:Georgia,'Times New Roman',serif}
+.pair-log-reader-window[data-skin="letter"] .pair-log-reader-header{padding:20px 14px;border-bottom:1px solid #b9a987;background:linear-gradient(#f5eddb,#eee4cf)}
+.pair-log-reader-window[data-skin="letter"] .pair-log-reader-header h2{color:#445b52;font:normal 29px/1.25 Georgia,serif}
+.pair-log-reader-window[data-skin="letter"] .pair-log-reader-content{border:1px solid #d8c8aa;background:repeating-linear-gradient(to bottom,#fffaf0 0 31px,#e8dfcc 32px);color:#49483f;font:15px/2 Georgia,'Malgun Gothic',serif;padding:24px 22px}
+.pair-log-reader-window[data-skin="letter"] .pair-log-reader-meta span{background:#eee4d1;border-color:#cbbd9f;color:#647064}
+.pair-log-reader-window[data-skin="win95"]{padding:5px;border:2px solid;border-color:#fff #454545 #454545 #fff;background:#c0c0c0;box-shadow:5px 5px 0 #444;border-radius:0}
+.pair-log-reader-window[data-skin="win95"] .pair-log-reader-header{margin:-1px -1px 8px;padding:8px;background:linear-gradient(90deg,#000080,#4264a3);color:white;border:0;align-items:center}
+.pair-log-reader-window[data-skin="win95"] .pair-log-reader-header h2,.pair-log-reader-window[data-skin="win95"] .pair-log-reader-header small,.pair-log-reader-window[data-skin="win95"] .pair-log-reader-date{color:white;font-family:Tahoma,Arial,sans-serif}
+.pair-log-reader-window[data-skin="win95"] .pair-log-reader-content{border:2px solid;border-color:#777 #fff #fff #777;background:#fff;color:#111;font:13px/1.7 'Courier New',monospace}
+.pair-log-reader-window[data-skin="win95"] .pair-log-reader-actions button,.pair-log-reader-window[data-skin="win95"] .pair-log-reader-header>button{border:2px solid;border-color:#fff #444 #444 #fff;background:#c0c0c0;color:#111;border-radius:0}
+.pair-log-reader-window[data-skin="editorial"]{border:1px solid #c8d0bd;background:#f5f5ec;box-shadow:8px 8px 0 rgba(49,65,50,.2)}
+.pair-log-reader-window[data-skin="editorial"] .pair-log-reader-header{padding:17px 12px;border-bottom:1px solid #c8d0bd}
+.pair-log-reader-window[data-skin="editorial"] .pair-log-reader-header h2{color:#4c5c47;font:normal 27px/1.2 Georgia,serif;letter-spacing:.02em}
+.pair-log-reader-window[data-skin="editorial"] .pair-log-reader-content{background:#fbfbf6;border:1px solid #d8ddcf;color:#454b40;line-height:1.9}
+.pair-log-reader-window[data-skin="midnight"]{border:1px solid #4c5366;background:#202638;color:#e8e5dc;box-shadow:10px 10px 0 rgba(0,0,0,.28)}
+.pair-log-reader-window[data-skin="midnight"] .pair-log-reader-header{border-bottom:1px solid #4c5366}
+.pair-log-reader-window[data-skin="midnight"] .pair-log-reader-header h2{color:#e6c99c;font:normal 25px/1.25 Georgia,serif}
+.pair-log-reader-window[data-skin="midnight"] .pair-log-reader-header small,.pair-log-reader-window[data-skin="midnight"] .pair-log-reader-date,.pair-log-reader-window[data-skin="midnight"] .pair-log-reader-meta{color:#b8c0d0}
+.pair-log-reader-window[data-skin="midnight"] .pair-log-reader-content{background:#171d2c;border:1px solid #48536c;color:#e8e5dc;line-height:1.9}
+.pair-log-reader-window[data-skin="midnight"] .pair-log-reader-meta span{background:#2b3449;border-color:#59627a;color:#e3cda9}
+@media(max-width:600px){.pair-log-reader-heading{min-width:0;flex:1}.pair-reader-skin-picker{align-items:flex-start;flex-direction:column}.pair-log-reader-window[data-skin="letter"] .pair-log-reader-content{padding:15px}.pair-chat-card-head{align-items:flex-start;flex-direction:column;gap:3px}}
 </style>
 </head>
 <body>
@@ -2186,6 +2244,7 @@ body::before{z-index:0!important;inset:0!important;background-color:var(--pt-wal
                 <div class="backup-block-heading"><span class="field-label" style="margin:0;">PROMPT VERSIONS · 프롬프트 버전</span><div class="backup-inline-actions"><button class="small" id="backupAddVersion" type="button">＋ VERSION</button><button class="small" id="backupDeleteVersion" type="button">− VERSION</button></div></div>
                 <div class="backup-version-tabs" id="backupVersionTabs" role="tablist" aria-label="프롬프트 버전 목록"></div>
                 <label class="field-label" for="backupVersionName">VERSION NAME · 버전 이름</label><input id="backupVersionName" class="backup-full" type="text" maxlength="60" placeholder="기본 프롬프트 / AU 프롬프트">
+                <div class="backup-version-photo-box"><label class="field-label" for="backupVersionImages">VERSION PHOTO · 현재 버전 전용 사진</label><input id="backupVersionImages" class="backup-full backup-file-input" type="file" accept="image/*" multiple><div id="backupVersionImagePreview" class="backup-image-preview"></div><small class="backup-version-hint">사진은 선택한 버전에만 저장됩니다. 버전을 바꾸면 해당 버전의 사진으로 전환됩니다.</small></div>
                 <small class="backup-version-hint">한 게시글 안에 기본·AU·IF 등 여러 프롬프트 묶음을 저장할 수 있습니다.</small>
               </section>
               <div class="backup-block-heading">
@@ -2516,7 +2575,7 @@ body::before{z-index:0!important;inset:0!important;background-color:var(--pt-wal
 
       <div id="pairLogReaderModal" class="pair-log-reader-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pairLogReaderTitle">
         <article class="pair-log-reader-window">
-          <header class="pair-log-reader-header"><div><small>PAIR ARCHIVE / LOG VIEWER</small><h2 id="pairLogReaderTitle">RP LOG</h2><div id="pairLogReaderDate" class="pair-log-reader-date"></div></div><button type="button" id="pairLogReaderClose" aria-label="닫기">×</button></header>
+          <header class="pair-log-reader-header"><div class="pair-log-reader-heading"><small>PAIR ARCHIVE / LOG VIEWER</small><h2 id="pairLogReaderTitle">RP LOG</h2><div id="pairLogReaderDate" class="pair-log-reader-date"></div><label class="pair-reader-skin-picker">VIEW STYLE · 열람 스킨 <select id="pairLogReaderSkin"><option value="diner">Retro Diner · 레트로 다이너</option><option value="letter">Letter Garden · 편지지</option><option value="win95">Classic Windows · 고전 윈도우</option><option value="editorial">Soft Editorial · 에디토리얼</option><option value="midnight">Midnight Archive · 미드나잇</option></select></label></div><button type="button" id="pairLogReaderClose" aria-label="닫기">×</button></header>
           <div id="pairLogReaderMeta" class="pair-log-reader-meta"></div><div id="pairLogReaderTags" class="pair-chat-tags"></div>
           <div id="pairLogReaderContent" class="pair-chat-rich pair-log-reader-content"></div>
           <footer class="pair-log-reader-actions"><button type="button" id="pairLogReaderCopy">COPY TEXT</button><button type="button" id="pairLogReaderEdit">EDIT</button><button type="button" class="primary" id="pairLogReaderCloseBottom">CLOSE</button></footer>
@@ -3553,6 +3612,62 @@ function startPromptToolbox() {
       }
     };
 
+
+    // v52: broaden composition, pose, camera, background, mood and reliable lighting tags.
+    categoryData.camera.values.push(
+      'extreme low angle', 'extreme high angle', 'top-down view', 'isometric view', 'side view', 'rear view',
+      'three-quarter rear view', 'profile close-up', 'overhead perspective', 'from ground level', 'through a doorway',
+      'through a window', 'through foreground objects', 'distant establishing shot', 'compressed perspective',
+      'telephoto shot', 'wide establishing shot', 'portrait lens perspective', 'tilted camera angle', 'vertical composition'
+    );
+    categoryData.composition.values.push(
+      'rule of thirds composition', 'golden ratio composition', 'leading lines composition', 'radial composition',
+      'S-curve composition', 'diagonal leading lines', 'strong foreground framing', 'layered depth composition',
+      'foreground subject, distant background', 'subject placed in lower third', 'subject placed at the edge of frame',
+      'large negative space', 'balanced asymmetrical composition', 'overlapping silhouettes', 'reflection-based composition',
+      'silhouette against bright background', 'architectural framing', 'window-frame composition', 'staircase perspective',
+      'environmental portrait composition', 'two-shot composition', 'split composition', 'full-bleed composition'
+    );
+    categoryData.pose.values.push(
+      'sitting on the floor', 'sitting sideways on a chair', 'kneeling on one knee', 'kneeling with both knees',
+      'leaning forward with elbows on knees', 'reclining on a sofa', 'lying on one side', 'lying on the back',
+      'one hand resting on the cheek', 'hand covering part of the face', 'hands gently folded', 'hands clasped behind back',
+      'one hand holding the opposite wrist', 'adjusting their glasses', 'touching the brim of a hat', 'holding a phone near the face',
+      'looking back while walking', 'pausing mid-step', 'turning toward the light', 'reaching toward the camera',
+      'arms loosely at sides', 'one shoulder raised', 'head tilted slightly', 'resting against a windowsill',
+      'standing with weight shifted to one leg', 'sitting with legs drawn up', 'crouching low', 'stretching both arms overhead',
+      'one hand in hair', 'hands resting on a table', 'reading while seated', 'writing at a desk', 'looking out of a window'
+    );
+    categoryData.background.values.push(
+      'sunlit conservatory', 'quiet train compartment', 'old-fashioned diner interior', 'retro roadside motel',
+      'ornate hotel lobby', 'empty theatre auditorium', 'museum gallery', 'rain-streaked glass greenhouse',
+      'narrow European street', 'rooftop overlooking the city', 'subway platform at night', 'deserted shopping arcade',
+      'vintage train station', 'flower shop interior', 'antique bookshop', 'art studio with large windows',
+      'moonlit garden', 'foggy lakeside', 'windy seaside promenade', 'snow-covered courtyard',
+      'industrial rooftop', 'quiet apartment kitchen', 'dim jazz bar interior', 'retro bowling alley',
+      'sunset-lit parking structure', 'old mansion hallway', 'arched stone corridor', 'minimal photo studio'
+    );
+    categoryData.mood.values.push(
+      'quiet anticipation', 'bittersweet nostalgia', 'subdued elegance', 'wistful calm', 'uneasy stillness',
+      'intimate quiet moment', 'playful energy', 'restrained tension', 'dreamlike solitude', 'warm familiarity',
+      'melancholic romance', 'serene detachment', 'theatrical drama', 'soft optimism', 'suspended moment',
+      'mysterious serenity', 'lonely grandeur', 'gentle intimacy', 'festive atmosphere', 'eerie quiet'
+    );
+    categoryData.lighting.values.push(
+      'soft key light', 'diffused window light', 'north-facing window light', 'direct afternoon sunlight',
+      'golden hour backlight', 'rim lighting', 'side lighting', 'split lighting', 'butterfly lighting',
+      'Rembrandt lighting', 'broad lighting', 'short lighting', 'top lighting', 'underlighting',
+      'overcast daylight', 'open shade lighting', 'softbox lighting', 'studio key and fill lighting',
+      'warm practical lighting', 'cool fluorescent lighting', 'neon sign illumination', 'candlelight',
+      'streetlamp lighting', 'headlight illumination', 'moonlight', 'volumetric light rays',
+      'strong backlighting', 'low-key lighting', 'high-key lighting', 'soft fill light', 'hard directional sunlight',
+      'dappled sunlight through leaves', 'light passing through blinds', 'window light with soft shadows'
+    );
+    categoryData.effects.values.push(
+      'sunbeams through window', 'light shafts in dusty air', 'rain reflections on pavement', 'soft lens bloom',
+      'subtle halation', 'shimmering water caustics', 'moving curtain shadows', 'light leaks', 'film burn edges',
+      'reflected neon on wet surfaces', 'soft atmospheric perspective', 'foreground bokeh', 'light rays through foliage'
+    );
 
     categoryData.expression.values.push('focused expression', 'fierce expression');
     categoryData.interaction.values.push(...["one adjusting the other’s scarf", "one fastening the other’s coat", "one brushing rain from the other’s shoulder", "one sharing an earbud with the other", "one showing the other something on a phone", "one taking a candid photo of the other", "one holding the other’s hand behind their back", "one wrapping a blanket around the other", "one offering the other a warm drink", "one wiping a smudge from the other’s cheek", "one fixing the other’s tie", "one straightening the other’s sleeve", "one leaning against the other while waiting", "one falling asleep against the other", "one waking the other gently", "one pulling a chair out for the other", "one helping the other put on a coat", "one shielding the other from rain", "one holding the door open for the other", "one guiding the other through a crowd", "one catching the other’s falling belongings", "one passing a note to the other", "one pointing something out to the other", "one sharing a book between them", "one holding the other’s wrist to check a watch", "one resting a hand over the other’s hand", "one placing a scarf around the other’s neck", "one leaning over to read the other’s book", "one playfully stealing the other’s hat", "one reaching up to remove something from the other’s hair", "one standing on tiptoe to reach the other", "one sitting close with their shoulders touching", "both looking at the same photograph", "both holding opposite ends of the same umbrella", "one guiding the other through a doorway", "one offering their hand to help the other stand", "one turning the other toward the camera", "one hiding behind the other while peeking out", "one leaning over the other’s shoulder to look at a screen", "one holding the other’s hand while crossing the street", "one sharing a blanket on a bench", "one offering their seat to the other"]);
@@ -4956,6 +5071,8 @@ function startPromptToolbox() {
       ,'B reaches for the lighter bag':'B가 더 가벼운 가방을 들어 주려 손을 뻗는 모습','B leans in to hear A better':'B가 A의 말을 더 잘 들으려 가까이 다가가는 모습','B glances at A from the corner of their eye':'B가 곁눈질로 A를 바라보는 모습'
       ,'late afternoon sunlight':'늦은 오후의 햇빛','harsh noon sunlight':'강렬한 한낮의 햇빛','backlit silhouette':'역광으로 드러난 실루엣','streetlight illumination':'가로등 조명'
     };
+    const PROMPT_TAG_KO_V52 = {"extreme low angle": "극단적인 로우 앵글", "extreme high angle": "극단적인 하이 앵글", "top-down view": "바로 위에서 내려다보는 시점", "isometric view": "등각 투영 시점", "side view": "측면 시점", "rear view": "후면 시점", "three-quarter rear view": "후면 3/4 시점", "profile close-up": "측면 클로즈업", "overhead perspective": "위에서 내려다보는 원근감", "from ground level": "지면 높이에서 바라보는 시점", "through a doorway": "문틈 너머로 바라보는 구도", "through a window": "창문 너머로 바라보는 구도", "through foreground objects": "전경 사물 사이로 바라보는 구도", "distant establishing shot": "공간 전체를 보여주는 원거리 샷", "compressed perspective": "압축된 원근감", "telephoto shot": "망원 샷", "wide establishing shot": "공간 전체를 담는 와이드 샷", "portrait lens perspective": "인물 렌즈 특유의 원근감", "tilted camera angle": "기울어진 카메라 앵글", "vertical composition": "세로형 구도", "rule of thirds composition": "삼분할 구도", "golden ratio composition": "황금비 구도", "leading lines composition": "유도선을 활용한 구도", "radial composition": "방사형 구도", "S-curve composition": "S자 곡선 구도", "diagonal leading lines": "사선 유도선", "strong foreground framing": "전경을 강조한 프레이밍", "layered depth composition": "층위감 있는 깊이 구도", "foreground subject, distant background": "전경의 인물과 멀리 떨어진 배경", "subject placed in lower third": "화면 아래쪽 삼분할 지점에 배치된 인물", "subject placed at the edge of frame": "화면 가장자리에 배치된 인물", "large negative space": "넓은 여백을 살린 구도", "balanced asymmetrical composition": "균형 잡힌 비대칭 구도", "overlapping silhouettes": "겹쳐지는 실루엣", "reflection-based composition": "반사를 활용한 구도", "silhouette against bright background": "밝은 배경 앞의 실루엣", "architectural framing": "건축 구조물을 활용한 프레이밍", "window-frame composition": "창틀을 활용한 구도", "staircase perspective": "계단의 원근감을 활용한 구도", "environmental portrait composition": "환경을 함께 담는 인물 구도", "two-shot composition": "두 인물 구도", "split composition": "분할 구도", "full-bleed composition": "화면을 가득 채우는 구도", "sitting on the floor": "바닥에 앉은 자세", "sitting sideways on a chair": "의자에 옆으로 걸터앉은 자세", "kneeling on one knee": "한쪽 무릎을 꿇은 자세", "kneeling with both knees": "양 무릎을 꿇은 자세", "leaning forward with elbows on knees": "무릎에 팔꿈치를 대고 앞으로 기댄 자세", "reclining on a sofa": "소파에 비스듬히 누운 자세", "lying on one side": "옆으로 누운 자세", "lying on the back": "등을 대고 누운 자세", "one hand resting on the cheek": "한 손을 뺨에 댄 자세", "hand covering part of the face": "손으로 얼굴 일부를 가린 자세", "hands gently folded": "두 손을 가지런히 모은 자세", "hands clasped behind back": "등 뒤로 두 손을 맞잡은 자세", "one hand holding the opposite wrist": "한 손으로 반대쪽 손목을 잡은 자세", "adjusting their glasses": "안경을 고쳐 쓰는 동작", "touching the brim of a hat": "모자 챙을 만지는 동작", "holding a phone near the face": "얼굴 가까이 휴대전화를 든 자세", "looking back while walking": "걸어가며 뒤돌아보는 모습", "pausing mid-step": "걷던 중 잠시 멈춘 자세", "turning toward the light": "빛이 있는 쪽으로 몸을 돌리는 자세", "reaching toward the camera": "카메라를 향해 손을 뻗는 자세", "arms loosely at sides": "양팔을 자연스럽게 내린 자세", "one shoulder raised": "한쪽 어깨를 올린 자세", "head tilted slightly": "고개를 살짝 기울인 자세", "resting against a windowsill": "창턱에 기대 있는 자세", "standing with weight shifted to one leg": "한쪽 다리에 체중을 실어 선 자세", "sitting with legs drawn up": "다리를 끌어안고 앉은 자세", "crouching low": "몸을 낮게 웅크린 자세", "stretching both arms overhead": "양팔을 머리 위로 뻗는 자세", "one hand in hair": "한 손으로 머리카락을 만지는 자세", "hands resting on a table": "테이블 위에 두 손을 둔 자세", "reading while seated": "앉아서 책을 읽는 모습", "writing at a desk": "책상에서 글을 쓰는 모습", "looking out of a window": "창밖을 바라보는 모습", "sunlit conservatory": "햇살이 드는 온실", "quiet train compartment": "조용한 열차 객실", "old-fashioned diner interior": "고전적인 다이너 내부", "retro roadside motel": "레트로풍 도로변 모텔", "ornate hotel lobby": "화려한 장식의 호텔 로비", "empty theatre auditorium": "텅 빈 극장 객석", "museum gallery": "박물관 전시실", "rain-streaked glass greenhouse": "빗물이 흐르는 유리 온실", "narrow European street": "유럽의 좁은 골목", "rooftop overlooking the city": "도시가 내려다보이는 옥상", "subway platform at night": "밤의 지하철 승강장", "deserted shopping arcade": "인적 없는 아케이드 상가", "vintage train station": "빈티지 기차역", "flower shop interior": "꽃집 내부", "antique bookshop": "앤티크 서점", "art studio with large windows": "큰 창문이 있는 작업실", "moonlit garden": "달빛이 비치는 정원", "foggy lakeside": "안개 낀 호숫가", "windy seaside promenade": "바람 부는 해변 산책로", "snow-covered courtyard": "눈 덮인 안뜰", "industrial rooftop": "산업 시설 옥상", "quiet apartment kitchen": "조용한 아파트 주방", "dim jazz bar interior": "어두운 재즈 바 내부", "retro bowling alley": "레트로 볼링장", "sunset-lit parking structure": "노을빛이 드는 주차장", "old mansion hallway": "오래된 저택 복도", "arched stone corridor": "아치형 석조 복도", "minimal photo studio": "미니멀한 사진 스튜디오", "quiet anticipation": "고요한 기대감", "bittersweet nostalgia": "씁쓸하고 아련한 향수", "subdued elegance": "절제된 우아함", "wistful calm": "그리움이 감도는 차분함", "uneasy stillness": "불안이 감도는 정적", "intimate quiet moment": "사적인 고요한 순간", "playful energy": "장난스럽고 활기찬 분위기", "restrained tension": "절제된 긴장감", "dreamlike solitude": "몽환적인 고독", "warm familiarity": "따뜻하고 익숙한 느낌", "melancholic romance": "쓸쓸한 낭만", "serene detachment": "고요한 거리감", "theatrical drama": "연극적인 극적 분위기", "soft optimism": "은은한 낙관", "suspended moment": "시간이 멈춘 듯한 순간", "mysterious serenity": "신비롭고 평온한 분위기", "lonely grandeur": "고독한 장엄함", "gentle intimacy": "부드러운 친밀감", "festive atmosphere": "축제 분위기", "eerie quiet": "기묘한 정적", "soft key light": "부드러운 주광", "diffused window light": "확산된 창문 빛", "north-facing window light": "북향 창문에서 들어오는 빛", "direct afternoon sunlight": "오후의 직사광", "golden hour backlight": "골든아워 역광", "rim lighting": "윤곽을 살리는 림 라이트", "side lighting": "측면 조명", "split lighting": "얼굴을 반으로 나누는 조명", "butterfly lighting": "버터플라이 조명", "Rembrandt lighting": "렘브란트 조명", "broad lighting": "브로드 조명", "short lighting": "쇼트 조명", "top lighting": "위쪽에서 비추는 조명", "underlighting": "아래쪽에서 비추는 조명", "overcast daylight": "흐린 날의 자연광", "open shade lighting": "그늘의 확산광", "softbox lighting": "소프트박스 조명", "studio key and fill lighting": "스튜디오 주광과 보조광", "warm practical lighting": "따뜻한 실내 실용 조명", "cool fluorescent lighting": "차가운 형광등 조명", "neon sign illumination": "네온사인 조명", "candlelight": "촛불 조명", "streetlamp lighting": "가로등 조명", "headlight illumination": "자동차 전조등 조명", "moonlight": "달빛", "volumetric light rays": "공기 중 빛줄기", "strong backlighting": "강한 역광", "low-key lighting": "어두운 저조도 조명", "high-key lighting": "밝은 고조도 조명", "soft fill light": "부드러운 보조광", "hard directional sunlight": "강한 방향성 직사광", "dappled sunlight through leaves": "잎 사이로 부서지는 햇빛", "light passing through blinds": "블라인드 사이로 들어오는 빛", "window light with soft shadows": "부드러운 그림자를 만드는 창문 빛", "sunbeams through window": "창문 사이로 들어오는 햇살", "light shafts in dusty air": "먼지 속에 비치는 빛줄기", "rain reflections on pavement": "젖은 바닥에 비친 빗물 반사", "soft lens bloom": "은은한 렌즈 번짐", "subtle halation": "은은한 할레이션", "shimmering water caustics": "물결이 반사하는 빛 무늬", "moving curtain shadows": "흔들리는 커튼 그림자", "light leaks": "빛샘 효과", "film burn edges": "필름 번 효과", "reflected neon on wet surfaces": "젖은 표면에 비친 네온", "soft atmospheric perspective": "부드러운 대기 원근감", "foreground bokeh": "전경의 보케", "light rays through foliage": "나뭇잎 사이로 비치는 빛줄기"};
+    Object.assign(PROMPT_TAG_KO_EXTRA, PROMPT_TAG_KO_V52);
     function promptTagKorean(tag){
       const raw=String(tag??'').trim();if(!raw)return '';
       if(PROMPT_TAG_KO_EXTRA[raw])return PROMPT_TAG_KO_EXTRA[raw];
@@ -5192,21 +5309,28 @@ function startPromptToolbox() {
       }
 
       if (theme && ['background','props','mood','lighting','effects'].includes(id) && (!Array.isArray(base) || !base.length)) base = categoryData[id].values;
-      return [...base, ...extra];
+      // Keep the new general-purpose scene tags available even when a theme-specific pool is active.
+      const v52Supplements = id==='background' ? categoryData.background.values.slice(-28)
+        : id==='mood' ? categoryData.mood.values.slice(-20)
+        : id==='lighting' ? categoryData.lighting.values.slice(-34)
+        : id==='effects' ? categoryData.effects.values.slice(-13) : [];
+      return [...new Set([...base, ...extra, ...v52Supplements])];
     }
 
     function refreshCategoryOptions(id) {
-      const card = categoryGrid.querySelector(`[data-category="${id}"]`);
-      if (!card) return;
-      const select = card.querySelector('.category-select');
-      const oldValues = select._currentValues || getValues(id);
-      const oldTag = select.value !== '' ? oldValues[Number(select.value)] : null;
+      const cards = [...categoryGrid.querySelectorAll(`[data-category="${id}"]`)];
+      if (!cards.length) return;
       const values = getValues(id);
-      select.innerHTML = '<option value="">— 랜덤 / 직접 선택 —</option>' +
-        values.map((tag, index) => `<option value="${index}">${escapeHtml(promptTagKorean(tag))}</option>`).join('');
-      const nextIndex = oldTag ? values.indexOf(oldTag) : -1;
-      select.value = nextIndex >= 0 ? String(nextIndex) : '';
-      select._currentValues = values.slice();
+      cards.forEach(card => {
+        card.querySelectorAll('.category-select').forEach(select => {
+          const oldValues = select._currentValues || getValues(id);
+          const oldTag = select.value !== '' ? oldValues[Number(select.value)] : null;
+          select.innerHTML = '<option value="">— 랜덤 / 직접 선택 —</option>' + values.map((tag,index)=>`<option value="${index}">${escapeHtml(promptTagKorean(tag))}</option>`).join('');
+          const nextIndex = oldTag ? values.indexOf(oldTag) : -1;
+          select.value = nextIndex >= 0 ? String(nextIndex) : '';
+          select._currentValues = values.slice();
+        });
+      });
       renderExcludedValues(id);
     }
 
@@ -5241,7 +5365,9 @@ function startPromptToolbox() {
             ${options}
           </select>
           <button type="button" class="small reroll-button">개별 랜덤</button>
+          <button type="button" class="small add-category-select" title="같은 항목을 하나 더 조합">＋</button>
         </div>
+        <div class="category-extra-selects"></div>
         <details class="exclude-picker">
           <summary>랜덤 제외 목록 <span class="exclude-count">0개 제외</span></summary>
           <div class="exclude-picker-inner">
@@ -5267,6 +5393,14 @@ function startPromptToolbox() {
         updateOutputFromSelections();
       });
       reroll.addEventListener('click', () => randomizeCategory(id));
+      card.querySelector('.add-category-select').addEventListener('click',()=>{
+        const host=card.querySelector('.category-extra-selects');
+        if(host.querySelectorAll('.category-extra-row').length>=3){setStatus('한 카테고리에서 최대 4개까지 조합할 수 있습니다.');return;}
+        const row=document.createElement('div');row.className='category-extra-row';
+        const extra=document.createElement('select');extra.className='category-select';extra.setAttribute('aria-label',`${data.label} 추가 선택`);extra.innerHTML='<option value="">— 추가 태그 선택 —</option>'+getValues(id).map((tag,index)=>`<option value="${index}">${escapeHtml(promptTagKorean(tag))}</option>`).join('');extra._currentValues=getValues(id).slice();
+        const remove=document.createElement('button');remove.type='button';remove.className='small remove-category-select';remove.textContent='−';remove.title='이 선택칸 제거';remove.addEventListener('click',()=>{row.remove();updateOutputFromSelections();});
+        extra.addEventListener('change',updateOutputFromSelections);row.append(extra,remove);host.appendChild(row);setStatus(`${data.label}: 추가 선택칸을 만들었습니다.`);
+      });
       card.querySelector('.clear-excluded').addEventListener('click', () => {
         getValues(id).forEach(tag => excludedValues[id].delete(tag));
         renderExcludedValues(id);
@@ -5289,6 +5423,7 @@ function startPromptToolbox() {
       });
       select.addEventListener('change', () => {
         if (select.value !== '') setStatus(`${data.label}: 직접 선택됨`);
+        updateOutputFromSelections();
       });
       return card;
     }
@@ -5391,14 +5526,13 @@ function startPromptToolbox() {
       if (id === 'background' && !backgroundToggle.checked) return;
       if (id === 'lighting' && !lightingToggle.checked) return;
       const card = categoryGrid.querySelector(`[data-category="${id}"]`);
-      const select = card.querySelector('.category-select');
+      const selects = [...card.querySelectorAll('.category-select')];
       const values = getRandomValues(id);
       if (!values.length) { setStatus('랜덤으로 뽑을 수 있는 항목이 없습니다. 제외 목록을 확인해주세요.'); return; }
-      const pickedTag = values[randomIndex(values.length)];
-      select.value = String(getValues(id).indexOf(pickedTag));
+      selects.forEach(select=>{const pickedTag=values[randomIndex(values.length)];select.value=String(getValues(id).indexOf(pickedTag));});
       if (id === 'theme' || id === 'au') refreshContextOptions();
       updateOutputFromSelections();
-      setStatus(`${categoryData[id].label}: 랜덤 추첨 완료`);
+      setStatus(`${categoryData[id].label}: ${selects.length}개 항목 랜덤 추첨 완료`);
     }
 
     function fullRandom() {
@@ -5410,13 +5544,12 @@ function startPromptToolbox() {
         if (id === 'props' && sceneMode.value === 'action') return;
         if (id === 'background' && !backgroundToggle.checked) return;
         if (id === 'lighting' && !lightingToggle.checked) return;
-        const select = categoryGrid.querySelector(`[data-category="${id}"] .category-select`);
+        const card=categoryGrid.querySelector(`[data-category="${id}"]`);
+        const selects=card?[...card.querySelectorAll('.category-select')]:[];
         const values = getRandomValues(id);
         if (values.length) {
-          const pickedTag = values[randomIndex(values.length)];
-          select.value = String(getValues(id).indexOf(pickedTag));
+          selects.forEach(select=>{const pickedTag=values[randomIndex(values.length)];select.value=String(getValues(id).indexOf(pickedTag));picked++;});
           if (id === 'theme' || id === 'au') refreshContextOptions();
-          picked++;
         }
       });
       refreshContextOptions(true);
@@ -5448,21 +5581,23 @@ function startPromptToolbox() {
         if (id === 'background' && !backgroundToggle.checked) return;
         if (id === 'lighting' && !lightingToggle.checked) return;
         const card = categoryGrid.querySelector(`[data-category="${id}"]`);
-        const select = card.querySelector('.category-select');
-        if (select.value === '') return;
-        const index = Number(select.value);
-        const values = getValues(id);
-        if (!Number.isInteger(index) || !values[index]) return;
-        const tag = values[index];
-        const translation = promptTagKorean(tag);
-        if (id === 'roleA') { roleATags.push(tag); roleAKo.push(translation); }
-        else if (id === 'roleB') { roleBTags.push(tag); roleBKo.push(translation); }
-        else if (id === 'weapons') {
-          const noArticle = /^(dual |twin |hook swords|deer horn knives|butterfly swords|throwing knives|brass knuckles)/i.test(tag);
-          const heldTag = noArticle ? `holding ${tag}` : `holding a ${tag}`;
-          tags.push(heldTag, 'weapon clearly visible', 'weapon in hand');
-          koTags.push(`${translation}을 손에 들고 있음`, '무기가 선명하게 보임', '손에 든 무기');
-        } else { tags.push(tag); koTags.push(translation); }
+        if (!card) return;
+        card.querySelectorAll('.category-select').forEach(select=>{
+          if (select.value === '') return;
+          const index = Number(select.value);
+          const values = getValues(id);
+          if (!Number.isInteger(index) || !values[index]) return;
+          const tag = values[index];
+          const translation = promptTagKorean(tag);
+          if (id === 'roleA') { roleATags.push(tag); roleAKo.push(translation); }
+          else if (id === 'roleB') { roleBTags.push(tag); roleBKo.push(translation); }
+          else if (id === 'weapons') {
+            const noArticle = /^(dual |twin |hook swords|deer horn knives|butterfly swords|throwing knives|brass knuckles)/i.test(tag);
+            const heldTag = noArticle ? `holding ${tag}` : `holding a ${tag}`;
+            tags.push(heldTag, 'weapon clearly visible', 'weapon in hand');
+            koTags.push(`${translation}을 손에 들고 있음`, '무기가 선명하게 보임', '손에 든 무기');
+          } else { tags.push(tag); koTags.push(translation); }
+        });
       });
       randomOutput.value = [...new Set(tags)].join(', ');
       koreanOutput.value = [...new Set(koTags)].join(', ');
@@ -5482,13 +5617,11 @@ function startPromptToolbox() {
         if (id === 'background' && !backgroundToggle.checked) return;
         if (id === 'lighting' && !lightingToggle.checked) return;
         const card = categoryGrid.querySelector(`[data-category="${id}"]`);
-        const select = card.querySelector('.category-select');
+        const selects = [...card.querySelectorAll('.category-select')];
         const values = getRandomValues(id);
         if (values.length) {
-          const pickedTag = values[randomIndex(values.length)];
-          select.value = String(getValues(id).indexOf(pickedTag));
+          selects.forEach(select=>{const pickedTag=values[randomIndex(values.length)];select.value=String(getValues(id).indexOf(pickedTag));picked++;});
           if (id === 'theme' || id === 'au') refreshContextOptions();
-          picked++;
         }
       });
       refreshContextOptions(true);
@@ -5507,6 +5640,7 @@ function startPromptToolbox() {
         if (excludedValues[id]) excludedValues[id].clear();
         renderExcludedValues(id);
         const card = categoryGrid.querySelector(`[data-category="${id}"]`);
+        card.querySelectorAll('.category-extra-row').forEach(row=>row.remove());
         card.querySelector('.category-select').value = '';
         card.querySelector('.category-enabled').checked = true;
         categoryEnabled[id] = true;
@@ -6441,6 +6575,8 @@ function startPromptToolbox() {
     let backupActiveVersionId = null;
     let backupDetailVersionId = null;
     let backupDraftImages = [];
+    let backupDraftVersionImages = [];
+    let backupVersionPreviewUrls = [];
     let backupEditingId = null;
     let backupPreviewUrls = [];
     let backupCardUrls = [];
@@ -6523,7 +6659,16 @@ function startPromptToolbox() {
         const dataUrl = await makeBackupImageDataUrl(image);
         if (dataUrl) images.push({ name: image.name || 'image', dataUrl, crop: getBackupImageCrop(image), ratio: getBackupImageRatio(image) });
       }
-      return { ...record, images };
+      const versions=[];
+      for(const version of (record.versions||[])){
+        const versionImages=[];
+        for(const image of (version.images||[])){
+          const dataUrl=await makeBackupImageDataUrl(image);
+          if(dataUrl)versionImages.push({name:image.name||'image',dataUrl,crop:getBackupImageCrop(image),ratio:getBackupImageRatio(image)});
+        }
+        versions.push({...version,images:versionImages});
+      }
+      return { ...record, images, versions };
     }
 
     function getLocalBackupRecords() {
@@ -6918,26 +7063,38 @@ function applyBackupTemplate(template) {
       });
     }
 
+    function clearBackupVersionPreviewUrls(){backupVersionPreviewUrls.forEach(url=>URL.revokeObjectURL(url));backupVersionPreviewUrls=[];}
+    function backupRenderVersionImagePreview(){
+      const preview=document.getElementById('backupVersionImagePreview');if(!preview)return;clearBackupVersionPreviewUrls();preview.replaceChildren();
+      backupDraftVersionImages.forEach((image,index)=>{
+        const item=document.createElement('div');item.className='backup-image-thumb backup-version-image-thumb';
+        const img=document.createElement('img');img.alt=image.name||`버전 사진 ${index+1}`;img.src=backupImageSource(image,backupVersionPreviewUrls);ptApplyImageRatio(item,img,{...image,ratio:'original'});item.classList.add('ratio-original');
+        const actions=document.createElement('div');actions.className='backup-image-thumb-actions';
+        const remove=document.createElement('button');remove.type='button';remove.textContent='×';remove.title='현재 버전에서 사진 제거';remove.addEventListener('click',()=>{backupDraftVersionImages.splice(index,1);backupSyncActiveVersion();backupRenderVersionImagePreview();});
+        actions.appendChild(remove);item.append(img,actions);preview.appendChild(item);
+      });
+    }
     function backupSnapshotDraftPrompts(){return backupDraftBlocks.map(block=>({label:String(block.label||'').trim(),text:String(block.text||'').trim()})).filter(block=>block.text);}
-    function backupSyncActiveVersion(){const active=backupDraftVersions.find(item=>item.id===backupActiveVersionId);if(active){active.prompts=backupSnapshotDraftPrompts();active.name=document.getElementById('backupVersionName')?.value.trim()||active.name||'기본 버전';}}
+    function backupSyncActiveVersion(){const active=backupDraftVersions.find(item=>item.id===backupActiveVersionId);if(active){active.prompts=backupSnapshotDraftPrompts();active.images=backupDraftVersionImages.map(image=>({name:image.name||'image',blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:'original'}));active.name=document.getElementById('backupVersionName')?.value.trim()||active.name||'기본 버전';}}
     function backupRenderVersionTabs(){
       const wrap=document.getElementById('backupVersionTabs');if(!wrap)return;wrap.replaceChildren();
       backupDraftVersions.forEach((version,index)=>{const button=document.createElement('button');button.type='button';button.className=version.id===backupActiveVersionId?'active':'';button.setAttribute('role','tab');button.setAttribute('aria-selected',String(version.id===backupActiveVersionId));button.textContent=version.name||`버전 ${index+1}`;button.addEventListener('click',()=>backupSwitchVersion(version.id));wrap.appendChild(button);});
       const active=backupDraftVersions.find(item=>item.id===backupActiveVersionId);const name=document.getElementById('backupVersionName');if(name)name.value=active?.name||'';
       const remove=document.getElementById('backupDeleteVersion');if(remove)remove.disabled=backupDraftVersions.length<=1;
+      wrap.style.justifyContent='flex-start';
     }
-    function backupSwitchVersion(id){backupSyncActiveVersion();const version=backupDraftVersions.find(item=>item.id===id);if(!version)return;backupActiveVersionId=id;backupDraftBlocks=(version.prompts||[]).map(prompt=>makeBackupBlock(prompt.label,prompt.text));if(!backupDraftBlocks.length)backupDraftBlocks=[makeBackupBlock('Prompt 1')];backupRenderVersionTabs();renderBackupDraftBlocks();}
-    function backupAddVersion(){backupSyncActiveVersion();const version={id:`ver-${Date.now()}-${Math.random().toString(36).slice(2,6)}`,name:`버전 ${backupDraftVersions.length+1}`,prompts:[]};backupDraftVersions.push(version);backupSwitchVersion(version.id);document.getElementById('backupVersionName')?.focus();}
-    function backupDeleteActiveVersion(){if(backupDraftVersions.length<=1){setStatus('버전은 최소 1개가 필요합니다.');return;}const active=backupDraftVersions.find(item=>item.id===backupActiveVersionId);if(!active)return;if(!confirm(`“${active.name}” 버전을 삭제할까요? 이 버전의 프롬프트만 삭제됩니다.`))return;backupDraftVersions=backupDraftVersions.filter(item=>item.id!==active.id);backupActiveVersionId=backupDraftVersions[0].id;backupSwitchVersion(backupActiveVersionId);setStatus('선택한 프롬프트 버전을 삭제했습니다.');}
+    function backupSwitchVersion(id){backupSyncActiveVersion();const version=backupDraftVersions.find(item=>item.id===id);if(!version)return;backupActiveVersionId=id;backupDraftVersionImages=(version.images||[]).map(image=>({name:image.name,blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:'original'}));backupDraftBlocks=(version.prompts||[]).map(prompt=>makeBackupBlock(prompt.label,prompt.text));if(!backupDraftBlocks.length)backupDraftBlocks=[makeBackupBlock('Prompt 1')];backupRenderVersionTabs();backupRenderVersionImagePreview();renderBackupDraftBlocks();}
+    function backupAddVersion(){backupSyncActiveVersion();const version={id:`ver-${Date.now()}-${Math.random().toString(36).slice(2,6)}`,name:`버전 ${backupDraftVersions.length+1}`,prompts:[],images:[]};backupDraftVersions.push(version);backupSwitchVersion(version.id);document.getElementById('backupVersionName')?.focus();}
+    function backupDeleteActiveVersion(){if(backupDraftVersions.length<=1){setStatus('버전은 최소 1개가 필요합니다.');return;}const active=backupDraftVersions.find(item=>item.id===backupActiveVersionId);if(!active)return;if(!confirm(`“${active.name}” 버전을 삭제할까요? 이 버전의 프롬프트와 사진이 함께 삭제됩니다.`))return;backupDraftVersions=backupDraftVersions.filter(item=>item.id!==active.id);backupActiveVersionId=backupDraftVersions[0].id;backupSwitchVersion(backupActiveVersionId);setStatus('선택한 프롬프트 버전과 사진을 삭제했습니다.');}
     function backupInitDraftVersions(entry=null){
-      const source=Array.isArray(entry?.versions)&&entry.versions.length?entry.versions:[{id:`ver-default-${Date.now()}`,name:'기본 버전',prompts:entry?.prompts||[]}];
-      backupDraftVersions=source.map((version,index)=>({id:String(version.id||`ver-${index}-${Date.now()}`),name:String(version.name||`버전 ${index+1}`),prompts:Array.isArray(version.prompts)?version.prompts.map(x=>({label:String(x.label||''),text:String(x.text||'')})):[ ]}));
-      if(!backupDraftVersions.length)backupDraftVersions=[{id:`ver-default-${Date.now()}`,name:'기본 버전',prompts:[]}];
+      const source=Array.isArray(entry?.versions)&&entry.versions.length?entry.versions:[{id:`ver-default-${Date.now()}`,name:'기본 버전',prompts:entry?.prompts||[],images:[]}];
+      backupDraftVersions=source.map((version,index)=>({id:String(version.id||`ver-${index}-${Date.now()}`),name:String(version.name||`버전 ${index+1}`),prompts:Array.isArray(version.prompts)?version.prompts.map(x=>({label:String(x.label||''),text:String(x.text||'')})):[],images:Array.isArray(version.images)?version.images.map(image=>({name:image.name,blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:'original'})):[]}));
+      if(!backupDraftVersions.length)backupDraftVersions=[{id:`ver-default-${Date.now()}`,name:'기본 버전',prompts:[],images:[]}];
       backupActiveVersionId=entry?.activeVersionId&&backupDraftVersions.some(x=>x.id===entry.activeVersionId)?entry.activeVersionId:backupDraftVersions[0].id;
-      const active=backupDraftVersions.find(x=>x.id===backupActiveVersionId);backupDraftBlocks=(active.prompts||[]).map(x=>makeBackupBlock(x.label,x.text));if(!backupDraftBlocks.length)backupDraftBlocks=[makeBackupBlock('Prompt 1')];
-      backupRenderVersionTabs();
+      const active=backupDraftVersions.find(x=>x.id===backupActiveVersionId);backupDraftVersionImages=(active.images||[]).map(image=>({name:image.name,blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:'original'}));backupDraftBlocks=(active.prompts||[]).map(x=>makeBackupBlock(x.label,x.text));if(!backupDraftBlocks.length)backupDraftBlocks=[makeBackupBlock('Prompt 1')];
+      backupRenderVersionTabs();backupRenderVersionImagePreview();
     }
-    function backupSnapshotAllVersions(){backupSyncActiveVersion();return backupDraftVersions.map((version,index)=>({id:version.id,name:version.name||`버전 ${index+1}`,prompts:(version.prompts||[]).map(x=>({label:x.label,text:x.text})).filter(x=>x.text)}));}
+    function backupSnapshotAllVersions(){backupSyncActiveVersion();return backupDraftVersions.map((version,index)=>({id:version.id,name:version.name||`버전 ${index+1}`,prompts:(version.prompts||[]).map(x=>({label:x.label,text:x.text})).filter(x=>x.text),images:(version.images||[]).map(image=>({name:image.name||'image',blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:'original'}))}));}
 
     function renderBackupDraftBlocks() {
       const container = document.getElementById('backupDraftBlocks');
@@ -6995,6 +7152,8 @@ function applyBackupTemplate(template) {
       backupDraftBlocks = [makeBackupBlock('Prompt 1')];
       backupInitDraftVersions(null);
       backupDraftImages = [];
+      backupDraftVersionImages = [];
+      clearBackupVersionPreviewUrls();
       backupCropQueue = [];
       const newPostBoard = activeBackupBoardFilter && activeBackupBoardFilter !== 'all' ? activeBackupBoardFilter : 'general';
       document.getElementById('backupTemplate').value = newPostBoard === 'wardrobe' ? 'wardrobe' : 'general';
@@ -7301,7 +7460,7 @@ function applyBackupTemplate(template) {
     function backupRenderDetailVersionTabs(entry){
       const wrap=document.getElementById('backupDetailVersionTabs');if(!wrap)return null;wrap.replaceChildren();const versions=backupGetEntryVersions(entry);
       if(!backupDetailVersionId||!versions.some(v=>v.id===backupDetailVersionId))backupDetailVersionId=entry.activeVersionId&&versions.some(v=>v.id===entry.activeVersionId)?entry.activeVersionId:versions[0].id;
-      versions.forEach((version,index)=>{const button=document.createElement('button');button.type='button';button.className=version.id===backupDetailVersionId?'active':'';button.setAttribute('role','tab');button.setAttribute('aria-selected',String(version.id===backupDetailVersionId));button.textContent=version.name||`버전 ${index+1}`;button.addEventListener('click',()=>{backupDetailVersionId=version.id;renderBackupDetail();});wrap.appendChild(button);});
+      versions.forEach((version,index)=>{const button=document.createElement('button');button.type='button';button.className=version.id===backupDetailVersionId?'active':'';button.setAttribute('role','tab');button.setAttribute('aria-selected',String(version.id===backupDetailVersionId));button.textContent=version.name||`버전 ${index+1}`;button.addEventListener('click',()=>{backupDetailVersionId=version.id;backupCurrentImageIndex=0;renderBackupDetail();});wrap.appendChild(button);});
       return versions.find(v=>v.id===backupDetailVersionId)||versions[0];
     }
 
@@ -7346,7 +7505,9 @@ function applyBackupTemplate(template) {
         tagWrap.appendChild(button);
       });
 
-      const images = (entry.images || []).filter(image => image.blob || image.dataUrl);
+      const activeVersion = backupRenderDetailVersionTabs(entry);
+      const versionImages = [...(entry.images || []), ...((Array.isArray(activeVersion?.images) ? activeVersion.images : []))];
+      const images = versionImages.filter(image => image.blob || image.dataUrl);
       const photo = document.getElementById('backupDetailPhoto');
       photo.replaceChildren();
       if (images.length) {
@@ -7371,7 +7532,6 @@ function applyBackupTemplate(template) {
       document.getElementById('backupPhotoCount').classList.toggle('hidden', images.length < 2);
       document.getElementById('backupAdjustCurrentPhoto').classList.toggle('hidden', images.length === 0);
 
-      const activeVersion = backupRenderDetailVersionTabs(entry);
       const prompts = activeVersion?.prompts || entry.prompts || [];
       const quickCopy = document.getElementById('backupPromptQuickCopy');
       quickCopy.replaceChildren();
@@ -8690,6 +8850,7 @@ function pairLogRecordTemplateMarkup(type){
       [data?.subtitle,data?.platform,data?.category].filter(Boolean).forEach(value=>{const span=document.createElement('span');span.textContent=value;meta.appendChild(span);});
       const tags=document.getElementById('pairLogReaderTags');tags.replaceChildren();(data?.tags||[]).forEach(value=>{const span=document.createElement('span');span.textContent='#'+value;tags.appendChild(span);});
       const content=document.getElementById('pairLogReaderContent');content.replaceChildren();if(data?.contentHtml)content.innerHTML=sanitizePairLogHtml(data.contentHtml);else content.textContent=data?.content||'';
+      const skinSelect=document.getElementById('pairLogReaderSkin');const savedSkin=loadStorage('promptToolbox.pairLogReaderSkin','diner')||'diner';if(skinSelect){skinSelect.value=savedSkin;modal.querySelector('.pair-log-reader-window')?.setAttribute('data-skin',savedSkin);}
       modal.classList.remove('hidden');document.body.style.overflow='hidden';
     }
     function pairLogReaderClose(){document.getElementById('pairLogReaderModal')?.classList.add('hidden');document.body.style.overflow='';pairLogReaderContext=null;}
@@ -8710,43 +8871,28 @@ function pairLogRecordTemplateMarkup(type){
         return [safeTitle,log.date,data.subtitle,data.platform,data.category,...(data.tags||[]),content].join(' ').toLowerCase().includes(query);
       });
       if(sort==='oldest')logs.sort((a,b)=>String(a.updatedAt||a.createdAt||'').localeCompare(String(b.updatedAt||b.createdAt||'')));
-      else if(sort==='title'){
-        const titleOf=item=>{const cached=item.secret?pairLogSecretCache.get(item.id):null;return item.secret&&!cached?.payload?'비밀글':(cached?.payload?.title||item.title||'');};
-        logs.sort((a,b)=>titleOf(a).localeCompare(titleOf(b),'ko'));
-      } else logs.sort((a,b)=>String(b.updatedAt||b.createdAt||'').localeCompare(String(a.updatedAt||a.createdAt||'')));
+      else if(sort==='title'){const titleOf=item=>{const cached=item.secret?pairLogSecretCache.get(item.id):null;return item.secret&&!cached?.payload?'비밀글':(cached?.payload?.title||item.title||'');};logs.sort((a,b)=>titleOf(a).localeCompare(titleOf(b),'ko'));}
+      else logs.sort((a,b)=>String(b.updatedAt||b.createdAt||'').localeCompare(String(a.updatedAt||a.createdAt||'')));
       if(!logs.length){const empty=document.createElement('div');empty.className='backup-empty';empty.textContent=query||favoritesOnly?'조건에 맞는 RP 로그가 없습니다.':'아직 저장된 대화 로그가 없습니다.';wrap.appendChild(empty);pairLogOpenAfterUnlock=null;return;}
       logs.forEach(log=>{
         const secretCache=log.secret?pairLogSecretCache.get(log.id):null;
         const unlocked=!!(secretCache&&secretCache.payload);
-        const details=document.createElement('details');details.className='pair-chat-item';
-        if(pairLogOpenAfterUnlock===log.id)details.open=true;
-        const summary=document.createElement('summary');
-        summary.textContent=(log.favorite?'★ ':'')+(log.secret&&!unlocked?'🔒 비밀글':(unlocked?secretCache.payload.title:(log.title||'Untitled log')));
-        const date=document.createElement('small');date.textContent=log.date||new Date(log.updatedAt||log.createdAt||Date.now()).toLocaleDateString('ko-KR');summary.appendChild(date);
-        const body=document.createElement('div');body.className='pair-chat-body';
-        const makeFavoriteButton=()=>{const favorite=document.createElement('button');favorite.type='button';favorite.className='pair-log-favorite'+(log.favorite?' is-active':'');favorite.textContent=log.favorite?'★ 즐겨찾기 해제':'☆ 즐겨찾기';favorite.addEventListener('click',async()=>{try{await saveRoomRecord({...log,favorite:!log.favorite,updatedAt:new Date().toISOString()});renderPairChatLogs();setStatus(log.favorite?'즐겨찾기를 해제했습니다.':'즐겨찾기에 추가했습니다.');}catch(error){setStatus(error.message||'즐겨찾기 변경 실패');}});return favorite;};
-        if(log.secret&&!unlocked){
-          const note=document.createElement('div');note.className='pair-log-locked-note';note.textContent='제목과 본문이 잠겨 있습니다. 비밀번호를 입력하면 내용을 확인할 수 있습니다.';
-          const unlock=document.createElement('button');unlock.type='button';unlock.textContent='VIEW LOG';unlock.addEventListener('click',()=>pairLogPromptSecret(log,'reader'));
-          const remove=document.createElement('button');remove.type='button';remove.textContent='DELETE';remove.addEventListener('click',async()=>{if(!confirm('이 비밀글을 삭제할까요?'))return;try{await deleteRoomRecord(log.id);pairLogSecretCache.delete(log.id);renderPairChatLogs();setStatus('비밀글을 삭제했습니다.');}catch(e){setStatus(e.message||'삭제 실패');}});
-          const actions=document.createElement('div');actions.className='pair-chat-actions';actions.append(unlock,makeFavoriteButton(),remove);body.append(note,actions);details.append(summary,body);wrap.appendChild(details);return;
-        }
         const data=unlocked?{...log,...secretCache.payload}:log;
-        const meta=document.createElement('div');meta.className='pair-chat-meta';
-        [data.subtitle,data.platform,data.category].filter(Boolean).forEach(value=>{const span=document.createElement('span');span.textContent=value;meta.appendChild(span);});
-        const tags=document.createElement('div');tags.className='pair-chat-tags';(data.tags||[]).forEach(value=>{const span=document.createElement('span');span.textContent=`#${value}`;tags.appendChild(span);});
-        const content=document.createElement('div');content.className='pair-chat-rich';
-        if(data.contentHtml) content.innerHTML=sanitizePairLogHtml(data.contentHtml);
-        else content.textContent=data.content||'';
-        const topActions=document.createElement('div');topActions.className='pair-chat-copy-row';
-        const copy=document.createElement('button');copy.type='button';copy.className='pair-chat-copy-button';copy.textContent='COPY TEXT';copy.title='본문 복사';copy.addEventListener('click',()=>copyText(data.contentHtml?pairLogPlainText(data.contentHtml):(data.content||''),'대화 로그를 복사했습니다.'));
-        topActions.append(copy);
+        const locked=log.secret&&!unlocked;
+        const card=document.createElement('article');card.className='pair-chat-item pair-chat-card'+(locked?' is-locked':'');
+        const open=document.createElement('button');open.type='button';open.className='pair-chat-open';open.addEventListener('click',()=>locked?pairLogPromptSecret(log,'reader'):pairLogReaderOpen(log,data));
+        const head=document.createElement('div');head.className='pair-chat-card-head';
+        const title=document.createElement('strong');title.textContent=(log.favorite?'★ ':'')+(locked?'🔒 비밀글':(data.title||'Untitled log'));
+        const date=document.createElement('time');date.textContent=log.date||new Date(log.updatedAt||log.createdAt||Date.now()).toLocaleDateString('ko-KR');head.append(title,date);
+        const sub=document.createElement('span');sub.className='pair-chat-card-sub';sub.textContent=locked?'비밀번호를 입력해 로그 열기':[data.subtitle,data.platform,data.category].filter(Boolean).join(' · ')||'OPEN LOG';
+        const excerpt=document.createElement('span');excerpt.className='pair-chat-card-excerpt';excerpt.textContent=locked?'이 로그는 비밀글로 저장되었습니다.':(data.contentHtml?pairLogPlainText(data.contentHtml):(data.content||'')).replace(/\s+/g,' ').slice(0,160)||'본문 미리보기 없음';
+        open.append(head,sub,excerpt);card.appendChild(open);
+        const tags=document.createElement('div');tags.className='pair-chat-tags';(locked?[]:(data.tags||[]).slice(0,6)).forEach(value=>{const span=document.createElement('span');span.textContent='#'+value;tags.appendChild(span);});if(tags.childElementCount)card.appendChild(tags);
         const actions=document.createElement('div');actions.className='pair-chat-actions';
-        const view=document.createElement('button');view.type='button';view.textContent='VIEW LOG';view.addEventListener('click',()=>pairLogReaderOpen(log,data));
-        const edit=document.createElement('button');edit.type='button';edit.textContent='EDIT';edit.addEventListener('click',()=>openPairLogEditor(log,unlocked?data:null));
+        const favorite=document.createElement('button');favorite.type='button';favorite.className='pair-log-favorite'+(log.favorite?' is-active':'');favorite.textContent=log.favorite?'★ 즐겨찾기 해제':'☆ 즐겨찾기';favorite.addEventListener('click',async()=>{try{await saveRoomRecord({...log,favorite:!log.favorite,updatedAt:new Date().toISOString()});renderPairChatLogs();setStatus(log.favorite?'즐겨찾기를 해제했습니다.':'즐겨찾기에 추가했습니다.');}catch(error){setStatus(error.message||'즐겨찾기 변경 실패');}});
+        const edit=document.createElement('button');edit.type='button';edit.textContent='EDIT';edit.disabled=locked;edit.addEventListener('click',()=>openPairLogEditor(log,unlocked?data:null));
         const remove=document.createElement('button');remove.type='button';remove.textContent='DELETE';remove.addEventListener('click',async()=>{if(!confirm('이 대화 로그를 삭제할까요?'))return;try{await deleteRoomRecord(log.id);pairLogSecretCache.delete(log.id);renderPairChatLogs();setStatus('대화 로그를 삭제했습니다.');}catch(e){setStatus(e.message||'삭제 실패');}});
-        actions.append(view,edit,makeFavoriteButton(),remove);
-        body.append(meta,tags,topActions,content,actions);details.append(summary,body);wrap.appendChild(details);
+        actions.append(favorite,edit,remove);card.appendChild(actions);wrap.appendChild(card);
       });
       pairLogOpenAfterUnlock=null;
     }
@@ -8947,6 +9093,7 @@ function pairLogRecordTemplateMarkup(type){
       document.getElementById('pairLogCancel').addEventListener('click',()=>{pairLogEditingId=null;openPairView('detail');});
       document.getElementById('pairLogReaderClose').addEventListener('click',pairLogReaderClose);
       document.getElementById('pairLogReaderCloseBottom').addEventListener('click',pairLogReaderClose);
+      document.getElementById('pairLogReaderSkin')?.addEventListener('change',event=>{const skin=event.target.value;document.querySelector('#pairLogReaderModal .pair-log-reader-window')?.setAttribute('data-skin',skin);saveStorage('promptToolbox.pairLogReaderSkin',skin);});
       document.getElementById('pairLogReaderModal').addEventListener('click',e=>{if(e.target.id==='pairLogReaderModal')pairLogReaderClose();});
       document.getElementById('pairLogReaderCopy').addEventListener('click',()=>{if(pairLogReaderContext){const d=pairLogReaderContext.data;copyText(d.contentHtml?pairLogPlainText(d.contentHtml):(d.content||''),'대화 로그를 복사했습니다.');}});
       document.getElementById('pairLogReaderEdit').addEventListener('click',()=>{if(pairLogReaderContext){const c=pairLogReaderContext;pairLogReaderClose();openPairLogEditor(c.log,c.data);}});
@@ -9310,6 +9457,11 @@ function pairLogRecordTemplateMarkup(type){
         }
         event.target.value = '';
       });
+      document.getElementById('backupVersionImages')?.addEventListener('change',event=>{
+        const files=Array.from(event.target.files||[]).filter(file=>file.type.startsWith('image/'));
+        files.forEach(file=>backupDraftVersionImages.push({name:file.name,blob:file,crop:{x:50,y:50,zoom:1},ratio:'original'}));
+        backupSyncActiveVersion();backupRenderVersionImagePreview();if(files.length)setStatus(`${files.length}장의 사진을 현재 버전에 추가했습니다.`);event.target.value='';
+      });
 
       document.getElementById('backupCopyAllDraft').addEventListener('click', () => {
         copyText(getBackupDraftPromptText(), '작성 중인 프롬프트 전체를 복사했습니다.');
@@ -9363,14 +9515,14 @@ function pairLogRecordTemplateMarkup(type){
       ['Powder Blue','#ccdbe0'],['Warm Grey','#cfcfc9'],['Butter','#e7dfb9'],['Plum Mist','#d7c8d3'],
       ['Olive','#cbd0b8'],['Charcoal','#777b78'],['Night','#555b65'],['Cream','#eee9d9']
     ];
-    const PT_THEME_DEFAULT={color:'#d7ddc8',pattern:'stripe',lineColor:'#73806a',gapColor:'#e9e7d7',blur:1,opacity:36,saved:[]};
+    const PT_THEME_DEFAULT={color:'#d7ddc8',pattern:'stripe',lineColor:'#73806a',gapColor:'#e9e7d7',titlebarColor:'#08049b',blur:1,opacity:36,saved:[]};
     let ptThemeState={...PT_THEME_DEFAULT};
     const ptThemeEl=id=>document.getElementById(id);
     function ptThemeHex(value){const m=String(value||'').trim().match(/^#?([0-9a-f]{6})$/i);return m?'#'+m[1].toLowerCase():null;}
     function ptThemePatternCss(pattern,lineColor,gapColor){
       const line=ptThemeHex(lineColor)||PT_THEME_DEFAULT.lineColor,gap=ptThemeHex(gapColor)||PT_THEME_DEFAULT.gapColor;
       if(pattern==='stripe')return `repeating-linear-gradient(90deg, ${line} 0 3px, ${gap} 3px 22px)`;
-      if(pattern==='grid')return `linear-gradient(${line} 1px, transparent 1px),linear-gradient(90deg,${line} 1px,transparent 1px)`;
+      if(pattern==='grid')return `linear-gradient(to right, ${line} 1px, ${gap} 1px),linear-gradient(to bottom, ${line} 1px, ${gap} 1px)`;
       if(pattern==='grain')return `repeating-linear-gradient(45deg,${line} 0 2px,${gap} 2px 9px)`;
       if(pattern==='dots')return `radial-gradient(${line} 1.3px, ${gap} 1.4px)`;
       return 'none';
@@ -9387,7 +9539,8 @@ function pairLogRecordTemplateMarkup(type){
       document.documentElement.style.setProperty('--pt-wallpaper-line',line);
       document.documentElement.style.setProperty('--pt-wallpaper-gap',gap);
       document.documentElement.style.setProperty('--desktop',color);
-      document.documentElement.style.setProperty('--pt-wallpaper-pattern-size',value.pattern==='dots'?'12px 12px':'auto');
+      document.documentElement.style.setProperty('--pt-wallpaper-pattern-size',value.pattern==='dots'?'12px 12px':value.pattern==='grid'?'24px 24px':'auto');
+      document.documentElement.style.setProperty('--pt-titlebar-color',ptThemeHex(value.titlebarColor)||'#08049b');
     }
     function ptThemeRenderPresets(){
       const host=ptThemeEl('ptThemePresets');if(!host)return;host.replaceChildren();
@@ -9401,6 +9554,7 @@ function pairLogRecordTemplateMarkup(type){
       ptThemeEl('ptThemeColor').value=ptThemeState.color;ptThemeEl('ptThemeHex').value=ptThemeState.color.toUpperCase();
       ptThemeEl('ptThemeLineColor').value=ptThemeState.lineColor;ptThemeEl('ptThemeLineHex').value=ptThemeState.lineColor.toUpperCase();
       ptThemeEl('ptThemeGapColor').value=ptThemeState.gapColor;ptThemeEl('ptThemeGapHex').value=ptThemeState.gapColor.toUpperCase();
+      ptThemeState.titlebarColor=ptThemeHex(ptThemeState.titlebarColor)||PT_THEME_DEFAULT.titlebarColor;ptThemeEl('ptThemeTitlebarColor').value=ptThemeState.titlebarColor;ptThemeEl('ptThemeTitlebarHex').value=ptThemeState.titlebarColor.toUpperCase();
       ptThemeEl('ptThemePattern').value=ptThemeState.pattern;ptThemeEl('ptThemeBlur').value=ptThemeState.blur;ptThemeEl('ptThemeBlurOut').textContent=ptThemeState.blur+'px';
       ptThemeEl('ptThemeOpacity').value=ptThemeState.opacity;ptThemeEl('ptThemeOpacityOut').textContent=ptThemeState.opacity+'%';ptThemeRenderSaved();
     }
@@ -9416,11 +9570,12 @@ function pairLogRecordTemplateMarkup(type){
       ptThemeApply(ptThemeState);ptThemeRenderPresets();ptThemeFill();
       ptThemeEl('ptThemeOpen')?.addEventListener('click',()=>{ptThemeFill();ptThemeEl('ptThemeModal').classList.remove('hidden');});
       ptThemeEl('ptThemeClose')?.addEventListener('click',()=>ptThemeEl('ptThemeModal').classList.add('hidden'));
-      ptThemeBindColor('ptThemeColor','ptThemeHex','color');ptThemeBindColor('ptThemeLineColor','ptThemeLineHex','lineColor');ptThemeBindColor('ptThemeGapColor','ptThemeGapHex','gapColor');
+      ptThemeBindColor('ptThemeColor','ptThemeHex','color');ptThemeBindColor('ptThemeLineColor','ptThemeLineHex','lineColor');ptThemeBindColor('ptThemeGapColor','ptThemeGapHex','gapColor');ptThemeBindColor('ptThemeTitlebarColor','ptThemeTitlebarHex','titlebarColor');
+      ptThemeEl('ptThemeAccentPresets')?.querySelectorAll('[data-titlebar-color]').forEach(button=>button.addEventListener('click',()=>{const c=ptThemeHex(button.dataset.titlebarColor);if(!c)return;ptThemeState.titlebarColor=c;ptThemeEl('ptThemeTitlebarColor').value=c;ptThemeEl('ptThemeTitlebarHex').value=c.toUpperCase();ptThemeApply(ptThemeState);}));
       ptThemeEl('ptThemePattern')?.addEventListener('change',e=>{ptThemeState.pattern=e.target.value;ptThemeApply(ptThemeState);});
       ptThemeEl('ptThemeBlur')?.addEventListener('input',e=>{ptThemeState.blur=Number(e.target.value);ptThemeEl('ptThemeBlurOut').textContent=e.target.value+'px';ptThemeApply(ptThemeState);});
       ptThemeEl('ptThemeOpacity')?.addEventListener('input',e=>{ptThemeState.opacity=Number(e.target.value);ptThemeEl('ptThemeOpacityOut').textContent=e.target.value+'%';ptThemeApply(ptThemeState);});
-      ptThemeEl('ptThemeSave')?.addEventListener('click',()=>{const c=ptThemeHex(ptThemeEl('ptThemeColor').value);if(!c)return;ptThemeState={...ptThemeState,color:c,lineColor:ptThemeHex(ptThemeEl('ptThemeLineColor').value)||PT_THEME_DEFAULT.lineColor,gapColor:ptThemeHex(ptThemeEl('ptThemeGapColor').value)||c,pattern:ptThemeEl('ptThemePattern').value,blur:Number(ptThemeEl('ptThemeBlur').value),opacity:Number(ptThemeEl('ptThemeOpacity').value),saved:ptThemeState.saved||[]};if(!ptThemeState.saved.includes(c)&&!PT_THEME_PRESETS.some(x=>x[1]===c))ptThemeState.saved.push(c);saveStorage('promptToolbox.desktopTheme',ptThemeState);ptThemeApply(ptThemeState);ptThemeRenderSaved();ptThemeEl('ptThemeModal').classList.add('hidden');setStatus('바탕 테마를 저장했습니다.');});
+      ptThemeEl('ptThemeSave')?.addEventListener('click',()=>{const c=ptThemeHex(ptThemeEl('ptThemeColor').value);if(!c)return;ptThemeState={...ptThemeState,color:c,lineColor:ptThemeHex(ptThemeEl('ptThemeLineColor').value)||PT_THEME_DEFAULT.lineColor,gapColor:ptThemeHex(ptThemeEl('ptThemeGapColor').value)||c,titlebarColor:ptThemeHex(ptThemeEl('ptThemeTitlebarColor').value)||PT_THEME_DEFAULT.titlebarColor,pattern:ptThemeEl('ptThemePattern').value,blur:Number(ptThemeEl('ptThemeBlur').value),opacity:Number(ptThemeEl('ptThemeOpacity').value),saved:ptThemeState.saved||[]};if(!ptThemeState.saved.includes(c)&&!PT_THEME_PRESETS.some(x=>x[1]===c))ptThemeState.saved.push(c);saveStorage('promptToolbox.desktopTheme',ptThemeState);ptThemeApply(ptThemeState);ptThemeRenderSaved();ptThemeEl('ptThemeModal').classList.add('hidden');setStatus('바탕 테마를 저장했습니다.');});
       ptThemeEl('ptThemeReset')?.addEventListener('click',()=>{ptThemeState={...PT_THEME_DEFAULT,saved:ptThemeState.saved||[]};ptThemeFill();ptThemeApply(ptThemeState);saveStorage('promptToolbox.desktopTheme',ptThemeState);});
       ptThemeEl('ptThemeModal')?.addEventListener('click',e=>{if(e.target===ptThemeEl('ptThemeModal'))ptThemeEl('ptThemeModal').classList.add('hidden');});
     }
@@ -9667,6 +9822,8 @@ function pairLogRecordTemplateMarkup(type){
     <p>바탕색과 패턴을 조합해 작업 공간의 분위기를 조정합니다. 기본 견본은 언제든 다시 선택할 수 있습니다.</p>
     <div class="pt-theme-presets" id="ptThemePresets"></div>
     <div class="pt-theme-row"><label for="ptThemeColor">CUSTOM COLOR <small>바탕색</small></label><input type="color" id="ptThemeColor" value="#d9d6c8"><input type="text" id="ptThemeHex" value="#D9D6C8" maxlength="7" aria-label="HEX 색상"></div>
+    <div class="pt-theme-row"><label for="ptThemeTitlebarColor">WINDOW TITLE BAR <small>상단 창 포인트 색</small></label><input type="color" id="ptThemeTitlebarColor" value="#08049b"><input type="text" id="ptThemeTitlebarHex" value="#08049B" maxlength="7" aria-label="타이틀 바 HEX 색상"></div>
+    <div class="pt-theme-accent-presets" id="ptThemeAccentPresets" aria-label="타이틀 바 기본 색상"><span>기본 포인트 색</span><button type="button" data-titlebar-color="#08049b" style="--swatch:#08049b">Classic Blue</button><button type="button" data-titlebar-color="#76596d" style="--swatch:#76596d">Vintage Wine</button><button type="button" data-titlebar-color="#596b53" style="--swatch:#596b53">Sage</button><button type="button" data-titlebar-color="#a45d63" style="--swatch:#a45d63">Dusty Rose</button><button type="button" data-titlebar-color="#4e596d" style="--swatch:#4e596d">Midnight</button><button type="button" data-titlebar-color="#8a7454" style="--swatch:#8a7454">Oat Brown</button><button type="button" data-titlebar-color="#766b91" style="--swatch:#766b91">Lavender</button><button type="button" data-titlebar-color="#357f87" style="--swatch:#357f87">Petrol</button></div>
     <div class="pt-theme-row"><label for="ptThemePattern">BACKGROUND PATTERN <small>배경 패턴</small></label><select id="ptThemePattern"><option value="solid">Solid · 단색</option><option value="stripe">Vertical Stripes · 세로 줄무늬</option><option value="grid">Fine Grid · 격자</option><option value="grain">Diagonal Grain · 대각선 결</option><option value="dots">Soft Dots · 점무늬</option></select></div>
     <div class="pt-theme-row"><label for="ptThemeLineColor">PATTERN LINE <small>패턴 선 색</small></label><input type="color" id="ptThemeLineColor" value="#68745f"><input type="text" id="ptThemeLineHex" value="#68745F" maxlength="7" aria-label="패턴 선 HEX 색상"></div>
     <div class="pt-theme-row"><label for="ptThemeGapColor">PATTERN GAP <small>선 사이 색</small></label><input type="color" id="ptThemeGapColor" value="#eee9d9"><input type="text" id="ptThemeGapHex" value="#EEE9D9" maxlength="7" aria-label="패턴 사이 HEX 색상"></div>
