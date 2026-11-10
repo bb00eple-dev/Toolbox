@@ -11,7 +11,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" sizes="192x192" href="./p-toolbox-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="./p-toolbox-192.png">
-  <title>P. Toolbox v55 · Reader Redesign</title>
+  <title>P. Toolbox v56 · Design Repair</title>
   <style>
     :root {
       color-scheme: light;
@@ -2203,6 +2203,255 @@ body::before{z-index:0!important;inset:0!important;opacity:1!important;filter:bl
 
 @media(max-width:650px){#pairLogReaderModal .pair-log-reader-inner{padding:32px 19px 32px!important}#pairLogReaderModal .pair-log-reader-window[data-skin="letter"] .pair-log-reader-inner{padding-left:42px!important;background-position:left top!important}#pairLogReaderModal .pair-log-reader-window[data-skin="windows"] .pair-log-reader-inner{padding:24px 18px!important}#pairLogReaderModal .pair-log-reader-title-row h2{font-size:36px!important}#pairLogReaderModal .pair-log-reader-content{font-size:14px!important;line-height:1.95!important}}
 
+</style>
+<style id="pt-v56-design-repair">
+/* v56: wallpaper pattern belongs to the desktop, never to the app's content canvas. */
+body::before{
+  z-index:0!important;
+  inset:0!important;
+  background-color:var(--pt-wallpaper-color,#e9e5d9)!important;
+  background-image:var(--pt-wallpaper-pattern,none)!important;
+  background-size:var(--pt-wallpaper-pattern-size,24px 24px)!important;
+  background-repeat:repeat!important;
+  opacity:var(--pt-wallpaper-opacity,.34)!important;
+  filter:blur(var(--pt-wallpaper-blur,0px))!important;
+}
+#toolboxWindow.window{
+  background-color:var(--pt-window-frame-color,#d5d1c8)!important;
+  background-image:none!important;
+}
+#toolboxWindow main{
+  position:relative!important;
+  background-color:var(--pt-window-gap,#f1eee5)!important;
+  background-image:none!important;
+  background-attachment:initial!important;
+}
+#toolboxWindow .tab-panel{background:transparent!important}
+#toolboxWindow #homePanel{background:transparent!important}
+
+/* Prompt Random: exact compact button grammar from Outfit Random. */
+.category-controls{
+  display:flex!important;align-items:stretch!important;flex-wrap:nowrap!important;
+  gap:5px!important;min-width:0!important;
+}
+.category-controls .category-select{
+  min-width:0!important;flex:1 1 120px!important;border-radius:0!important;
+}
+.category-controls .reroll-button{
+  display:block!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;
+  min-height:25px!important;height:25px!important;margin:0!important;padding:3px 8px!important;
+  border:2px solid!important;border-color:#fff #404040 #404040 #fff!important;
+  border-radius:0!important;background:#ddd9cf!important;color:#111!important;
+  font:700 10px Tahoma,Arial,sans-serif!important;letter-spacing:normal!important;
+  line-height:normal!important;white-space:nowrap!important;box-shadow:none!important;transform:none!important;
+}
+.category-controls .reroll-button:hover{background:#e8e4db!important;color:#111!important}
+.category-controls .add-category-select{
+  display:block!important;flex:0 0 25px!important;width:25px!important;min-width:25px!important;
+  height:25px!important;min-height:25px!important;padding:3px 6px!important;
+  border:2px solid!important;border-color:#fff #404040 #404040 #fff!important;border-radius:0!important;
+  background:#ddd9cf!important;color:#111!important;font:700 10px Tahoma,Arial,sans-serif!important;
+  box-shadow:none!important;
+}
+
+/* Pair Archive: rebuild the composition, not just its colors. */
+#pairDetailView .pair-detail-card{
+  max-width:900px!important;margin:0 auto!important;padding:clamp(12px,2.6vw,24px)!important;
+  border:1px solid #e4ddd1!important;background:#fffdf8!important;
+  box-shadow:0 5px 18px rgba(73,62,49,.045)!important;
+}
+#pairDetailView .pair-detail-heading{
+  position:relative!important;isolation:isolate!important;overflow:hidden!important;
+  display:flex!important;flex-direction:column!important;align-items:flex-start!important;
+  justify-content:center!important;gap:0!important;
+  min-height:116px!important;margin:0 0 22px!important;
+  padding:20px clamp(16px,3.2vw,30px)!important;
+  text-align:left!important;border:1px solid #e4dbce!important;
+  background:#f5f1e8!important;
+}
+#pairDetailView .pair-detail-heading::after{
+  content:"";position:absolute;z-index:0;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,#f5f1e8 0%,#f5f1e8 38%,rgba(245,241,232,.92) 53%,rgba(245,241,232,.18) 100%)!important;
+}
+#pairDetailView .pair-detail-heading>*:not(.pair-detail-banner-image){position:relative!important;z-index:1!important}
+#pairDetailView .pair-detail-kicker{
+  margin:0 0 6px!important;color:#8b8576!important;
+  font:700 8px/1.3 Tahoma,Arial,sans-serif!important;letter-spacing:2px!important;
+}
+#pairDetailView .pair-detail-heading h2{
+  max-width:72%!important;margin:0!important;color:#41443a!important;
+  font:500 clamp(23px,3.2vw,31px)/1.12 Georgia,'Noto Serif KR',serif!important;
+  letter-spacing:-.045em!important;text-align:left!important;overflow-wrap:anywhere!important;
+}
+#pairDetailView .pair-detail-heading p{
+  max-width:66%!important;margin:7px 0 0!important;color:#777163!important;
+  font:11px/1.55 'Malgun Gothic',Arial,sans-serif!important;text-align:left!important;
+}
+#pairDetailView .pair-detail-heading .photo-archive-tags{
+  justify-content:flex-start!important;gap:3px 7px!important;margin-top:9px!important;
+  opacity:.66!important;font-size:8px!important;
+}
+#pairDetailView .pair-detail-heading .pair-dday-badge{display:none!important}
+#pairDetailView .pair-detail-heading .pair-detail-banner-image{
+  position:absolute!important;z-index:0!important;top:0!important;right:0!important;left:auto!important;
+  width:54%!important;height:100%!important;object-fit:cover!important;object-position:center 42%!important;
+  pointer-events:none!important;
+}
+#pairDetailView .pair-detail-heading .pair-detail-banner-image.is-gradient{
+  opacity:var(--pair-banner-opacity,.35)!important;
+  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.22) 34%,#000 100%)!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.22) 34%,#000 100%)!important;
+}
+#pairDetailView .pair-detail-heading .pair-detail-banner-image.is-full{
+  left:0!important;right:0!important;width:100%!important;
+  opacity:var(--pair-banner-opacity,.35)!important;mask-image:none!important;-webkit-mask-image:none!important;
+}
+#pairDetailView .pair-members-grid{
+  display:grid!important;grid-template-columns:minmax(0,1fr) 34px minmax(0,1fr)!important;
+  align-items:start!important;gap:clamp(8px,2.8vw,24px)!important;
+  max-width:760px!important;margin:0 auto!important;padding:8px 0 22px!important;
+  border:0!important;background:transparent!important;
+}
+#pairDetailView .pair-member-card{
+  display:flex!important;flex-direction:column!important;align-items:center!important;
+  min-width:0!important;padding:0!important;border:0!important;background:transparent!important;
+  box-shadow:none!important;text-align:center!important;
+}
+#pairDetailView .pair-member-label{
+  margin:0 0 9px!important;color:#999080!important;
+  font:700 8px/1.3 Tahoma,Arial,sans-serif!important;letter-spacing:1.45px!important;
+}
+#pairDetailView .pair-member-photo{
+  width:min(100%,190px)!important;height:auto!important;max-height:none!important;
+  aspect-ratio:4/5!important;margin:0 auto!important;overflow:hidden!important;
+  background:#eee9df!important;border:5px solid #fff!important;
+  outline:1px solid #ded6ca!important;box-shadow:0 5px 16px rgba(68,57,47,.08)!important;
+}
+#pairDetailView .pair-member-photo img{width:100%!important;height:100%!important;object-fit:cover!important}
+#pairDetailView .pair-member-photo.empty{
+  display:grid!important;place-items:center!important;color:#aaa293!important;
+  font:italic 11px Georgia,serif!important;letter-spacing:.08em!important;
+}
+#pairDetailView .pair-member-name{
+  margin:10px 0 0!important;padding:0!important;color:#4f5147!important;
+  font:500 14px/1.35 Georgia,'Noto Serif KR',serif!important;letter-spacing:-.015em!important;
+}
+#pairDetailView .pair-member-label::before{content:""}
+#pairDetailView .pair-link-mark{
+  align-self:center!important;justify-self:center!important;
+  width:auto!important;height:auto!important;margin:76px 0 0!important;padding:0!important;
+  border:0!important;border-radius:0!important;background:transparent!important;
+  color:#b18a9a!important;font:400 23px/1 Georgia,serif!important;
+  box-shadow:none!important;
+}
+#pairMilestoneStrip{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:14px!important;max-width:760px!important;margin:0 auto 28px!important;
+  padding:11px 2px 12px!important;border-top:1px solid #e9e3d9!important;
+  border-bottom:1px solid #e9e3d9!important;background:transparent!important;color:#747466!important;
+}
+#pairMilestoneStrip .pair-dday-badge{
+  display:flex!important;align-items:baseline!important;justify-content:space-between!important;
+  width:100%!important;gap:12px!important;margin:0!important;padding:0!important;
+  border:0!important;background:transparent!important;color:#666b5a!important;
+}
+#pairMilestoneStrip .pair-dday-badge span{
+  color:#898475!important;font:700 8px/1.4 Tahoma,'Malgun Gothic',sans-serif!important;
+  letter-spacing:1.5px!important;text-transform:uppercase!important;
+}
+#pairMilestoneStrip .pair-dday-badge strong{
+  color:#626d58!important;font:500 19px/1 Georgia,serif!important;
+  font-style:italic!important;letter-spacing:-.03em!important;
+}
+#pairMilestoneStrip.hidden{display:none!important}
+#pairDetailView .pair-subarchive{
+  margin-top:25px!important;padding:19px 0 4px!important;
+  border-top:1px solid #e8e2d8!important;background:transparent!important;
+}
+#pairDetailView .pair-subarchive-heading{
+  display:flex!important;align-items:flex-end!important;justify-content:space-between!important;
+  gap:12px!important;margin:0 0 13px!important;padding:0 1px!important;
+}
+#pairDetailView .pair-subarchive-heading small{
+  color:#9a9385!important;font:700 8px/1.4 Tahoma,Arial,sans-serif!important;letter-spacing:1.5px!important;
+}
+#pairDetailView .pair-subarchive-heading h3{
+  margin:4px 0 0!important;color:#4f5147!important;
+  font:500 17px/1.2 Georgia,'Noto Serif KR',serif!important;letter-spacing:-.02em!important;
+}
+#pairDetailView .pair-subarchive-heading button{
+  min-height:27px!important;padding:5px 9px!important;border:1px solid #d8d1c5!important;
+  border-radius:2px!important;background:#fffdf8!important;color:#686b5c!important;
+  font:600 8px/1.2 Tahoma,Arial,sans-serif!important;box-shadow:none!important;
+}
+#pairDetailView .pair-sub-toolbar{
+  margin:0 0 16px!important;padding:0 0 9px!important;border-bottom:1px solid #e8e2d8!important;
+}
+#pairDetailView .pair-sub-toolbar button{
+  min-height:27px!important;padding:5px 9px!important;border:1px solid #d9d1c6!important;
+  border-radius:2px!important;background:#fffdf8!important;color:#66675d!important;
+  font:600 9px/1.2 Tahoma,Arial,sans-serif!important;box-shadow:none!important;
+}
+#pairDetailView .pair-card-join{color:#b18a9a!important}
+@media(max-width:600px){
+  #pairDetailView .pair-detail-card{padding:9px!important}
+  #pairDetailView .pair-detail-heading{min-height:106px!important;padding:16px 14px!important;margin-bottom:16px!important}
+  #pairDetailView .pair-detail-heading h2{max-width:75%!important;font-size:24px!important}
+  #pairDetailView .pair-detail-heading p{max-width:72%!important;font-size:10px!important}
+  #pairDetailView .pair-detail-heading .pair-detail-banner-image{width:58%!important}
+  #pairDetailView .pair-members-grid{grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr)!important;gap:7px!important;padding:5px 0 17px!important}
+  #pairDetailView .pair-member-photo{width:min(100%,150px)!important;border-width:4px!important}
+  #pairDetailView .pair-member-name{font-size:12px!important;margin-top:8px!important}
+  #pairDetailView .pair-member-label{font-size:7px!important;letter-spacing:1px!important}
+  #pairDetailView .pair-link-mark{margin-top:64px!important;font-size:19px!important}
+  #pairMilestoneStrip{margin-bottom:20px!important;padding:9px 1px!important}
+}
+
+/* Reader heading: clear title-first hierarchy with the smaller date aligned at the right. */
+.pair-log-reader-title-row{
+  display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:end!important;column-gap:18px!important;row-gap:4px!important;
+  text-align:left!important;
+}
+.pair-log-reader-title-row h2{
+  min-width:0!important;max-width:none!important;margin:0!important;
+  text-align:left!important;font-size:clamp(29px,5vw,52px)!important;
+}
+.pair-log-reader-title-row .pair-log-reader-date{
+  justify-self:end!important;align-self:end!important;margin:0 0 5px!important;
+  text-align:right!important;font-size:9px!important;line-height:1.35!important;
+  white-space:nowrap!important;opacity:.76!important;
+}
+@media(max-width:520px){
+  .pair-log-reader-title-row{column-gap:9px!important}
+  .pair-log-reader-title-row h2{font-size:clamp(24px,7vw,34px)!important}
+  .pair-log-reader-title-row .pair-log-reader-date{font-size:8px!important;letter-spacing:.02em!important}
+}
+
+/* Version rail: stable, left-aligned, visible buttons; never replace the selected tab. */
+#backupDetailVersionTabs{
+  display:flex!important;visibility:visible!important;opacity:1!important;
+  flex-wrap:nowrap!important;justify-content:flex-start!important;align-items:center!important;
+  gap:6px!important;min-height:35px!important;margin:10px 0 12px!important;padding:4px 0 7px!important;
+  overflow-x:auto!important;overflow-y:hidden!important;white-space:nowrap!important;
+  border-bottom:1px solid var(--bp-line)!important;background:transparent!important;
+  scrollbar-width:thin!important;animation:none!important;transition:none!important;
+}
+#backupDetailVersionTabs button,
+#backupDetailVersionTabs button.active{
+  display:inline-flex!important;visibility:visible!important;opacity:1!important;
+  flex:0 0 auto!important;position:static!important;min-width:max-content!important;
+  min-height:28px!important;margin:0!important;padding:5px 11px!important;
+  border:1px solid var(--bp-line)!important;border-radius:2px!important;
+  background:#fffdf9!important;color:var(--bp-ink)!important;
+  font:600 10px/1.2 'Malgun Gothic',Arial,sans-serif!important;
+  white-space:nowrap!important;animation:none!important;transition:none!important;
+  transform:none!important;box-shadow:none!important;pointer-events:auto!important;
+}
+#backupDetailVersionTabs button.active{
+  background:var(--bp-accent)!important;color:#fff!important;
+  border-color:var(--bp-accent)!important;outline:0!important;
+}
 </style>
 </head>
 <body>
@@ -5753,7 +6002,7 @@ function startPromptToolbox() {
             <option value="">— 랜덤 / 직접 선택 —</option>
             ${options}
           </select>
-          <button type="button" class="small reroll-button" title="개별 랜덤" aria-label="개별 랜덤">↻</button>
+          <button type="button" class="small outfit-reroll reroll-button" title="개별 랜덤" aria-label="개별 랜덤">개별 랜덤</button>
           <button type="button" class="small add-category-select" title="같은 항목을 하나 더 조합">＋</button>
         </div>
         <div class="category-extra-selects"></div>
@@ -8396,7 +8645,7 @@ function applyBackupTemplate(template) {
           frame.appendChild(label); members.appendChild(frame);
         });
         while (members.children.length<2) { const f=document.createElement('div'); f.className='pair-card-photo empty'; f.textContent='NO IMAGE'; members.appendChild(f); }
-        const join=document.createElement('span'); join.className='pair-card-join'; join.textContent='×'; members.appendChild(join);
+        const join=document.createElement('span'); join.className='pair-card-join'; join.textContent='♡'; members.appendChild(join);
         const caption=document.createElement('div'); caption.className='pair-card-caption';
         const title=document.createElement('div'); title.className='pair-card-title'; title.textContent=pair.title || `${pair.members?.[0]?.name || 'A'} × ${pair.members?.[1]?.name || 'B'}`;
         const note=document.createElement('div'); note.className='pair-card-note'; note.textContent=`${pairPhotoRecords(pair.id).length} photo posts · ${pairLogRecords(pair.id).length} chat logs`;
@@ -8495,7 +8744,7 @@ function applyBackupTemplate(template) {
         } else {frame.classList.add('empty');frame.textContent='NO IMAGE';}
         const name=document.createElement('div');name.className='pair-member-name';name.textContent=member.name||`Character ${index+1}`;
         card.append(label,frame,name);members.appendChild(card);
-        if(index===0){const join=document.createElement('div');join.className='pair-link-mark';join.textContent='×';members.appendChild(join);}
+        if(index===0){const join=document.createElement('div');join.className='pair-link-mark';join.textContent='♡';members.appendChild(join);}
       });
       renderPairPhotos(); renderPairChatLogs();
     }
@@ -10360,7 +10609,7 @@ function pairLogRecordTemplateMarkup(type){
       const title=ptThemeHex(next.titlebarColor)||PT_THEME_DEFAULT.titlebarColor;
       const nav=ptThemeHex(next.navColor)||PT_THEME_DEFAULT.navColor;
       const pattern=ptThemePatternV54(next);
-      const size=next.pattern==='dots'?'14px 14px':'auto';
+      const patternSizes={grid:'24px 24px, 24px 24px',stripe:'22px 22px',grain:'10px 10px',dots:'14px 14px'};const size=patternSizes[next.pattern]||'auto';
       document.documentElement.style.setProperty('--pt-wallpaper-color',wallpaper);
       document.documentElement.style.setProperty('--pt-wallpaper-gap',ptThemeHex(next.gapColor)||wallpaper);
       document.documentElement.style.setProperty('--pt-window-frame-color',frame);
@@ -10453,6 +10702,110 @@ function pairLogRecordTemplateMarkup(type){
     saveBackupEntry=async function(){const id=backupEditingId;await saveBackupEntryV53Base();if(id)backupDetailVersionCacheV54.delete(String(id));};
     // No flash, slide, or scale animation when selecting a version.
     document.getElementById('backupDetailVersionTabs')?.addEventListener('click',event=>{const tab=event.target.closest('button[data-version-id]');if(!tab)return;tab.style.animation='none';tab.style.transition='none';});
+
+
+    // v56: keep every version tab in a persistent rail, even if legacy renderers try to replace it.
+    const ptV56BaseRenderBackupDetail = renderBackupDetail;
+    backupRenderDetailVersionTabs = function(entry){
+      const wrap=document.getElementById('backupDetailVersionTabs');
+      if(!wrap||!entry)return null;
+      const versions=backupGetEntryVersions(entry);
+      if(!versions.length)return null;
+      const entryKey=String(entry.id||'');
+      if(wrap.dataset.entryId!==entryKey){wrap.replaceChildren();wrap.dataset.entryId=entryKey;}
+      if(!backupDetailVersionId||!versions.some(v=>String(v.id)===String(backupDetailVersionId))){
+        backupDetailVersionId=entry.activeVersionId&&versions.some(v=>String(v.id)===String(entry.activeVersionId))?String(entry.activeVersionId):String(versions[0].id);
+      }
+      wrap.classList.add('v56-version-tabs-rail');
+      wrap.setAttribute('role','tablist');
+      wrap.setAttribute('aria-label','저장된 프롬프트 버전');
+      const byId=new Map([...wrap.querySelectorAll('button[data-version-id]')].map(button=>[String(button.dataset.versionId),button]));
+      versions.forEach((version,index)=>{
+        const id=String(version.id);
+        let button=byId.get(id);
+        if(!button){button=document.createElement('button');button.type='button';button.dataset.versionId=id;button.setAttribute('role','tab');}
+        button.dataset.versionId=id;
+        button.textContent=version.name||`버전 ${index+1}`;
+        const active=id===String(backupDetailVersionId);
+        button.classList.toggle('active',active);
+        button.setAttribute('aria-selected',String(active));
+        button.tabIndex=active?0:-1;
+        button.onclick=event=>{
+          event.preventDefault();event.stopPropagation();
+          if(String(backupDetailVersionId)===id)return;
+          backupDetailVersionId=id;
+          backupCurrentImageIndex=0;
+          wrap.querySelectorAll('button[data-version-id]').forEach(node=>{
+            const selected=String(node.dataset.versionId)===id;
+            node.classList.toggle('active',selected);
+            node.setAttribute('aria-selected',String(selected));
+            node.tabIndex=selected?0:-1;
+          });
+          renderBackupDetail();
+          const selectedTab=wrap.querySelector(`button[data-version-id="${CSS.escape(id)}"]`);
+          selectedTab?.focus({preventScroll:true});
+        };
+        const current=wrap.children[index];
+        if(current!==button)wrap.insertBefore(button,current||null);
+      });
+      const valid=new Set(versions.map(v=>String(v.id)));
+      [...wrap.querySelectorAll('button[data-version-id]')].forEach(button=>{
+        if(!valid.has(String(button.dataset.versionId)))button.remove();
+      });
+      wrap.style.display='flex';
+      return versions.find(v=>String(v.id)===String(backupDetailVersionId))||versions[0];
+    };
+    renderBackupDetail = function(...args){
+      const wrap=document.getElementById('backupDetailVersionTabs');
+      const entryKey=String(backupCurrentEntryId||'');
+      const sameEntry=!!wrap&&wrap.dataset.entryId===entryKey;
+      const preserved=sameEntry?new Map([...wrap.querySelectorAll('button[data-version-id]')].map(button=>[String(button.dataset.versionId),button])):new Map();
+      const hadRailFocus=!!wrap&&wrap.contains(document.activeElement);
+      const result=ptV56BaseRenderBackupDetail.apply(this,args);
+      const entry=backupEntriesData.find(item=>String(item.id)===entryKey);
+      if(!wrap||!entry)return result;
+      const versions=backupGetEntryVersions(entry);
+      if(wrap.dataset.entryId!==entryKey){wrap.replaceChildren();wrap.dataset.entryId=entryKey;}
+      const rendered=new Map([...wrap.querySelectorAll('button[data-version-id]')].map(button=>[String(button.dataset.versionId),button]));
+      const ordered=[];
+      versions.forEach((version,index)=>{
+        const id=String(version.id);
+        let button=preserved.get(id)||rendered.get(id);
+        if(!button){button=document.createElement('button');button.type='button';button.dataset.versionId=id;button.setAttribute('role','tab');}
+        button.dataset.versionId=id;
+        button.textContent=version.name||`버전 ${index+1}`;
+        const active=id===String(backupDetailVersionId);
+        button.classList.toggle('active',active);
+        button.setAttribute('aria-selected',String(active));
+        button.tabIndex=active?0:-1;
+        button.onclick=event=>{
+          event.preventDefault();event.stopPropagation();
+          if(String(backupDetailVersionId)===id)return;
+          backupDetailVersionId=id;backupCurrentImageIndex=0;
+          wrap.querySelectorAll('button[data-version-id]').forEach(node=>{
+            const selected=String(node.dataset.versionId)===id;
+            node.classList.toggle('active',selected);
+            node.setAttribute('aria-selected',String(selected));
+            node.tabIndex=selected?0:-1;
+          });
+          renderBackupDetail();
+        };
+        ordered.push(button);
+      });
+      // Reorder only when needed. Do not clear the rail or replace nodes on version changes.
+      ordered.forEach((button,index)=>{
+        const current=wrap.children[index];
+        if(current!==button)wrap.insertBefore(button,current||null);
+      });
+      const keep=new Set(ordered);
+      [...wrap.querySelectorAll('button[data-version-id]')].forEach(button=>{if(!keep.has(button))button.remove();});
+      wrap.style.display='flex';
+      if(hadRailFocus){
+        const active=wrap.querySelector('button.active');
+        active?.focus({preventScroll:true});
+      }
+      return result;
+    };
 
 
 } 
