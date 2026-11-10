@@ -1,6 +1,6 @@
 {
-  "name": "P. Toolbox",
-  "short_name": "P.Toolbox",
+  "name": "P. Toolbox v54",
+  "short_name": "P. Toolbox",
   "description": "Personal prompt, pair log and archive toolbox",
   "start_url": "./",
   "scope": "./",
@@ -8,8 +8,21 @@
   "background_color": "#f8f6ed",
   "theme_color": "#08049b",
   "icons": [
-    { "src": "./p-toolbox-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "./p-toolbox-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "./p-toolbox-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "./p-toolbox-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./p-toolbox-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "./p-toolbox-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }

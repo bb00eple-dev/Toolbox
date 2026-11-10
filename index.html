@@ -11,7 +11,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" sizes="192x192" href="./p-toolbox-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="./p-toolbox-192.png">
-  <title>P. Toolbox v53 · Minimal Pretty</title>
+  <title>P. Toolbox v55 · Reader Redesign</title>
   <style>
     :root {
       color-scheme: light;
@@ -1995,6 +1995,214 @@ body::before{content:"";position:fixed;inset:-18px;z-index:0;pointer-events:none
 #backupDetailVersionTabs.v53-version-tabs-rail button{display:inline-flex!important;visibility:visible!important;opacity:1!important;flex:0 0 auto!important;white-space:nowrap!important;min-height:27px;padding:5px 10px;border:1px solid var(--bp-line);background:#fff;color:var(--bp-ink);font-size:10px}
 #backupDetailVersionTabs.v53-version-tabs-rail button.active{background:var(--bp-accent);color:#fff;border-color:var(--bp-accent)}
 
+
+/* v54: restrained controls, real wallpaper pattern, balanced pair archive. */
+:root{--pt-nav-color:#eeeae1;--pt-nav-text:#393b35;--pt-titlebar-text:#fff;--pt-nav-active:#596553}
+body::before{z-index:0!important;inset:0!important;opacity:1!important;filter:blur(var(--pt-wallpaper-blur,0px))!important;background-color:var(--pt-wallpaper-color,#e9e5d9)!important;background-image:var(--pt-wallpaper-pattern,none)!important;background-size:var(--pt-wallpaper-pattern-size,24px 24px)!important;background-repeat:repeat!important}
+#toolboxWindow.window{border-color:var(--pt-window-frame-color,#ddd9cf)!important;background-color:var(--pt-wallpaper-gap,var(--pt-window-frame-color,#ddd9cf))!important;background-image:var(--pt-window-pattern,none)!important;background-size:var(--pt-wallpaper-pattern-size,24px 24px)!important;background-repeat:repeat!important}
+#toolboxWindow .titlebar{background:var(--pt-titlebar-color,#596553)!important;color:var(--pt-titlebar-text,#fff)!important}
+#toolboxWindow .titlebar-brand{color:var(--pt-titlebar-text,#fff)!important;text-shadow:none!important;white-space:nowrap!important;flex:0 0 auto!important;min-width:max-content!important}
+#toolboxWindow .titlebar-room-label:empty{display:none!important}
+#toolboxWindow .titlebar-room-label{color:var(--pt-titlebar-text,#fff)!important;background:color-mix(in srgb,var(--pt-titlebar-text,#fff) 10%,transparent)!important;border-radius:2px!important}
+.app-routebar{background:var(--pt-nav-color,#eeeae1)!important;color:var(--pt-nav-text,#393b35)!important;border-bottom:1px solid color-mix(in srgb,var(--pt-nav-text,#393b35) 28%,transparent)!important}
+.app-routebar .route-divider{color:color-mix(in srgb,var(--pt-nav-text,#393b35) 48%,transparent)!important}
+.app-routebar button{background:color-mix(in srgb,var(--pt-nav-color,#eeeae1) 76%,white)!important;color:var(--pt-nav-text,#393b35)!important;border:1px solid color-mix(in srgb,var(--pt-nav-text,#393b35) 34%,transparent)!important;box-shadow:none!important}
+.app-routebar button.active{background:var(--pt-nav-active,var(--pt-titlebar-color))!important;color:var(--pt-titlebar-text,#fff)!important;border-color:var(--pt-nav-active,var(--pt-titlebar-color))!important}
+.pt-theme-color-note{align-self:center;color:#817b70;font-size:9px}
+/* Small, aligned reroll controls: they remain part of the selector row. */
+.category-controls{display:flex!important;align-items:stretch!important;gap:0!important;min-width:0}
+.category-controls .category-select{min-width:0!important;flex:1 1 auto!important;border-top-right-radius:0!important;border-bottom-right-radius:0!important}
+.category-controls .reroll-button,.category-controls .add-category-select{flex:0 0 25px!important;width:25px!important;min-width:25px!important;height:29px!important;min-height:29px!important;margin:0!important;padding:0!important;border:1px solid #cfc8bd!important;border-left:0!important;border-radius:0 2px 2px 0!important;background:#f8f6f1!important;color:#777166!important;font-size:12px!important;font-weight:400!important;line-height:1!important;box-shadow:none!important;transform:none!important}
+.category-controls .reroll-button:hover,.category-controls .add-category-select:hover{background:#fffdf8!important;color:#4f5948!important;border-color:#aaa292!important}
+.category-extra-row .remove-category-select{flex:0 0 25px!important;width:25px!important;height:29px!important;min-height:29px!important;padding:0!important;border:1px solid #cfc8bd!important;background:#f8f6f1!important;color:#777166!important;box-shadow:none!important}
+/* Pair archive: editorial layout, compact horizontal photo banner, D-day away from title. */
+#pairDetailView .pair-detail-card{padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#pairDetailView .pair-detail-heading{position:relative!important;isolation:isolate!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;min-height:112px!important;margin:0 0 17px!important;padding:17px clamp(16px,3vw,26px)!important;overflow:hidden!important;text-align:left!important;border:0!important;border-top:1px solid #d9d2c8!important;border-bottom:1px solid #d9d2c8!important;background:#f4f0e7!important}
+#pairDetailView .pair-detail-heading::after{content:"";position:absolute;z-index:0;inset:0;pointer-events:none;background:linear-gradient(90deg,#f4f0e7 0%,color-mix(in srgb,#f4f0e7 93%,transparent) 40%,transparent 76%)}
+#pairDetailView .pair-detail-heading>*:not(.pair-detail-banner-image){position:relative!important;z-index:1!important}
+#pairDetailView .pair-detail-kicker{color:#85816e!important;font:700 8px/1.4 Tahoma,Arial,sans-serif!important;letter-spacing:1.8px!important}
+#pairDetailView .pair-detail-heading h2{margin:4px 0 2px!important;color:#45483e!important;font:500 clamp(23px,3vw,31px)/1.15 Georgia,'Noto Serif KR',serif!important;letter-spacing:-.035em!important}
+#pairDetailView .pair-detail-heading p{max-width:min(620px,78%)!important;margin:3px 0 0!important;color:#6e6a5f!important;font:11px/1.6 'Malgun Gothic',Arial,sans-serif!important;text-align:left!important}
+#pairDetailView .pair-detail-heading .photo-archive-tags{justify-content:flex-start!important;margin-top:5px!important;gap:3px 6px!important;opacity:.62!important}
+#pairDetailView .pair-detail-heading .pair-detail-banner-image{position:absolute!important;z-index:0!important;top:0!important;right:0!important;left:auto!important;width:62%!important;height:100%!important;object-fit:cover!important;object-position:center 42%!important;pointer-events:none!important}
+#pairDetailView .pair-detail-heading .pair-detail-banner-image.is-gradient{opacity:var(--pair-banner-opacity,.35)!important;mask-image:linear-gradient(90deg,transparent 0%,#000 52%,#000 100%)!important;-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 52%,#000 100%)!important}
+#pairDetailView .pair-detail-heading .pair-detail-banner-image.is-full{left:0!important;right:0!important;width:100%!important;opacity:var(--pair-banner-opacity,.35)!important;mask-image:none!important;-webkit-mask-image:none!important}
+.pair-banner-preview{height:88px!important;max-height:88px!important;border:1px solid #ded8ce!important;background:#f0ece3!important}
+.pair-banner-preview[data-mode="gradient"] img{mask-image:linear-gradient(90deg,transparent 0%,#000 52%,#000 100%)!important;-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 52%,#000 100%)!important}
+.pair-banner-preview[data-mode="full"] img{opacity:var(--banner-opacity,.35)!important}
+#pairDetailView .pair-members-grid{grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr)!important;gap:clamp(8px,2vw,18px)!important;max-width:660px!important;margin:0 auto 12px!important;padding:8px 0 14px!important;border:0!important;border-bottom:1px solid #e2ddd4!important;background:transparent!important}
+#pairDetailView .pair-member-card{padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#pairDetailView .pair-member-photo{width:min(100%,210px)!important;max-height:220px!important;aspect-ratio:4/5!important;border:0!important;outline:0!important;background:#ebe7de!important}
+#pairDetailView .pair-member-name{padding:7px 2px 0!important;color:#505548!important;font:600 12px/1.4 'Malgun Gothic',Arial,sans-serif!important}
+#pairDetailView .pair-member-label{color:#999183!important;font:8px Tahoma,Arial,sans-serif!important;letter-spacing:.9px!important}
+#pairMilestoneStrip{display:flex;align-items:baseline;justify-content:space-between;gap:12px;max-width:660px;margin:0 auto 18px;padding:8px 3px 9px;border-bottom:1px solid #e2ddd4;color:#66695d}
+#pairMilestoneStrip .pair-dday-badge{display:flex!important;align-items:baseline!important;justify-content:space-between!important;gap:12px!important;width:100%!important;margin:0!important;padding:0!important;border:0!important;color:#68735c!important}
+#pairMilestoneStrip .pair-dday-badge span{font:9px/1.4 'Malgun Gothic',Arial,sans-serif!important;letter-spacing:.04em!important;color:#777467!important}
+#pairMilestoneStrip .pair-dday-badge strong{font:italic 19px/1 Georgia,serif!important;font-weight:500!important;letter-spacing:-.04em!important;color:#596653!important}
+#pairMilestoneStrip.hidden{display:none!important}
+#pairDetailView .pair-subarchive{margin-top:18px!important;padding-top:14px!important;border-top:1px solid #ded8ce!important}
+#pairDetailView .pair-subarchive-heading{margin-bottom:10px!important}
+#pairDetailView .pair-subarchive-heading h3{font:600 13px/1.25 Georgia,'Noto Serif KR',serif!important;letter-spacing:.01em!important;color:#55594c!important}
+@media(max-width:600px){#pairDetailView .pair-detail-heading{min-height:94px!important;padding:13px 14px!important}#pairDetailView .pair-detail-heading p{max-width:86%!important}#pairDetailView .pair-detail-heading .pair-detail-banner-image{width:70%!important}#pairDetailView .pair-members-grid{gap:6px!important}#pairDetailView .pair-member-photo{max-height:180px!important}#pairMilestoneStrip{margin-bottom:14px}}
+/* Pair Log reader: quiet editorial typography, full-bleed reading surface, no floating card. */
+.pair-log-reader-overlay{background:var(--reader-bg,#f7f5ef)!important;backdrop-filter:none!important}
+.pair-log-reader-window{border:0!important;border-radius:0!important;box-shadow:none!important;background:var(--reader-bg,#f7f5ef)!important}
+.pair-log-reader-header{min-height:48px!important;padding:9px clamp(18px,4vw,58px)!important;border-bottom:1px solid color-mix(in srgb,var(--reader-accent) 25%,transparent)!important;background:var(--reader-bg,#f7f5ef)!important;backdrop-filter:none!important}
+.pair-log-reader-masthead{gap:9px!important;font:700 8px Tahoma,Arial,sans-serif!important;letter-spacing:1.2px!important}
+.pair-log-reader-masthead small{font-size:8px!important;letter-spacing:1.5px!important}
+.pair-log-reader-tools{gap:5px!important}
+.pair-log-reader-tools button{min-width:24px!important;min-height:24px!important;padding:2px 6px!important;border:0!important;background:transparent!important;color:var(--reader-accent)!important;font:8px Tahoma,Arial,sans-serif!important;box-shadow:none!important}
+.pair-log-reader-tools #pairLogReaderClose{width:26px!important;height:26px!important;min-width:26px!important;min-height:26px!important;padding:0!important;border:0!important;background:transparent!important;color:var(--reader-text)!important;font:300 28px/1 Arial,sans-serif!important}
+.pair-log-reader-inner{width:100%!important;max-width:none!important;margin:0!important;padding:clamp(28px,5.5vh,58px) clamp(22px,8vw,120px) 48px!important}
+.pair-log-reader-tags{max-width:880px!important;margin:0 auto 12px!important;font-size:7px!important;letter-spacing:.05em!important;opacity:.45!important}
+.pair-log-reader-meta{max-width:880px!important;margin:0 auto 5px!important;font-size:8px!important;letter-spacing:.12em!important;opacity:.62!important}
+.pair-log-reader-meta span{padding:0!important;border:0!important;background:transparent!important}
+.pair-log-reader-title-row{max-width:880px!important;gap:8px!important;padding:0 0 18px!important;border-bottom:1px solid color-mix(in srgb,var(--reader-accent) 24%,transparent)!important}
+.pair-log-reader-title-row h2{margin:0!important;font:500 clamp(29px,4.4vw,48px)/1.18 Georgia,'Noto Serif KR',serif!important;letter-spacing:-.045em!important;color:var(--reader-text)!important}
+.pair-log-reader-date{font:9px/1.4 Tahoma,Arial,sans-serif!important;letter-spacing:.04em!important;opacity:.55!important}
+.pair-log-reader-content{max-width:880px!important;margin:28px auto 0!important;padding:0!important;border:0!important;background:transparent!important;color:var(--reader-text)!important;font-size:15px!important;line-height:2.05!important;box-shadow:none!important}
+.pair-log-reader-content p{margin:0 0 1.1em!important}
+.pair-log-reader-content blockquote{margin:1.4em 0!important;padding:.1em 0 .1em 1.1em!important;border-left:2px solid var(--reader-accent)!important;background:transparent!important}
+.pair-log-reader-content img{max-height:none!important;border:0!important;box-shadow:none!important}
+.pair-log-reader-footer{max-width:880px!important;margin:48px auto 0!important;padding-top:10px!important;font-size:7px!important;letter-spacing:1.2px!important}
+.pair-log-reader-window[data-skin="editorial"] .pair-log-reader-title-row h2{font-weight:500!important}
+.pair-log-reader-window[data-skin="diner"] .pair-log-reader-inner{background-image:linear-gradient(180deg,color-mix(in srgb,var(--reader-accent) 7%,transparent),transparent 120px)!important}
+.pair-log-reader-window[data-skin="diner"] .pair-log-reader-title-row{border-bottom:3px double var(--reader-accent)!important}
+.pair-log-reader-window[data-skin="diner"] .pair-log-reader-title-row h2{font-family:Georgia,'Noto Serif KR',serif!important;font-weight:700!important;letter-spacing:.005em!important;text-transform:none!important}
+.pair-log-reader-window[data-skin="letter"] .pair-log-reader-inner{background-image:linear-gradient(90deg,transparent 0 32px,color-mix(in srgb,var(--reader-accent) 12%,transparent) 32px 33px,transparent 33px)!important}
+.pair-log-reader-window[data-skin="letter"] .pair-log-reader-title-row h2{font-weight:400!important;font-style:italic!important}
+.pair-log-reader-window[data-skin="windows"] .pair-log-reader-header{border-bottom:1px solid var(--reader-accent)!important}
+.pair-log-reader-window[data-skin="windows"] .pair-log-reader-title-row h2{font-family:Tahoma,Arial,sans-serif!important;font-size:clamp(27px,4vw,42px)!important;font-weight:600!important;letter-spacing:-.04em!important}
+.pair-log-reader-window[data-skin="midnight"] .pair-log-reader-header{background:var(--reader-bg)!important}
+.pair-log-reader-window[data-skin="midnight"] .pair-log-reader-footer{opacity:.58!important}
+.pair-log-reader-window[data-skin="botanical"] .pair-log-reader-inner{background-image:radial-gradient(ellipse at 96% 0%,color-mix(in srgb,var(--reader-accent) 7%,transparent),transparent 34%)!important}
+.pair-log-reader-window[data-skin="botanical"] .pair-log-reader-title-row h2{font-style:italic!important;font-weight:400!important}
+@media(max-width:650px){.pair-log-reader-header{min-height:45px!important;padding:8px 14px!important}.pair-log-reader-inner{padding:28px 18px 32px!important}.pair-log-reader-title-row h2{font-size:30px!important}.pair-log-reader-content{font-size:14px!important;line-height:1.95!important}}
+/* Version navigation is a stable rail. Reuse existing buttons instead of recreating them on each selection. */
+#backupDetailVersionTabs.v54-version-tabs-rail{position:relative!important;display:flex!important;justify-content:flex-start!important;align-items:center!important;flex-wrap:nowrap!important;gap:6px!important;min-height:36px!important;margin:9px 0 13px!important;padding:4px 0 7px!important;overflow-x:auto!important;overflow-y:hidden!important;white-space:nowrap!important;background:transparent!important;border-bottom:1px solid var(--bp-line)!important;scrollbar-width:thin!important;animation:none!important;transition:none!important}
+#backupDetailVersionTabs.v54-version-tabs-rail button{display:inline-flex!important;visibility:visible!important;opacity:1!important;flex:0 0 auto!important;align-items:center!important;justify-content:center!important;min-height:27px!important;margin:0!important;padding:5px 11px!important;border:1px solid var(--bp-line)!important;border-radius:2px!important;background:transparent!important;color:var(--bp-ink)!important;font-size:10px!important;white-space:nowrap!important;animation:none!important;transition:none!important;transform:none!important;box-shadow:none!important}
+#backupDetailVersionTabs.v54-version-tabs-rail button.active{background:var(--bp-accent)!important;color:#fff!important;border-color:var(--bp-accent)!important;font-weight:700!important}
+#backupDetailVersionTabs.v54-version-tabs-rail button:focus{outline:1px solid var(--bp-accent)!important;outline-offset:2px!important}
+
+
+/* v54.1 correction: visible wallpaper pattern, true titlebar contrast, refined Pair layout. */
+#toolboxWindow .titlebar-room-label{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important;min-width:0!important;max-width:clamp(42px,15vw,112px)!important;opacity:.72!important}
+#toolboxWindow .titlebar-brand{color:var(--pt-titlebar-text,#30312c)!important}
+#toolboxWindow.window{background-color:var(--pt-window-frame-color,#c0c0c0)!important;border-color:var(--pt-window-frame-color,#c0c0c0)!important}
+#toolboxWindow main{position:relative;background-color:var(--pt-wallpaper-gap,var(--pt-wallpaper-color,#e9e5d9))!important;background-image:var(--pt-window-pattern,none)!important;background-size:var(--pt-wallpaper-pattern-size,24px 24px)!important;background-repeat:repeat!important;background-attachment:local!important}
+#toolboxWindow .tab-panel{background:transparent!important}
+#toolboxWindow .titlebar-settings,#toolboxWindow .titlebar-lock{color:#20211e!important}
+#backupDetailVersionTabs.v54-version-tabs-rail{flex-wrap:wrap!important;justify-content:flex-start!important;align-content:flex-start!important;overflow:visible!important;min-height:32px!important;gap:5px!important;padding:4px 0 8px!important;scrollbar-width:none!important}
+#backupDetailVersionTabs.v54-version-tabs-rail button{position:static!important;flex:0 0 auto!important;min-width:0!important;min-height:27px!important;visibility:visible!important;opacity:1!important;animation:none!important;transition:none!important;transform:none!important;pointer-events:auto!important}
+#backupDetailVersionTabs.v54-version-tabs-rail button.active{outline:1px solid color-mix(in srgb,var(--bp-accent) 35%,transparent)!important;outline-offset:1px!important}
+#pairDetailView .pair-sub-toolbar{margin:0 0 13px!important;padding:0 0 8px!important;border-bottom:1px solid #ded9d0!important;color:#777467!important}
+#pairDetailView .pair-sub-toolbar button{min-height:27px!important;padding:5px 9px!important;border:1px solid #d5cfc5!important;border-radius:2px!important;background:transparent!important;color:#68675c!important;box-shadow:none!important;font-size:9px!important}
+#pairDetailView .pair-detail-card{max-width:100%!important}
+#pairDetailView .pair-detail-heading{min-height:98px!important;margin-bottom:14px!important;padding:15px clamp(16px,4vw,34px)!important;background:#f1eee6!important}
+#pairDetailView .pair-detail-heading::after{background:linear-gradient(90deg,#f1eee6 0%,color-mix(in srgb,#f1eee6 96%,transparent) 34%,color-mix(in srgb,#f1eee6 58%,transparent) 57%,transparent 82%)!important}
+#pairDetailView .pair-detail-heading .pair-detail-banner-image{width:56%!important;height:100%!important;object-position:center 42%!important}
+#pairDetailView .pair-detail-heading .pair-detail-banner-image.is-gradient{-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.42) 27%,#000 68%)!important;mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.42) 27%,#000 68%)!important}
+#pairDetailView .pair-detail-heading .pair-detail-banner-image.is-full{width:100%!important;opacity:var(--pair-banner-opacity,.35)!important}
+#pairDetailView .pair-members-grid{max-width:720px!important;grid-template-columns:minmax(0,1fr) 36px minmax(0,1fr)!important;gap:clamp(9px,2.2vw,24px)!important;align-items:start!important;margin:0 auto 9px!important;padding:5px 0 15px!important}
+#pairDetailView .pair-member-card{display:flex!important;flex-direction:column!important;align-items:center!important;gap:0!important}
+#pairDetailView .pair-member-label{margin:0 0 7px!important;color:#a19a8c!important;font-size:8px!important;letter-spacing:1.25px!important}
+#pairDetailView .pair-member-photo{width:min(100%,230px)!important;max-height:245px!important;aspect-ratio:4/5!important;overflow:hidden!important;background:#e9e4da!important}
+#pairDetailView .pair-member-photo img{width:100%!important;height:100%!important;object-fit:cover!important}
+#pairDetailView .pair-member-name{margin-top:9px!important;color:#44483f!important;font:600 13px/1.3 'Malgun Gothic',Arial,sans-serif!important;letter-spacing:-.02em!important}
+#pairDetailView .pair-link-mark{align-self:center!important;margin-top:56px!important;color:#aaa293!important;font:300 19px/1 Georgia,serif!important}
+#pairMilestoneStrip{max-width:720px!important;margin:0 auto 20px!important;padding:9px 2px 10px!important;border-top:1px solid #e3ded5!important;border-bottom:1px solid #e3ded5!important;background:transparent!important}
+#pairMilestoneStrip .pair-dday-badge strong{font:500 15px/1 Georgia,'Noto Serif KR',serif!important;font-style:normal!important;letter-spacing:.01em!important}
+#pairMilestoneStrip .pair-dday-badge span{font-size:8px!important;letter-spacing:.12em!important;text-transform:uppercase!important}
+#pairDetailView .pair-subarchive{margin-top:22px!important;padding-top:17px!important;border-top:1px solid #dcd6cc!important}
+#pairDetailView .pair-subarchive-heading{align-items:end!important;margin-bottom:12px!important}
+#pairDetailView .pair-subarchive-heading small{font-size:8px!important;letter-spacing:1.5px!important;color:#9b9487!important}
+#pairDetailView .pair-subarchive-heading h3{font-size:15px!important;font-weight:500!important;letter-spacing:.02em!important}
+#pairDetailView .pair-subarchive-heading button{border:1px solid #d4cec3!important;background:transparent!important;color:#64675a!important;box-shadow:none!important}
+#pairDetailView .pair-chat-item.pair-chat-card{margin:8px 0!important;border:0!important;border-bottom:1px solid #e4dfd7!important;background:transparent!important;box-shadow:none!important}
+#pairDetailView .pair-chat-card .pair-chat-actions{background:transparent!important;border-top:1px solid #eee9e2!important}
+#pairDetailView .pair-photo-post{padding:0!important;border:0!important;background:transparent!important}
+#pairDetailView .pair-photo-post-title{font-size:11px!important;color:#52574b!important}
+#pairDetailView .pair-photo-post-note{color:#888477!important}
+.pair-banner-preview{height:68px!important;max-height:68px!important}
+.pair-banner-preview[data-mode="gradient"] img{-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.42) 27%,#000 68%)!important;mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.42) 27%,#000 68%)!important}
+@media(max-width:600px){#pairDetailView .pair-detail-heading{min-height:90px!important;padding:12px 13px!important}#pairDetailView .pair-detail-heading .pair-detail-banner-image{width:62%!important}#pairDetailView .pair-members-grid{grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr)!important;gap:5px!important}#pairDetailView .pair-member-photo{max-height:185px!important}#pairDetailView .pair-link-mark{margin-top:45px!important}#pairMilestoneStrip{margin-bottom:16px!important}}
+
+
+
+/* v55: complete Pair Log reader art direction. Each skin has its own layout language. */
+#pairLogReaderModal{--reader-bg:#f5f1e8;--reader-text:#34352f;--reader-accent:#65745b;background:var(--reader-bg)!important;color:var(--reader-text)!important}
+#pairLogReaderModal .pair-log-reader-window{background:var(--reader-bg)!important;color:var(--reader-text)!important}
+#pairLogReaderModal .pair-log-reader-inner{width:100%!important;max-width:none!important;margin:0!important;padding:clamp(28px,5vw,76px) clamp(22px,7vw,112px) 54px!important}
+#pairLogReaderModal .pair-log-reader-content{width:100%;max-width:1440px;margin:clamp(24px,4vh,48px) auto 0!important;padding:0!important;border:0!important;background:transparent!important;color:var(--reader-text)!important;font-size:clamp(14px,1.15vw,17px)!important;line-height:2.05!important}
+#pairLogReaderModal .pair-log-reader-content>*{max-width:100%}
+#pairLogReaderModal .pair-log-reader-content img{max-height:none;object-fit:contain}
+#pairLogReaderModal .pair-log-reader-header{min-height:64px!important;padding:12px clamp(20px,4vw,64px)!important}
+#pairLogReaderModal .pair-log-reader-title-row{gap:10px!important;padding-bottom:22px!important}
+#pairLogReaderModal .pair-log-reader-title-row h2{font-size:clamp(34px,5.2vw,68px)!important;line-height:1.08!important;letter-spacing:-.045em!important}
+#pairLogReaderModal .pair-log-reader-date{font-size:10px!important;letter-spacing:.12em!important;opacity:.72}
+#pairLogReaderModal .pair-log-reader-tags{margin:0 0 12px!important;gap:5px 12px!important;font-size:8px!important;letter-spacing:.04em!important}
+#pairLogReaderModal .pair-log-reader-tags span{padding:0!important;border:0!important;background:none!important}
+#pairLogReaderModal .pair-log-reader-footer{max-width:1440px;margin:64px auto 0!important}
+#pairLogReaderModal .pair-log-reader-tools #pairLogReaderClose{font-size:30px!important;font-weight:300!important}
+
+/* Editorial Paper: quiet magazine typography, generous negative space, fine rules. */
+#pairLogReaderModal .pair-log-reader-window[data-skin="editorial"]{--reader-bg:#f5f2e9;--reader-text:#34372f;--reader-accent:#68765f;background:#f5f2e9!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="editorial"] .pair-log-reader-header{border-bottom:1px solid #d8d8ca!important;background:rgba(245,242,233,.94)!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="editorial"] .pair-log-reader-inner{padding-top:clamp(54px,9vh,112px)!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="editorial"] .pair-log-reader-title-row{max-width:1440px;margin:0 auto;border-bottom:1px solid #aeb8a4!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="editorial"] .pair-log-reader-content{font-family:Georgia,"Noto Serif KR",serif!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="editorial"] .pair-log-reader-content h2{font-size:1.5em}
+
+/* Diner Note: blush-and-cream diner menu, horizontal stripe and compact index. */
+#pairLogReaderModal .pair-log-reader-window[data-skin="diner"]{--reader-bg:#fff4ed;--reader-text:#493c39;--reader-accent:#a65360;background:#fff4ed!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="diner"] .pair-log-reader-header{min-height:82px!important;border:0!important;border-bottom:5px solid #a65360!important;background:repeating-linear-gradient(90deg,#f4d9d5 0 18px,#fff4ed 18px 36px)!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="diner"] .pair-log-reader-masthead{padding:10px 14px;background:#fffaf5;border:1px solid #d7aaa6}
+#pairLogReaderModal .pair-log-reader-window[data-skin="diner"] .pair-log-reader-edition{font-weight:700;letter-spacing:.16em}
+#pairLogReaderModal .pair-log-reader-window[data-skin="diner"] .pair-log-reader-inner{padding-top:clamp(38px,6vh,78px)!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="diner"] .pair-log-reader-title-row{max-width:1440px;margin:0 auto;border-bottom:3px double #bd7b7e!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="diner"] .pair-log-reader-title-row h2{font-family:Georgia,"Noto Serif KR",serif!important;font-weight:700!important;letter-spacing:.015em!important;text-transform:uppercase}
+#pairLogReaderModal .pair-log-reader-window[data-skin="diner"] .pair-log-reader-content{font-family:Arial,"Noto Sans KR",sans-serif!important;line-height:1.95!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="diner"] .pair-log-reader-content blockquote{padding:14px 20px;background:#f8e5df;border-left:3px solid #a65360}
+
+/* Old Letter: letterhead, left margin rule, ruled writing field without a card. */
+#pairLogReaderModal .pair-log-reader-window[data-skin="letter"]{--reader-bg:#f2ead9;--reader-text:#51483e;--reader-accent:#8d7354;background:#f2ead9!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="letter"] .pair-log-reader-header{border-bottom:1px solid #cbbda2!important;background:#eee3ce!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="letter"] .pair-log-reader-masthead small:before{content:"✉  ";font-size:13px}
+#pairLogReaderModal .pair-log-reader-window[data-skin="letter"] .pair-log-reader-inner{position:relative;padding-left:clamp(46px,9vw,150px)!important;background:linear-gradient(90deg,transparent 0 clamp(28px,5vw,76px),rgba(157,105,91,.32) clamp(28px,5vw,76px),rgba(157,105,91,.32) calc(clamp(28px,5vw,76px) + 1px),transparent calc(clamp(28px,5vw,76px) + 1px))!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="letter"] .pair-log-reader-title-row{border-bottom:1px solid #c5b393!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="letter"] .pair-log-reader-title-row h2{font-style:italic!important;font-weight:400!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="letter"] .pair-log-reader-content{font-family:Georgia,"Noto Serif KR",serif!important;line-height:2.35!important;background:repeating-linear-gradient(to bottom,transparent 0 34px,rgba(139,115,84,.15) 34px 35px)!important}
+
+/* Soft Windows: authentic desktop title strip, flat controls, spacious document pane. */
+#pairLogReaderModal .pair-log-reader-window[data-skin="windows"]{--reader-bg:#e9edf0;--reader-text:#27323b;--reader-accent:#355d79;background:#e9edf0!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="windows"] .pair-log-reader-header{min-height:48px!important;padding:8px 18px!important;border:0!important;background:linear-gradient(90deg,#254b78,#52799b)!important;color:#fff!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="windows"] .pair-log-reader-masthead,#pairLogReaderModal .pair-log-reader-window[data-skin="windows"] .pair-log-reader-masthead small,#pairLogReaderModal .pair-log-reader-window[data-skin="windows"] .pair-log-reader-edition,#pairLogReaderModal .pair-log-reader-window[data-skin="windows"] .pair-log-reader-tools button{color:#fff!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="windows"] .pair-log-reader-inner{padding:clamp(26px,4vw,56px)!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="windows"] .pair-log-reader-title-row{padding:0 0 16px!important;border-bottom:2px solid #aebbc5!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="windows"] .pair-log-reader-title-row h2{font-family:Tahoma,"Noto Sans KR",sans-serif!important;font-weight:650!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="windows"] .pair-log-reader-content{font-family:Tahoma,"Noto Sans KR",sans-serif!important;line-height:1.9!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="windows"] .pair-log-reader-content blockquote{padding:12px 16px;background:#dce5eb;border-left:3px solid #52799b}
+
+/* Midnight Ink: dark literary reading mode with quiet amber typography. */
+#pairLogReaderModal .pair-log-reader-window[data-skin="midnight"]{--reader-bg:#171d25;--reader-text:#e8e4da;--reader-accent:#c4a879;background:#171d25!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="midnight"] .pair-log-reader-header{background:rgba(23,29,37,.96)!important;border-bottom:1px solid #ffffff20!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="midnight"] .pair-log-reader-inner{padding-top:clamp(52px,9vh,104px)!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="midnight"] .pair-log-reader-title-row{border-bottom:1px solid #c4a87955!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="midnight"] .pair-log-reader-content{font-family:Georgia,"Noto Serif KR",serif!important;line-height:2.1!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="midnight"] .pair-log-reader-content blockquote{padding:12px 18px;background:#ffffff08;border-left:2px solid #c4a879}
+
+/* Botanical Index: natural-history catalogue, olive ink and index typography. */
+#pairLogReaderModal .pair-log-reader-window[data-skin="botanical"]{--reader-bg:#edf0e5;--reader-text:#3e493c;--reader-accent:#71836a;background:#edf0e5!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="botanical"] .pair-log-reader-header{background:#e5eadc!important;border-bottom:1px solid #c4cfbb!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="botanical"] .pair-log-reader-masthead small:before{content:"✳  ";font-size:12px}
+#pairLogReaderModal .pair-log-reader-window[data-skin="botanical"] .pair-log-reader-inner{padding-top:clamp(42px,7vh,90px)!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="botanical"] .pair-log-reader-title-row{border-bottom:1px dashed #9aa991!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="botanical"] .pair-log-reader-title-row h2{font-style:italic!important;font-weight:400!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="botanical"] .pair-log-reader-content{font-family:Georgia,"Noto Serif KR",serif!important}
+#pairLogReaderModal .pair-log-reader-window[data-skin="botanical"] .pair-log-reader-content blockquote{border-left:2px solid #71836a;padding:10px 18px;background:#dfe7d7}
+
+@media(max-width:650px){#pairLogReaderModal .pair-log-reader-inner{padding:32px 19px 32px!important}#pairLogReaderModal .pair-log-reader-window[data-skin="letter"] .pair-log-reader-inner{padding-left:42px!important;background-position:left top!important}#pairLogReaderModal .pair-log-reader-window[data-skin="windows"] .pair-log-reader-inner{padding:24px 18px!important}#pairLogReaderModal .pair-log-reader-title-row h2{font-size:36px!important}#pairLogReaderModal .pair-log-reader-content{font-size:14px!important;line-height:1.95!important}}
+
 </style>
 </head>
 <body>
@@ -2549,7 +2757,7 @@ body::before{content:"";position:fixed;inset:-18px;z-index:0;pointer-events:none
                 <input class="backup-full" id="pairBannerFile" type="file" accept="image/*">
                 <div class="pair-banner-preview" id="pairBannerPreview"><span>NO BANNER · 배너 사진 없음</span></div>
                 <div class="pair-banner-options">
-                  <label>DISPLAY · 표시 방식<select id="pairBannerMode"><option value="gradient">Soft Gradient · 위쪽은 선명하고 아래는 자연스럽게 흐림</option><option value="full">Full Banner · 배너 전체에 사진</option></select></label>
+                  <label>DISPLAY · 표시 방식<select id="pairBannerMode"><option value="gradient">Horizontal Fade · 왼쪽에서 오른쪽으로 옅어지는 페이드</option><option value="full">Full Banner · 배너 전체에 사진</option></select></label>
                   <label>OPACITY · 투명도 <output id="pairBannerOpacityOut">35%</output><input id="pairBannerOpacity" type="range" min="10" max="90" step="5" value="35"></label>
                   <button type="button" id="pairBannerRemove">REMOVE BANNER</button>
                 </div>
@@ -7258,11 +7466,21 @@ function applyBackupTemplate(template) {
     function backupSnapshotDraftPrompts(){return backupDraftBlocks.map(block=>({label:String(block.label||'').trim(),text:String(block.text||'').trim()})).filter(block=>block.text);}
     function backupSyncActiveVersion(){const active=backupDraftVersions.find(item=>item.id===backupActiveVersionId);if(active){active.prompts=backupSnapshotDraftPrompts();active.images=backupDraftVersionImages.map(image=>({name:image.name||'image',blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:'original'}));active.name=document.getElementById('backupVersionName')?.value.trim()||active.name||'기본 버전';}}
     function backupRenderVersionTabs(){
-      const wrap=document.getElementById('backupVersionTabs');if(!wrap)return;wrap.replaceChildren();
-      backupDraftVersions.forEach((version,index)=>{const button=document.createElement('button');button.type='button';button.className=version.id===backupActiveVersionId?'active':'';button.setAttribute('role','tab');button.setAttribute('aria-selected',String(version.id===backupActiveVersionId));button.textContent=version.name||`버전 ${index+1}`;button.addEventListener('click',()=>backupSwitchVersion(version.id));wrap.appendChild(button);});
-      const active=backupDraftVersions.find(item=>item.id===backupActiveVersionId);const name=document.getElementById('backupVersionName');if(name)name.value=active?.name||'';
+      const wrap=document.getElementById('backupVersionTabs');if(!wrap)return;
+      const existing=new Map([...wrap.querySelectorAll('button[data-version-id]')].map(button=>[button.dataset.versionId,button]));
+      backupDraftVersions.forEach((version,index)=>{
+        const id=String(version.id);let button=existing.get(id);
+        if(!button){button=document.createElement('button');button.type='button';button.dataset.versionId=id;button.setAttribute('role','tab');}
+        button.textContent=version.name||`버전 ${index+1}`;
+        const active=id===String(backupActiveVersionId);button.classList.toggle('active',active);button.setAttribute('aria-selected',String(active));button.tabIndex=active?0:-1;
+        button.onclick=event=>{event.preventDefault();event.stopPropagation();backupSwitchVersion(id);};
+        const current=wrap.children[index];if(current!==button)wrap.insertBefore(button,current||null);
+      });
+      const valid=new Set(backupDraftVersions.map(version=>String(version.id)));
+      [...wrap.querySelectorAll('button[data-version-id]')].forEach(button=>{if(!valid.has(button.dataset.versionId))button.remove();});
+      const active=backupDraftVersions.find(item=>String(item.id)===String(backupActiveVersionId));const name=document.getElementById('backupVersionName');if(name)name.value=active?.name||'';
       const remove=document.getElementById('backupDeleteVersion');if(remove)remove.disabled=backupDraftVersions.length<=1;
-      wrap.style.justifyContent='flex-start';
+      wrap.style.justifyContent='flex-start';wrap.classList.add('v54-version-tabs-rail');
     }
     function backupSwitchVersion(id){backupSyncActiveVersion();const version=backupDraftVersions.find(item=>item.id===id);if(!version)return;backupActiveVersionId=id;backupDraftVersionImages=(version.images||[]).map(image=>({name:image.name,blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:'original'}));backupDraftBlocks=(version.prompts||[]).map(prompt=>makeBackupBlock(prompt.label,prompt.text));if(!backupDraftBlocks.length)backupDraftBlocks=[makeBackupBlock('Prompt 1')];backupRenderVersionTabs();backupRenderVersionImagePreview();renderBackupDraftBlocks();}
     function backupAddVersion(){backupSyncActiveVersion();const version={id:`ver-${Date.now()}-${Math.random().toString(36).slice(2,6)}`,name:`버전 ${backupDraftVersions.length+1}`,prompts:[],images:[]};backupDraftVersions.push(version);backupSwitchVersion(version.id);document.getElementById('backupVersionName')?.focus();}
@@ -7635,14 +7853,52 @@ function applyBackupTemplate(template) {
     }
 
     function backupGetEntryVersions(entry){
-      if(Array.isArray(entry?.versions)&&entry.versions.length)return entry.versions;
-      return [{id:'legacy-default',name:'기본 버전',prompts:entry?.prompts||[]}];
+      if(!entry)return [];
+      const asList=value=>Array.isArray(value)?value:(value&&typeof value==='object'?Object.entries(value).map(([key,item])=>({...item,id:item?.id||key})):[]);
+      const raw=asList(entry.versions).length?asList(entry.versions):asList(entry.promptVersions).length?asList(entry.promptVersions):asList(entry.versionSets);
+      const normalize=list=>list.map((version,index)=>({
+        ...version,
+        id:String(version.id||`version-${index}-${entry.id||'entry'}`),
+        name:String(version.name||version.label||`버전 ${index+1}`),
+        prompts:Array.isArray(version.prompts)?version.prompts.map(item=>({label:String(item.label||''),text:String(item.text||'')})):(Array.isArray(version.blocks)?version.blocks.map(item=>({label:String(item.label||''),text:String(item.text||item.content||'')})):[]),
+        images:Array.isArray(version.images)?version.images:[]
+      }));
+      const versions=normalize(raw);
+      if(versions.length){
+        const legacy=Array.isArray(entry.prompts)?entry.prompts:[];
+        const signature=items=>JSON.stringify((items||[]).map(item=>[String(item.label||''),String(item.text||'')]));
+        if(legacy.some(item=>String(item.text||'').trim())&&!versions.some(version=>signature(version.prompts)===signature(legacy)))versions.push({id:`legacy-active-${entry.id}`,name:'기본 버전',prompts:legacy.map(item=>({label:String(item.label||''),text:String(item.text||'')})),images:Array.isArray(entry.images)?entry.images:[]});
+        return versions;
+      }
+      return [{id:'legacy-default',name:'기본 버전',prompts:entry.prompts||[],images:entry.images||[]}];
     }
     function backupRenderDetailVersionTabs(entry){
-      const wrap=document.getElementById('backupDetailVersionTabs');if(!wrap)return null;wrap.replaceChildren();const versions=backupGetEntryVersions(entry);
-      if(!backupDetailVersionId||!versions.some(v=>v.id===backupDetailVersionId))backupDetailVersionId=entry.activeVersionId&&versions.some(v=>v.id===entry.activeVersionId)?entry.activeVersionId:versions[0].id;
-      versions.forEach((version,index)=>{const button=document.createElement('button');button.type='button';button.className=version.id===backupDetailVersionId?'active':'';button.setAttribute('role','tab');button.setAttribute('aria-selected',String(version.id===backupDetailVersionId));button.textContent=version.name||`버전 ${index+1}`;button.addEventListener('click',()=>{backupDetailVersionId=version.id;backupCurrentImageIndex=0;renderBackupDetail();});wrap.appendChild(button);});
-      return versions.find(v=>v.id===backupDetailVersionId)||versions[0];
+      const wrap=document.getElementById('backupDetailVersionTabs');if(!wrap||!entry)return null;
+      const versions=backupGetEntryVersions(entry);if(!versions.length)return null;
+      const entryKey=String(entry.id||'');
+      if(wrap.dataset.entryId!==entryKey){wrap.replaceChildren();wrap.dataset.entryId=entryKey;}
+      if(!backupDetailVersionId||!versions.some(version=>String(version.id)===String(backupDetailVersionId))){
+        backupDetailVersionId=entry.activeVersionId&&versions.some(version=>String(version.id)===String(entry.activeVersionId))?String(entry.activeVersionId):String(versions[0].id);
+      }
+      wrap.classList.add('v54-version-tabs-rail');wrap.setAttribute('aria-label','저장된 프롬프트 버전');
+      const existing=new Map([...wrap.querySelectorAll('button[data-version-id]')].map(button=>[button.dataset.versionId,button]));
+      versions.forEach((version,index)=>{
+        const id=String(version.id);let button=existing.get(id);
+        if(!button){button=document.createElement('button');button.type='button';button.dataset.versionId=id;button.setAttribute('role','tab');}
+        button.textContent=version.name||`버전 ${index+1}`;
+        const active=id===String(backupDetailVersionId);button.classList.toggle('active',active);button.setAttribute('aria-selected',String(active));button.tabIndex=active?0:-1;
+        button.onclick=event=>{
+          event.preventDefault();event.stopPropagation();
+          if(String(backupDetailVersionId)===id)return;
+          backupDetailVersionId=id;backupCurrentImageIndex=0;
+          wrap.querySelectorAll('button[data-version-id]').forEach(node=>{const selected=node.dataset.versionId===id;node.classList.toggle('active',selected);node.setAttribute('aria-selected',String(selected));node.tabIndex=selected?0:-1;});
+          renderBackupDetail();
+        };
+        const current=wrap.children[index];if(current!==button)wrap.insertBefore(button,current||null);
+      });
+      const valid=new Set(versions.map(version=>String(version.id)));
+      [...wrap.querySelectorAll('button[data-version-id]')].forEach(button=>{if(!valid.has(button.dataset.versionId))button.remove();});
+      return versions.find(version=>String(version.id)===String(backupDetailVersionId))||versions[0];
     }
 
     function renderBackupDetail() {
@@ -9701,7 +9957,7 @@ function pairLogRecordTemplateMarkup(type){
       ['Powder Blue','#ccdbe0'],['Warm Grey','#cfcfc9'],['Butter','#e7dfb9'],['Plum Mist','#d7c8d3'],
       ['Olive','#cbd0b8'],['Charcoal','#777b78'],['Night','#555b65'],['Cream','#eee9d9']
     ];
-    const PT_THEME_DEFAULT={color:'#d7ddc8',pattern:'stripe',lineColor:'#73806a',gapColor:'#e9e7d7',titlebarColor:'#08049b',frameColor:'#c0c0c0',blur:1,opacity:36,saved:[]};
+    const PT_THEME_DEFAULT={color:'#e9e5d9',pattern:'grid',lineColor:'#8b927d',gapColor:'#e9e5d9',titlebarColor:'#596553',frameColor:'#ddd9cf',navColor:'#eeeae1',blur:0,opacity:34,saved:[]};
     let ptThemeState={...PT_THEME_DEFAULT};
     const ptThemeEl=id=>document.getElementById(id);
     function ptThemeHex(value){const m=String(value||'').trim().match(/^#?([0-9a-f]{6})$/i);return m?'#'+m[1].toLowerCase():null;}
@@ -10074,6 +10330,131 @@ function pairLogRecordTemplateMarkup(type){
     }
     ptV53InitAfterFeatures();
 
+    // v54 repair: independent navigation-bar palette, correctly layered wallpaper,
+    // compact pair banner, D-day outside the pair title, and persistent version tabs.
+    const ptThemeApplyV53Base = ptThemeApply;
+    const ptThemeContrastV54 = (hex) => {
+      const raw=String(hex||'#000000').replace('#','');
+      const full=raw.length===3?raw.split('').map(ch=>ch+ch).join(''):raw;
+      const n=parseInt(full,16);if(!Number.isFinite(n))return '#ffffff';
+      const channels=[(n>>16)&255,(n>>8)&255,n&255].map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4;});
+      const lum=.2126*channels[0]+.7152*channels[1]+.0722*channels[2];return lum>.48?'#30312c':'#fffdf7';
+    };
+    function ptThemePatternV54(value){
+      const line=ptThemeHex(value.lineColor)||PT_THEME_DEFAULT.lineColor;
+      const gap=ptThemeHex(value.gapColor)||ptThemeHex(value.color)||PT_THEME_DEFAULT.color;
+      const opacity=Math.max(5,Math.min(100,Number(value.opacity)||34))/100;
+      const match=line.match(/^#([0-9a-f]{6})$/i);const n=parseInt(match?.[1]||'73806a',16);
+      const stroke=`rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${opacity.toFixed(2)})`;
+      if(value.pattern==='stripe')return `repeating-linear-gradient(90deg, ${stroke} 0 1px, transparent 1px 22px)`;
+      if(value.pattern==='grid')return `repeating-linear-gradient(0deg, ${stroke} 0 1px, transparent 1px 24px), repeating-linear-gradient(90deg, ${stroke} 0 1px, transparent 1px 24px)`;
+      if(value.pattern==='grain')return `repeating-linear-gradient(135deg, ${stroke} 0 1px, transparent 1px 10px)`;
+      if(value.pattern==='dots')return `radial-gradient(circle at 1px 1px, ${stroke} 1px, transparent 1.5px)`;
+      return 'none';
+    }
+    ptThemeApply = function(value){
+      const next={...PT_THEME_DEFAULT,...(value||{})};
+      if(typeof ptThemeApplyV53Base==='function')ptThemeApplyV53Base(next);
+      const wallpaper=ptThemeHex(next.color)||PT_THEME_DEFAULT.color;
+      const frame=ptThemeHex(next.frameColor)||PT_THEME_DEFAULT.frameColor;
+      const title=ptThemeHex(next.titlebarColor)||PT_THEME_DEFAULT.titlebarColor;
+      const nav=ptThemeHex(next.navColor)||PT_THEME_DEFAULT.navColor;
+      const pattern=ptThemePatternV54(next);
+      const size=next.pattern==='dots'?'14px 14px':'auto';
+      document.documentElement.style.setProperty('--pt-wallpaper-color',wallpaper);
+      document.documentElement.style.setProperty('--pt-wallpaper-gap',ptThemeHex(next.gapColor)||wallpaper);
+      document.documentElement.style.setProperty('--pt-window-frame-color',frame);
+      document.documentElement.style.setProperty('--pt-titlebar-color',title);
+      document.documentElement.style.setProperty('--pt-titlebar-text',ptThemeContrastV54(title));
+      document.documentElement.style.setProperty('--pt-nav-color',nav);
+      document.documentElement.style.setProperty('--pt-nav-text',ptThemeContrastV54(nav));
+      document.documentElement.style.setProperty('--pt-nav-active',title);
+      document.documentElement.style.setProperty('--pt-wallpaper-pattern',pattern);
+      document.documentElement.style.setProperty('--pt-window-pattern',pattern);
+      document.documentElement.style.setProperty('--pt-window-gap',ptThemeHex(next.gapColor)||wallpaper);
+      document.documentElement.style.setProperty('--pt-wallpaper-pattern-size',size);
+      document.documentElement.style.setProperty('--pt-wallpaper-blur',Math.max(0,Math.min(8,Number(next.blur)||0))+'px');
+      document.documentElement.style.setProperty('--pt-wallpaper-opacity',String(Math.max(5,Math.min(100,Number(next.opacity)||34))/100));
+      document.body.style.backgroundColor=wallpaper;
+      const navInput=ptThemeEl('ptThemeNavColor');if(navInput&&navInput.value.toLowerCase()!==nav.toLowerCase())navInput.value=nav;
+    };
+    const ptThemeFillV53Base=ptThemeFill;
+    ptThemeFill=function(){if(typeof ptThemeFillV53Base==='function')ptThemeFillV53Base();const input=ptThemeEl('ptThemeNavColor');if(input)input.value=ptThemeHex(ptThemeState.navColor)||PT_THEME_DEFAULT.navColor;};
+    const ptThemeNavInput=ptThemeEl('ptThemeNavColor');
+    if(ptThemeNavInput){
+      ptThemeNavInput.value=ptThemeHex(ptThemeState.navColor)||PT_THEME_DEFAULT.navColor;
+      ptThemeNavInput.addEventListener('input',event=>{ptThemeState.navColor=ptThemeHex(event.target.value)||PT_THEME_DEFAULT.navColor;ptThemeApply(ptThemeState);});
+    }
+    ptThemeEl('ptThemeSave')?.addEventListener('click',()=>{
+      ptThemeState.navColor=ptThemeHex(ptThemeEl('ptThemeNavColor')?.value)||PT_THEME_DEFAULT.navColor;
+      saveStorage('promptToolbox.desktopTheme',ptThemeState);ptThemeApply(ptThemeState);
+    });
+    ptThemeEl('ptThemeReset')?.addEventListener('click',()=>{ptThemeState.navColor=PT_THEME_DEFAULT.navColor;const input=ptThemeEl('ptThemeNavColor');if(input)input.value=PT_THEME_DEFAULT.navColor;ptThemeApply(ptThemeState);});
+    ptThemeApply(ptThemeState);
+
+    // Move D-day to its own restrained information line below the member portraits.
+    function pairMoveDdayV54(){
+      const members=document.getElementById('pairMembersView');const badge=document.getElementById('pairDdayBadge');if(!members||!badge)return;
+      let strip=document.getElementById('pairMilestoneStrip');
+      if(!strip){strip=document.createElement('div');strip.id='pairMilestoneStrip';strip.className='hidden';members.insertAdjacentElement('afterend',strip);}
+      if(badge.parentElement!==strip)strip.appendChild(badge);
+      strip.classList.toggle('hidden',badge.classList.contains('hidden'));
+    }
+    const pairRenderDetailV53Base=renderPairDetail;
+    renderPairDetail=function(){if(typeof pairRenderDetailV53Base==='function')pairRenderDetailV53Base();pairMoveDdayV54();};
+    pairMoveDdayV54();
+
+    // Version data survives detail re-renders; tab nodes are updated in place, never replaced.
+    const backupDetailVersionCacheV54=new Map();
+    function backupGetEntryVersions(entry){
+      if(!entry)return [];
+      const cached=backupDetailVersionCacheV54.get(String(entry.id));
+      const asList=value=>Array.isArray(value)?value:(value&&typeof value==='object'?Object.entries(value).map(([key,item])=>({...item,id:item?.id||key})):[]);
+      const raw=asList(entry.versions).length?asList(entry.versions):asList(entry.promptVersions).length?asList(entry.promptVersions):asList(entry.versionSets);
+      const normalize=list=>list.map((version,index)=>({
+        ...version,id:String(version.id||`version-${index}-${entry.id||'entry'}`),name:String(version.name||version.label||`버전 ${index+1}`),
+        prompts:Array.isArray(version.prompts)?version.prompts.map(item=>({label:String(item.label||''),text:String(item.text||'')})):(Array.isArray(version.blocks)?version.blocks.map(item=>({label:String(item.label||''),text:String(item.text||item.content||'')})):[]),
+        images:Array.isArray(version.images)?version.images:[]
+      }));
+      let versions=normalize(raw);
+      if(versions.length){
+        const legacy=Array.isArray(entry.prompts)?entry.prompts:[];
+        const signature=items=>JSON.stringify((items||[]).map(item=>[String(item.label||''),String(item.text||'')]));
+        if(legacy.some(item=>String(item.text||'').trim())&&!versions.some(version=>signature(version.prompts)===signature(legacy)))versions.push({id:`legacy-active-${entry.id}`,name:'기본 버전',prompts:legacy.map(item=>({label:String(item.label||''),text:String(item.text||'')})),images:Array.isArray(entry.images)?entry.images:[]});
+        if(cached&&cached.length>versions.length)versions=cached;
+        else backupDetailVersionCacheV54.set(String(entry.id),versions.map(version=>({...version,prompts:version.prompts.map(item=>({...item})),images:[...(version.images||[])]})));
+        return versions;
+      }
+      if(cached?.length)return cached;
+      const fallback=[{id:'legacy-default',name:'기본 버전',prompts:entry.prompts||[],images:entry.images||[]}];backupDetailVersionCacheV54.set(String(entry.id),fallback);return fallback;
+    }
+    function backupRenderDetailVersionTabs(entry){
+      const wrap=document.getElementById('backupDetailVersionTabs');if(!wrap||!entry)return null;
+      const versions=backupGetEntryVersions(entry);if(!versions.length)return null;
+      const entryKey=String(entry.id||'');
+      if(wrap.dataset.entryId!==entryKey){wrap.replaceChildren();wrap.dataset.entryId=entryKey;}
+      if(!backupDetailVersionId||!versions.some(version=>String(version.id)===String(backupDetailVersionId)))backupDetailVersionId=entry.activeVersionId&&versions.some(version=>String(version.id)===String(entry.activeVersionId))?String(entry.activeVersionId):String(versions[0].id);
+      wrap.classList.add('v54-version-tabs-rail');wrap.setAttribute('aria-label','저장된 프롬프트 버전');
+      const existing=new Map([...wrap.querySelectorAll('button[data-version-id]')].map(button=>[button.dataset.versionId,button]));
+      versions.forEach((version,index)=>{
+        const id=String(version.id);let button=existing.get(id);
+        if(!button){button=document.createElement('button');button.type='button';button.dataset.versionId=id;button.setAttribute('role','tab');}
+        button.textContent=version.name||`버전 ${index+1}`;
+        const active=id===String(backupDetailVersionId);button.classList.toggle('active',active);button.setAttribute('aria-selected',String(active));button.tabIndex=active?0:-1;
+        button.onclick=event=>{event.preventDefault();event.stopPropagation();if(String(backupDetailVersionId)===id)return;backupDetailVersionId=id;backupCurrentImageIndex=0;wrap.querySelectorAll('button[data-version-id]').forEach(node=>{const selected=node.dataset.versionId===id;node.classList.toggle('active',selected);node.setAttribute('aria-selected',String(selected));node.tabIndex=selected?0:-1;});renderBackupDetail();};
+        const current=wrap.children[index];if(current!==button)wrap.insertBefore(button,current||null);
+      });
+      const valid=new Set(versions.map(version=>String(version.id)));[...wrap.querySelectorAll('button[data-version-id]')].forEach(button=>{if(!valid.has(button.dataset.versionId))button.remove();});
+      return versions.find(version=>String(version.id)===String(backupDetailVersionId))||versions[0];
+    }
+    const openBackupEntryV53Base=openBackupEntry;
+    openBackupEntry=function(id){const entry=backupEntriesData.find(item=>item.id===id);backupDetailVersionCacheV54.delete(String(id));if(entry)backupGetEntryVersions(entry);return openBackupEntryV53Base(id);};
+    const saveBackupEntryV53Base=saveBackupEntry;
+    saveBackupEntry=async function(){const id=backupEditingId;await saveBackupEntryV53Base();if(id)backupDetailVersionCacheV54.delete(String(id));};
+    // No flash, slide, or scale animation when selecting a version.
+    document.getElementById('backupDetailVersionTabs')?.addEventListener('click',event=>{const tab=event.target.closest('button[data-version-id]');if(!tab)return;tab.style.animation='none';tab.style.transition='none';});
+
+
 } 
 </script>
 <script>
@@ -10171,6 +10552,7 @@ function pairLogRecordTemplateMarkup(type){
     <div class="pt-theme-row"><label for="ptThemeColor">CUSTOM COLOR <small>바탕색</small></label><input type="color" id="ptThemeColor" value="#d9d6c8"><input type="text" id="ptThemeHex" value="#D9D6C8" maxlength="7" aria-label="HEX 색상"></div>
     <div class="pt-theme-row"><label for="ptThemeTitlebarColor">WINDOW TITLE BAR <small>상단 창 포인트 색</small></label><input type="color" id="ptThemeTitlebarColor" value="#08049b"><input type="text" id="ptThemeTitlebarHex" value="#08049B" maxlength="7" aria-label="타이틀 바 HEX 색상"></div>
     <div class="pt-theme-row"><label for="ptThemeFrameColor">WINDOW FRAME <small>창 테두리 회색 바탕</small></label><input type="color" id="ptThemeFrameColor" value="#c0c0c0"><input type="text" id="ptThemeFrameHex" value="#C0C0C0" maxlength="7" aria-label="창 프레임 HEX 색상"></div>
+    <div class="pt-theme-row"><label for="ptThemeNavColor">NAVIGATION BAR <small>상단 메뉴 바탕</small></label><input type="color" id="ptThemeNavColor" value="#eeeae1"><span class="pt-theme-color-note">메뉴 배경색</span></div>
     <div class="pt-theme-accent-presets" id="ptThemeAccentPresets" aria-label="타이틀 바 기본 색상"><span>기본 포인트 색</span><button type="button" data-titlebar-color="#08049b" style="--swatch:#08049b">Classic Blue</button><button type="button" data-titlebar-color="#76596d" style="--swatch:#76596d">Vintage Wine</button><button type="button" data-titlebar-color="#596b53" style="--swatch:#596b53">Sage</button><button type="button" data-titlebar-color="#a45d63" style="--swatch:#a45d63">Dusty Rose</button><button type="button" data-titlebar-color="#4e596d" style="--swatch:#4e596d">Midnight</button><button type="button" data-titlebar-color="#8a7454" style="--swatch:#8a7454">Oat Brown</button><button type="button" data-titlebar-color="#766b91" style="--swatch:#766b91">Lavender</button><button type="button" data-titlebar-color="#357f87" style="--swatch:#357f87">Petrol</button></div>
     <div class="pt-theme-row"><label for="ptThemePattern">BACKGROUND PATTERN <small>배경 패턴</small></label><select id="ptThemePattern"><option value="solid">Solid · 단색</option><option value="stripe">Vertical Stripes · 세로 줄무늬</option><option value="grid">Fine Grid · 격자</option><option value="grain">Diagonal Grain · 대각선 결</option><option value="dots">Soft Dots · 점무늬</option></select></div>
     <div class="pt-theme-row"><label for="ptThemeLineColor">PATTERN LINE <small>패턴 선 색</small></label><input type="color" id="ptThemeLineColor" value="#68745f"><input type="text" id="ptThemeLineHex" value="#68745F" maxlength="7" aria-label="패턴 선 HEX 색상"></div>
