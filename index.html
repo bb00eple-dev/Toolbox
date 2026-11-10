@@ -2993,6 +2993,10 @@ body::before{
                 </div>
                 <div id="pairChatLogs" class="pair-chat-list"><div class="backup-empty">아직 저장된 대화 로그가 없습니다.</div></div>
               </section>
+              <section id="pairImageLogSection" class="pair-subarchive hidden">
+                <div class="pair-subarchive-heading"><div><small>03 / IMAGE LOG</small><h3>IMAGE LOG BACKUP</h3></div></div>
+                <div id="pairImageLogList" class="pair-image-log-list"></div>
+              </section>
             </article>
           </section>
 
@@ -3040,6 +3044,7 @@ body::before{
               <textarea class="backup-description" id="pairDescriptionInput" rows="3" placeholder="페어 소개나 관계 메모"></textarea>
               <label class="field-label" for="pairTagsInput">TAGS</label>
               <input class="backup-full" id="pairTagsInput" type="text" placeholder="태그를 쉼표로 구분">
+              <label class="pair-image-log-toggle"><input id="pairImageLogEnabled" type="checkbox"><span><strong>IMAGE LOG BACKUP</strong><small>이미지가 포함된 RP 로그를 별도 목록으로 모아보기</small></span></label>
               <div class="backup-form-actions"><button class="primary" id="pairSaveButton" type="button">SAVE PAIR</button></div>
             </div>
           </section>
@@ -7706,14 +7711,17 @@ function applyBackupTemplate(template) {
       const preview=document.getElementById('backupVersionImagePreview');if(!preview)return;clearBackupVersionPreviewUrls();preview.replaceChildren();
       backupDraftVersionImages.forEach((image,index)=>{
         const item=document.createElement('div');item.className='backup-image-thumb backup-version-image-thumb';
-        const img=document.createElement('img');img.alt=image.name||`버전 사진 ${index+1}`;img.src=backupImageSource(image,backupVersionPreviewUrls);ptApplyImageRatio(item,img,{...image,ratio:'original'});item.classList.add('ratio-original');
+        const img=document.createElement('img');img.alt=image.name||`버전 사진 ${index+1}`;img.src=backupImageSource(image,backupVersionPreviewUrls);ptApplyImageRatio(item,img,image);
         const actions=document.createElement('div');actions.className='backup-image-thumb-actions';
+        const ratio=document.createElement('select');ratio.className='backup-version-ratio';ratio.setAttribute('aria-label',`버전 사진 ${index+1} 비율`);
+        [['3/4','3:4'],['2/3','2:3'],['1/1','1:1'],['4/3','4:3'],['16/9','16:9'],['original','원본 비율']].forEach(([value,label])=>{const option=document.createElement('option');option.value=value;option.textContent=label;ratio.appendChild(option);});
+        ratio.value=getBackupImageRatio(image);ratio.addEventListener('change',()=>{image.ratio=ratio.value;ptApplyImageRatio(item,img,image);backupSyncActiveVersion();});
         const remove=document.createElement('button');remove.type='button';remove.textContent='×';remove.title='현재 버전에서 사진 제거';remove.addEventListener('click',()=>{backupDraftVersionImages.splice(index,1);backupSyncActiveVersion();backupRenderVersionImagePreview();});
-        actions.appendChild(remove);item.append(img,actions);preview.appendChild(item);
+        actions.append(ratio,remove);item.append(img,actions);preview.appendChild(item);
       });
     }
     function backupSnapshotDraftPrompts(){return backupDraftBlocks.map(block=>({label:String(block.label||'').trim(),text:String(block.text||'').trim()})).filter(block=>block.text);}
-    function backupSyncActiveVersion(){const active=backupDraftVersions.find(item=>item.id===backupActiveVersionId);if(active){active.prompts=backupSnapshotDraftPrompts();active.images=backupDraftVersionImages.map(image=>({name:image.name||'image',blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:'original'}));active.name=document.getElementById('backupVersionName')?.value.trim()||active.name||'기본 버전';}}
+    function backupSyncActiveVersion(){const active=backupDraftVersions.find(item=>item.id===backupActiveVersionId);if(active){active.prompts=backupSnapshotDraftPrompts();active.images=backupDraftVersionImages.map(image=>({name:image.name||'image',blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:getBackupImageRatio(image)}));active.name=document.getElementById('backupVersionName')?.value.trim()||active.name||'기본 버전';}}
     function backupRenderVersionTabs(){
       const wrap=document.getElementById('backupVersionTabs');if(!wrap)return;
       const existing=new Map([...wrap.querySelectorAll('button[data-version-id]')].map(button=>[button.dataset.versionId,button]));
@@ -7731,7 +7739,7 @@ function applyBackupTemplate(template) {
       const remove=document.getElementById('backupDeleteVersion');if(remove)remove.disabled=backupDraftVersions.length<=1;
       wrap.style.justifyContent='flex-start';wrap.classList.add('v54-version-tabs-rail');
     }
-    function backupSwitchVersion(id){backupSyncActiveVersion();const version=backupDraftVersions.find(item=>item.id===id);if(!version)return;backupActiveVersionId=id;backupDraftVersionImages=(version.images||[]).map(image=>({name:image.name,blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:'original'}));backupDraftBlocks=(version.prompts||[]).map(prompt=>makeBackupBlock(prompt.label,prompt.text));if(!backupDraftBlocks.length)backupDraftBlocks=[makeBackupBlock('Prompt 1')];backupRenderVersionTabs();backupRenderVersionImagePreview();renderBackupDraftBlocks();}
+    function backupSwitchVersion(id){backupSyncActiveVersion();const version=backupDraftVersions.find(item=>item.id===id);if(!version)return;backupActiveVersionId=id;backupDraftVersionImages=(version.images||[]).map(image=>({name:image.name,blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:getBackupImageRatio(image)}));backupDraftBlocks=(version.prompts||[]).map(prompt=>makeBackupBlock(prompt.label,prompt.text));if(!backupDraftBlocks.length)backupDraftBlocks=[makeBackupBlock('Prompt 1')];backupRenderVersionTabs();backupRenderVersionImagePreview();renderBackupDraftBlocks();}
     function backupAddVersion(){backupSyncActiveVersion();const version={id:`ver-${Date.now()}-${Math.random().toString(36).slice(2,6)}`,name:`버전 ${backupDraftVersions.length+1}`,prompts:[],images:[]};backupDraftVersions.push(version);backupSwitchVersion(version.id);document.getElementById('backupVersionName')?.focus();}
     function backupDeleteActiveVersion(){if(backupDraftVersions.length<=1){setStatus('버전은 최소 1개가 필요합니다.');return;}const active=backupDraftVersions.find(item=>item.id===backupActiveVersionId);if(!active)return;if(!confirm(`“${active.name}” 버전을 삭제할까요? 이 버전의 프롬프트와 사진이 함께 삭제됩니다.`))return;backupDraftVersions=backupDraftVersions.filter(item=>item.id!==active.id);backupActiveVersionId=backupDraftVersions[0].id;backupSwitchVersion(backupActiveVersionId);setStatus('선택한 프롬프트 버전과 사진을 삭제했습니다.');}
     function backupInitDraftVersions(entry=null){
@@ -7742,7 +7750,7 @@ function applyBackupTemplate(template) {
       const active=backupDraftVersions.find(x=>x.id===backupActiveVersionId);backupDraftVersionImages=(active.images||[]).map(image=>({name:image.name,blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:'original'}));backupDraftBlocks=(active.prompts||[]).map(x=>makeBackupBlock(x.label,x.text));if(!backupDraftBlocks.length)backupDraftBlocks=[makeBackupBlock('Prompt 1')];
       backupRenderVersionTabs();backupRenderVersionImagePreview();
     }
-    function backupSnapshotAllVersions(){backupSyncActiveVersion();return backupDraftVersions.map((version,index)=>({id:version.id,name:version.name||`버전 ${index+1}`,prompts:(version.prompts||[]).map(x=>({label:x.label,text:x.text})).filter(x=>x.text),images:(version.images||[]).map(image=>({name:image.name||'image',blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:'original'}))}));}
+    function backupSnapshotAllVersions(){backupSyncActiveVersion();return backupDraftVersions.map((version,index)=>({id:version.id,name:version.name||`버전 ${index+1}`,prompts:(version.prompts||[]).map(x=>({label:x.label,text:x.text})).filter(x=>x.text),images:(version.images||[]).map(image=>({name:image.name||'image',blob:image.blob,dataUrl:image.dataUrl,crop:getBackupImageCrop(image),ratio:getBackupImageRatio(image)}))}));}
 
     function renderBackupDraftBlocks() {
       const container = document.getElementById('backupDraftBlocks');
@@ -8682,7 +8690,7 @@ function applyBackupTemplate(template) {
       document.getElementById('pairAImageInput').value='';
       document.getElementById('pairBImageInput').value='';
       document.getElementById('pairBannerFile').value='';
-      document.getElementById('pairDdayLabel').value='';document.getElementById('pairDdayDate').value='';
+      document.getElementById('pairDdayLabel').value='';document.getElementById('pairDdayDate').value='';document.getElementById('pairImageLogEnabled').checked=false;
       document.getElementById('pairBannerMode').value='gradient';document.getElementById('pairBannerOpacity').value='35';document.getElementById('pairBannerOpacityOut').textContent='35%';
       document.getElementById('pairComposeHeading').textContent='NEW PAIR';
       document.getElementById('pairSaveButton').textContent='SAVE PAIR';
@@ -8704,7 +8712,7 @@ function applyBackupTemplate(template) {
       document.getElementById('pairBannerOpacity').value=String(pair.banner?.opacity??35);
       document.getElementById('pairBannerOpacityOut').textContent=`${pair.banner?.opacity??35}%`;
       document.getElementById('pairDdayLabel').value=pair.dday?.label||'';
-      document.getElementById('pairDdayDate').value=pair.dday?.date||'';
+      document.getElementById('pairDdayDate').value=pair.dday?.date||'';document.getElementById('pairImageLogEnabled').checked=!!pair.imageLogEnabled;
       document.getElementById('pairAImageInput').value='';document.getElementById('pairBImageInput').value='';
       document.getElementById('pairComposeHeading').textContent='EDIT PAIR';document.getElementById('pairSaveButton').textContent='SAVE CHANGES';
       pairRenderBannerPreviewV53();setPairDraftPhotoPreview(0);setPairDraftPhotoPreview(1);openPairView('compose');
@@ -8719,7 +8727,7 @@ function applyBackupTemplate(template) {
       const dday=ddayDate?{label:document.getElementById('pairDdayLabel').value.trim()||'D-DAY',date:ddayDate}:null;
       const record={id:pairEditingId||makePairId(),kind:'pair',title:document.getElementById('pairNameInput').value.trim()||`${nameA} × ${nameB}`,
         members:[{name:nameA,photo:pairDraftImages[0]?{...pairDraftImages[0],crop:getBackupImageCrop(pairDraftImages[0]),ratio:'3/4'}:null},{name:nameB,photo:pairDraftImages[1]?{...pairDraftImages[1],crop:getBackupImageCrop(pairDraftImages[1]),ratio:'3/4'}:null}],
-        description:document.getElementById('pairDescriptionInput').value.trim(),tags:document.getElementById('pairTagsInput').value.split(/[，,\n]/).map(v=>v.trim().replace(/^#/,'')).filter(Boolean),banner,dday,
+        description:document.getElementById('pairDescriptionInput').value.trim(),tags:document.getElementById('pairTagsInput').value.split(/[，,\n]/).map(v=>v.trim().replace(/^#/,'')).filter(Boolean),banner,dday,imageLogEnabled:!!document.getElementById('pairImageLogEnabled').checked,
         createdAt:existing?.createdAt||now,updatedAt:now};
       try{await saveRoomRecord(record);currentPairId=record.id;renderPairCards();renderPairDetail();openPairView('detail');setStatus('페어를 저장했습니다.');}
       catch(error){setStatus(`페어 저장 실패: ${error.message||'다시 시도해주세요.'}`);}
@@ -8746,7 +8754,7 @@ function applyBackupTemplate(template) {
         card.append(label,frame,name);members.appendChild(card);
         if(index===0){const join=document.createElement('div');join.className='pair-link-mark';join.textContent='♡';members.appendChild(join);}
       });
-      renderPairPhotos(); renderPairChatLogs();
+      renderPairPhotos(); renderPairChatLogs(); renderPairImageLogs();
     }
 
     function openPairPhotoComposer() {
@@ -10138,7 +10146,7 @@ function pairLogRecordTemplateMarkup(type){
       document.getElementById('backupImages').addEventListener('change', event => {
         const files = Array.from(event.target.files || []).filter(file => file.type.startsWith('image/'));
         const startIndex = backupDraftImages.length;
-        files.forEach(file => backupDraftImages.push({ name: file.name, blob: file, crop: { x: 50, y: 50, zoom: 1 } }));
+        files.forEach(file => backupDraftImages.push({ name: file.name, blob: file, crop: { x: 50, y: 50, zoom: 1 }, ratio: document.getElementById('backupPhotoRatio')?.value || '3/4' }));
         renderBackupImagePreview();
         if (files.length) {
           backupCropQueue = files.map((file, index) => startIndex + index);
@@ -10150,7 +10158,7 @@ function pairLogRecordTemplateMarkup(type){
       });
       document.getElementById('backupVersionImages')?.addEventListener('change',event=>{
         const files=Array.from(event.target.files||[]).filter(file=>file.type.startsWith('image/'));
-        files.forEach(file=>backupDraftVersionImages.push({name:file.name,blob:file,crop:{x:50,y:50,zoom:1},ratio:'original'}));
+        files.forEach(file=>backupDraftVersionImages.push({name:file.name,blob:file,crop:{x:50,y:50,zoom:1},ratio:getBackupImageRatio({ratio:document.getElementById('backupPhotoRatio')?.value||'original'})}));
         backupSyncActiveVersion();backupRenderVersionImagePreview();if(files.length)setStatus(`${files.length}장의 사진을 현재 버전에 추가했습니다.`);event.target.value='';
       });
 
@@ -10808,6 +10816,56 @@ function pairLogRecordTemplateMarkup(type){
     };
 
 
+
+    // v57: the first saved version is the stable default whenever a post is opened.
+    // Version selection is transient UI state; activeVersionId remains an editing pointer only.
+    backupRenderDetailVersionTabs = function(entry){
+      const wrap=document.getElementById('backupDetailVersionTabs');
+      if(!wrap||!entry)return null;
+      const versions=backupGetEntryVersions(entry);
+      if(!versions.length)return null;
+      const entryKey=String(entry.id||'');
+      if(wrap.dataset.entryId!==entryKey){wrap.replaceChildren();wrap.dataset.entryId=entryKey;backupDetailVersionId=String(versions[0].id);}
+      if(!backupDetailVersionId||!versions.some(v=>String(v.id)===String(backupDetailVersionId)))backupDetailVersionId=String(versions[0].id);
+      wrap.classList.add('v57-version-tabs-rail');wrap.setAttribute('role','tablist');
+      const existing=new Map([...wrap.querySelectorAll('button[data-version-id]')].map(b=>[String(b.dataset.versionId),b]));
+      const ordered=[];
+      versions.forEach((version,index)=>{
+        const id=String(version.id);let button=existing.get(id);
+        if(!button){button=document.createElement('button');button.type='button';button.dataset.versionId=id;button.setAttribute('role','tab');}
+        button.textContent=version.name||`버전 ${index+1}`;
+        const active=id===String(backupDetailVersionId);button.classList.toggle('active',active);button.setAttribute('aria-selected',String(active));button.tabIndex=active?0:-1;
+        button.onclick=event=>{event.preventDefault();event.stopPropagation();if(String(backupDetailVersionId)===id)return;backupDetailVersionId=id;backupCurrentImageIndex=0;wrap.querySelectorAll('button[data-version-id]').forEach(node=>{const selected=String(node.dataset.versionId)===id;node.classList.toggle('active',selected);node.setAttribute('aria-selected',String(selected));node.tabIndex=selected?0:-1;});renderBackupDetail();};
+        ordered.push(button);
+      });
+      ordered.forEach((button,index)=>{const current=wrap.children[index];if(current!==button)wrap.insertBefore(button,current||null);});
+      const keep=new Set(ordered);[...wrap.querySelectorAll('button[data-version-id]')].forEach(b=>{if(!keep.has(b))b.remove();});
+      wrap.style.display='flex';
+      return versions.find(v=>String(v.id)===String(backupDetailVersionId))||versions[0];
+    };
+
+    // Pair image-log backup is an optional, per-pair view of RP logs containing images.
+    function renderPairImageLogs(){
+      const section=document.getElementById('pairImageLogSection'),wrap=document.getElementById('pairImageLogList');
+      const pair=pairRecords().find(item=>item.id===currentPairId);
+      if(!section||!wrap||!pair)return;
+      section.classList.toggle('hidden',!pair.imageLogEnabled);
+      wrap.replaceChildren();if(!pair.imageLogEnabled)return;
+      const logs=pairLogRecords(currentPairId).filter(log=>!log.secret&&/<img\b/i.test(log.contentHtml||''));
+      if(!logs.length){const empty=document.createElement('div');empty.className='backup-empty';empty.textContent='이미지가 포함된 로그가 아직 없습니다.';wrap.appendChild(empty);return;}
+      logs.forEach(log=>{
+        const card=document.createElement('button');card.type='button';card.className='pair-image-log-card';
+        const source=document.createElement('div');source.className='pair-image-log-cover';
+        const holder=document.createElement('div');holder.innerHTML=sanitizePairLogHtml(log.contentHtml||'');
+        const image=holder.querySelector('img');
+        if(image){const thumb=document.createElement('img');thumb.src=image.getAttribute('src')||'';thumb.alt='';source.appendChild(thumb);}else source.textContent='IMAGE LOG';
+        const copy=document.createElement('span');copy.className='pair-image-log-copy';
+        const title=document.createElement('strong');title.textContent=log.title||'제목 없는 로그';
+        const date=document.createElement('small');date.textContent=log.date||'';
+        copy.append(title,date);card.append(source,copy);card.addEventListener('click',()=>pairLogReaderOpen(log,log));wrap.appendChild(card);
+      });
+    }
+
 } 
 </script>
 <script>
@@ -10946,6 +11004,52 @@ function pairLogRecordTemplateMarkup(type){
   <footer><button type="button" id="pairStatusPreviewButton">미리보기</button><span></span><button type="button" id="pairStatusInsert">본문에 삽입</button></footer>
  </section>
 </div>
+
+
+<style id="pt-v57-visual-repair">
+/* Restore the v52 home canvas: wallpaper stays outside the application window. */
+#toolboxWindow main{background:var(--pt-window-gap,#f1eee5)!important;background-image:none!important}
+#toolboxWindow #homePanel{background:var(--pt-window-gap,#f1eee5)!important;padding:10px 8px!important}
+#toolboxWindow #homePanel .start-page{background:#fffdfb!important;border:1px solid #cfbbc5!important;box-shadow:3px 3px 0 rgba(115,82,101,.12)!important}
+/* Pair detail returns to the compact framed two-column composition from v52. */
+#pairDetailView .pair-detail-card{max-width:780px!important;margin:0 auto!important;padding:11px!important;border:1px solid #cfbbc5!important;background:#fffdfb!important;box-shadow:none!important}
+#pairDetailView .pair-detail-heading{position:relative!important;isolation:isolate!important;display:block!important;min-height:0!important;margin:0 0 14px!important;padding:13px 12px 12px!important;overflow:hidden!important;text-align:center!important;border:1px dotted #d3bac6!important;background:linear-gradient(135deg,#f8eaf0,#f2e2e9)!important}
+#pairDetailView .pair-detail-heading::after{display:none!important}
+#pairDetailView .pair-detail-heading .pair-detail-kicker{margin:0 0 5px!important;color:#987b8b!important;font:700 9px Tahoma,Arial,sans-serif!important;letter-spacing:1.4px!important}
+#pairDetailView .pair-detail-heading h2{max-width:none!important;margin:4px 0!important;color:#604c59!important;font:500 23px/1.25 Georgia,'Noto Serif KR',serif!important;letter-spacing:0!important;text-align:center!important}
+#pairDetailView .pair-detail-heading p{max-width:620px!important;margin:5px auto!important;color:#786672!important;font:11px/1.55 'Malgun Gothic',Tahoma,sans-serif!important;text-align:center!important}
+#pairDetailView .pair-detail-heading .photo-archive-tags{justify-content:center!important;margin-top:7px!important;opacity:1!important}
+#pairDetailView .pair-detail-heading .pair-detail-banner-image{top:0!important;right:0!important;left:auto!important;width:42%!important;height:100%!important;object-fit:cover!important;opacity:var(--pair-banner-opacity,.28)!important}
+#pairDetailView .pair-detail-heading .pair-detail-banner-image.is-gradient{-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 100%)!important;mask-image:linear-gradient(90deg,transparent 0%,#000 100%)!important}
+#pairDetailView .pair-detail-heading .pair-detail-banner-image.is-full{left:0!important;right:0!important;width:100%!important;opacity:var(--pair-banner-opacity,.28)!important;-webkit-mask-image:none!important;mask-image:none!important}
+#pairDetailView .pair-members-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;align-items:start!important;max-width:680px!important;margin:0 auto 16px!important;padding:0!important;border:0!important;background:transparent!important}
+#pairDetailView .pair-member-card{display:flex!important;flex-direction:column!important;align-items:center!important;min-width:0!important;padding:8px!important;border:1px solid #d8c4ce!important;background:#fff!important;text-align:center!important;box-shadow:1px 2px 0 rgba(80,50,65,.08)!important}
+#pairDetailView .pair-member-label{margin:0 0 7px!important;color:#a18a97!important;font:700 8px Tahoma,Arial,sans-serif!important;letter-spacing:1.2px!important}
+#pairDetailView .pair-member-photo{width:min(100%,240px)!important;max-width:240px!important;aspect-ratio:3/4!important;height:auto!important;max-height:none!important;margin:0 auto!important;overflow:hidden!important;border:4px solid #fff!important;outline:1px solid #d4bfca!important;background:#ece1e6!important;box-shadow:0 2px 5px rgba(80,50,65,.10)!important}
+#pairDetailView .pair-member-photo img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important}
+#pairDetailView .pair-member-name{margin:8px 0 1px!important;padding:0!important;color:#624a5a!important;font:600 13px Georgia,'Noto Serif KR',serif!important}
+#pairDetailView .pair-link-mark{display:none!important}
+#pairMilestoneStrip{max-width:680px!important;margin:0 auto 17px!important;padding:9px 10px!important;border-top:1px solid #e3d6dc!important;border-bottom:1px solid #e3d6dc!important;background:#fff9fb!important}
+#pairMilestoneStrip .pair-dday-badge{display:flex!important;justify-content:space-between!important;width:100%!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important}
+#pairMilestoneStrip .pair-dday-badge span{font:9px Tahoma,'Malgun Gothic',sans-serif!important;color:#927b89!important;letter-spacing:.08em!important}
+#pairMilestoneStrip .pair-dday-badge strong{font:italic 19px Georgia,serif!important;color:#76596d!important}
+.pair-image-log-toggle{display:flex!important;align-items:center!important;gap:9px!important;margin:12px 0!important;padding:10px 12px!important;border:1px solid #d8c4ce!important;background:#fffafc!important;color:#76596d!important;cursor:pointer!important}
+.pair-image-log-toggle input{width:16px!important;height:16px!important;accent-color:#76596d!important}
+.pair-image-log-toggle span{display:grid!important;gap:3px!important}
+.pair-image-log-toggle strong{font:700 10px Tahoma,Arial,sans-serif!important;letter-spacing:.8px!important}
+.pair-image-log-toggle small{color:#9b8792!important;font-size:9px!important}
+.pair-image-log-list{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(150px,1fr))!important;gap:9px!important}
+.pair-image-log-card{display:flex!important;flex-direction:column!important;gap:7px!important;min-width:0!important;padding:7px!important;border:1px solid #d8c4ce!important;background:#fff!important;color:#624a5a!important;text-align:left!important;box-shadow:none!important}
+.pair-image-log-cover{display:grid!important;place-items:center!important;width:100%!important;aspect-ratio:4/3!important;overflow:hidden!important;background:#f2eaf0!important;color:#a18a97!important}
+.pair-image-log-cover img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important}
+.pair-image-log-copy{display:grid!important;gap:3px!important}
+.pair-image-log-copy strong{font:600 11px/1.4 Georgia,'Malgun Gothic',serif!important;overflow-wrap:anywhere!important}
+.pair-image-log-copy small{color:#9b8792!important;font:9px Tahoma,Arial,sans-serif!important}
+#backupVersionImagePreview .backup-version-ratio{width:100%!important;min-width:0!important;margin-top:4px!important;padding:3px!important;border:1px solid var(--bp-line)!important;background:#fff!important;color:var(--bp-ink)!important;font-size:9px!important}
+#backupDetailVersionTabs.v57-version-tabs-rail{display:flex!important;flex-wrap:nowrap!important;justify-content:flex-start!important;gap:6px!important;overflow-x:auto!important;white-space:nowrap!important}
+#backupDetailVersionTabs.v57-version-tabs-rail button{flex:0 0 auto!important;visibility:visible!important;opacity:1!important;position:static!important;animation:none!important;transition:none!important;transform:none!important}
+@media(max-width:600px){#pairDetailView .pair-members-grid{gap:7px!important}#pairDetailView .pair-member-card{padding:5px!important}#pairDetailView .pair-member-photo{border-width:3px!important}#pairDetailView .pair-member-name{font-size:11px!important}.pair-image-log-list{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+</style>
 
 </body>
 </html>
