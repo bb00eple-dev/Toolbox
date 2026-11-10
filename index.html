@@ -11,7 +11,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" sizes="192x192" href="./p-toolbox-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="./p-toolbox-192.png">
-  <title>P. Toolbox v52 · Reader & Prompt Expansion</title>
+  <title>P. Toolbox v53 · Minimal Pretty</title>
   <style>
     :root {
       color-scheme: light;
@@ -1849,6 +1849,152 @@ body::before{z-index:0!important;inset:0!important;background-color:var(--pt-wal
 .pair-log-reader-window[data-skin="midnight"] .pair-log-reader-content{background:#171d2c;border:1px solid #48536c;color:#e8e5dc;line-height:1.9}
 .pair-log-reader-window[data-skin="midnight"] .pair-log-reader-meta span{background:#2b3449;border-color:#59627a;color:#e3cda9}
 @media(max-width:600px){.pair-log-reader-heading{min-width:0;flex:1}.pair-reader-skin-picker{align-items:flex-start;flex-direction:column}.pair-log-reader-window[data-skin="letter"] .pair-log-reader-content{padding:15px}.pair-chat-card-head{align-items:flex-start;flex-direction:column;gap:3px}}
+
+/* v53 · minimal editorial reader, balanced controls, complete theme layers and pair banner */
+body{background:var(--pt-wallpaper-color,var(--desktop))!important}
+body::before{content:"";position:fixed;inset:-18px;z-index:0;pointer-events:none;background-color:transparent!important;background-image:var(--pt-wallpaper-pattern,none)!important;background-size:var(--pt-wallpaper-pattern-size,auto)!important;background-repeat:repeat!important;opacity:var(--pt-wallpaper-opacity,.36)!important;filter:blur(var(--pt-wallpaper-blur,0px))!important}
+#roomGate,#toolboxWindow{position:relative;z-index:1}
+#toolboxWindow.window{background:var(--pt-window-frame-color,var(--surface))!important}
+#toolboxWindow .titlebar{background:var(--pt-titlebar-color,var(--navy))!important}
+.category-controls .reroll-button,.category-controls .add-category-select{flex:0 0 23px!important;width:23px!important;min-width:23px!important;height:23px!important;min-height:23px!important;padding:0!important;border:1px solid #d7d0c8!important;background:#f8f6f1!important;color:#8b8176!important;font-size:12px!important;font-weight:400!important;line-height:1!important;display:grid!important;place-items:center!important;box-shadow:none!important}
+.category-controls .reroll-button:hover,.category-controls .add-category-select:hover{border-color:#a9a090!important;background:#fffdf8!important;color:#5b6350!important}
+.category-controls .category-select{flex:1 1 auto;min-width:0}
+.category-extra-row .remove-category-select{flex:0 0 23px;width:23px;height:23px;min-height:23px;padding:0;border:1px solid #d7d0c8;background:#f8f6f1;color:#8b8176;font-size:12px;box-shadow:none}
+.category-extra-selects{min-width:0}
+
+/* Reader: a reading page, not a dialog card. */
+.pair-log-reader-overlay{position:fixed!important;inset:0!important;z-index:12000!important;display:block!important;padding:0!important;overflow:hidden!important;background:var(--reader-bg,#f7f5ef)!important;color:var(--reader-text,#34372f)!important;backdrop-filter:none!important}
+.pair-log-reader-overlay.hidden{display:none!important}
+.pair-log-reader-window{--reader-bg:#f7f5ef;--reader-text:#34372f;--reader-accent:#68735c;position:absolute!important;inset:0!important;display:flex!important;flex-direction:column!important;width:100%!important;height:100%!important;max-height:none!important;max-width:none!important;margin:0!important;padding:0!important;overflow-y:auto!important;overflow-x:hidden!important;border:0!important;border-radius:0!important;background:var(--reader-bg)!important;color:var(--reader-text)!important;box-shadow:none!important}
+.pair-log-reader-header{position:sticky!important;top:0!important;z-index:5!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:20px!important;min-height:58px!important;margin:0!important;padding:12px clamp(18px,5vw,72px)!important;border:0!important;border-bottom:1px solid color-mix(in srgb,var(--reader-accent) 24%,transparent)!important;background:color-mix(in srgb,var(--reader-bg) 94%,transparent)!important;backdrop-filter:blur(12px)!important}
+.pair-log-reader-masthead{display:flex;align-items:center;gap:20px;min-width:0;color:var(--reader-accent)}
+.pair-log-reader-masthead small{font:700 9px/1.2 Tahoma,Arial,sans-serif;letter-spacing:1.8px;color:var(--reader-accent)}
+.pair-log-reader-masthead small span{opacity:.5}
+.pair-log-reader-edition{font:9px/1 Tahoma,Arial,sans-serif;letter-spacing:1.1px;opacity:.64}
+.pair-log-reader-tools{display:flex;align-items:center;gap:9px}
+.pair-log-reader-tools button{min-width:32px;min-height:25px;padding:4px 7px;border:0;background:transparent;color:var(--reader-accent);font:700 9px Tahoma,Arial,sans-serif;letter-spacing:.7px}
+.pair-log-reader-tools button:hover{background:color-mix(in srgb,var(--reader-accent) 9%,transparent)}
+.pair-log-reader-tools #pairLogReaderClose{width:28px;height:28px;min-width:28px;min-height:28px;padding:0;background:transparent!important;border:0!important;color:var(--reader-text)!important;font:300 28px/1 Arial,sans-serif!important}
+.pair-log-reader-inner{width:min(100%,1060px);margin:0 auto;padding:clamp(34px,7vh,82px) clamp(22px,7vw,94px) 44px}
+.pair-log-reader-meta{display:flex;flex-wrap:wrap;gap:6px 13px;margin:0 0 12px;color:var(--reader-accent);font:9px/1.5 Tahoma,Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;opacity:.78}
+.pair-log-reader-meta span{padding:0!important;border:0!important;background:transparent!important}
+.pair-log-reader-meta span+span:before{content:'·';margin-right:13px;opacity:.45}
+.pair-log-reader-title-row{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:0 0 17px;border-bottom:1px solid color-mix(in srgb,var(--reader-accent) 30%,transparent)}
+.pair-log-reader-title-row h2{max-width:100%;margin:0!important;color:var(--reader-text)!important;font:500 clamp(30px,5vw,54px)/1.12 Georgia,'Noto Serif KR',serif!important;letter-spacing:-.035em;overflow-wrap:anywhere}
+.pair-log-reader-date{color:var(--reader-accent)!important;font:10px/1.4 Tahoma,Arial,sans-serif!important;letter-spacing:.08em}
+.pair-log-reader-tags{display:flex;flex-wrap:wrap;gap:4px 9px;margin:10px 0 0;color:var(--reader-accent);font:8px/1.4 Tahoma,Arial,sans-serif;opacity:.68}
+.pair-log-reader-tags span{padding:0;border:0;background:transparent}
+.pair-log-reader-content{min-height:0!important;margin:clamp(24px,4vh,42px) 0 0!important;padding:0!important;border:0!important;background:transparent!important;color:var(--reader-text)!important;font:15px/2.05 Georgia,'Noto Serif KR',serif;overflow-wrap:anywhere}
+.pair-log-reader-content p{margin:.45em 0 1em;line-height:inherit}
+.pair-log-reader-content h1,.pair-log-reader-content h2,.pair-log-reader-content h3{color:var(--reader-accent);font-family:Georgia,'Noto Serif KR',serif;line-height:1.35}
+.pair-log-reader-content blockquote{margin:1.2em 0;padding:.15em 0 .15em 1.2em;border:0;border-left:2px solid var(--reader-accent);background:transparent;opacity:.88}
+.pair-log-reader-content img{display:block;max-width:100%;height:auto;margin:1.4em auto;object-fit:contain}
+.pair-log-reader-content table{border-collapse:collapse;max-width:100%;font-size:.9em}
+.pair-log-reader-content th,.pair-log-reader-content td{border:1px solid color-mix(in srgb,var(--reader-accent) 25%,transparent);padding:7px 9px;text-align:left}
+.pair-log-reader-content th{background:color-mix(in srgb,var(--reader-accent) 8%,transparent)}
+.pair-log-reader-footer{display:flex;justify-content:space-between;gap:12px;margin-top:clamp(40px,7vh,76px);padding-top:11px;border-top:1px solid color-mix(in srgb,var(--reader-accent) 28%,transparent);color:var(--reader-accent);font:8px Tahoma,Arial,sans-serif;letter-spacing:1.4px;opacity:.75}
+/* Fresh, restrained visual identities. */
+.pair-log-reader-window[data-skin="editorial"] .pair-log-reader-inner{background:transparent}
+.pair-log-reader-window[data-skin="diner"] .pair-log-reader-header{border-bottom:2px solid var(--reader-accent)!important}
+.pair-log-reader-window[data-skin="diner"] .pair-log-reader-masthead small:before{content:'✦ ';}
+.pair-log-reader-window[data-skin="diner"] .pair-log-reader-title-row h2{font-weight:700!important;letter-spacing:.015em!important;text-transform:uppercase}
+.pair-log-reader-window[data-skin="diner"] .pair-log-reader-content{font-family:Arial,'Malgun Gothic',sans-serif;line-height:1.9}
+.pair-log-reader-window[data-skin="letter"] .pair-log-reader-inner{position:relative;background-image:linear-gradient(90deg,transparent 0 35px,color-mix(in srgb,var(--reader-accent) 14%,transparent) 35px 36px,transparent 36px)}
+.pair-log-reader-window[data-skin="letter"] .pair-log-reader-title-row h2{font-weight:400!important;font-style:italic}
+.pair-log-reader-window[data-skin="letter"] .pair-log-reader-content{font-family:Georgia,'Noto Serif KR',serif;line-height:2.18}
+.pair-log-reader-window[data-skin="windows"] .pair-log-reader-header{border-bottom:1px solid var(--reader-accent)!important}
+.pair-log-reader-window[data-skin="windows"] .pair-log-reader-masthead small{font-family:Tahoma,Arial,sans-serif}
+.pair-log-reader-window[data-skin="windows"] .pair-log-reader-title-row h2{font-family:Tahoma,Arial,sans-serif!important;font-weight:600!important;letter-spacing:-.03em!important}
+.pair-log-reader-window[data-skin="windows"] .pair-log-reader-content{font-family:Tahoma,Arial,sans-serif;line-height:1.9}
+.pair-log-reader-window[data-skin="midnight"] .pair-log-reader-header{background:rgba(20,27,38,.88)!important;border-color:#ffffff24!important}
+.pair-log-reader-window[data-skin="midnight"] .pair-log-reader-content blockquote{border-color:var(--reader-accent)}
+.pair-log-reader-window[data-skin="botanical"] .pair-log-reader-inner{background-image:linear-gradient(90deg,transparent 0 100%)}
+.pair-log-reader-window[data-skin="botanical"] .pair-log-reader-masthead small:before{content:'❧ ';}
+.pair-log-reader-window[data-skin="botanical"] .pair-log-reader-title-row h2{font-style:italic;font-weight:400!important}
+@media(max-width:650px){.pair-log-reader-header{min-height:50px!important;padding:9px 14px!important}.pair-log-reader-masthead{gap:8px;flex-direction:column;align-items:flex-start}.pair-log-reader-masthead small{font-size:8px!important}.pair-log-reader-inner{padding:34px 20px 30px}.pair-log-reader-title-row h2{font-size:34px!important}.pair-log-reader-content{font-size:14px;line-height:1.95}.pair-log-reader-tools{gap:2px}.pair-log-reader-tools button{padding:4px 5px}}
+/* Editorial skins: full-bleed pages with typography, not nested paper cards. */
+.pair-log-reader-inner{width:100%!important;max-width:none!important;margin:0!important;padding:clamp(30px,6vh,76px) clamp(22px,7.5vw,112px) 52px!important}
+.pair-log-reader-meta,.pair-log-reader-tags{max-width:1280px;margin-left:auto!important;margin-right:auto!important}
+.pair-log-reader-title-row,.pair-log-reader-content,.pair-log-reader-footer{max-width:1280px;margin-left:auto!important;margin-right:auto!important;width:100%}
+.pair-log-reader-tags{order:-1;margin-top:0!important;margin-bottom:13px!important;font-size:7px!important;letter-spacing:.06em;gap:3px 8px;opacity:.52}
+.pair-log-reader-meta{margin-bottom:7px!important;font-size:8px!important;letter-spacing:.12em}
+.pair-log-reader-title-row{gap:7px!important;padding-bottom:21px!important}
+.pair-log-reader-title-row h2{font-size:clamp(34px,5.4vw,62px)!important;letter-spacing:-.045em!important}
+.pair-log-reader-date{font-size:9px!important;opacity:.68}
+.pair-log-reader-content{max-width:1180px;font-size:15px;line-height:2.05}
+.pair-log-reader-footer{max-width:1180px}
+.pair-log-reader-window[data-skin="editorial"] .pair-log-reader-masthead:after{content:'✳';margin-left:4px;font:16px Georgia,serif;color:var(--reader-accent);opacity:.65}
+.pair-log-reader-window[data-skin="editorial"] .pair-log-reader-title-row{border-bottom:1px solid color-mix(in srgb,var(--reader-accent) 26%,transparent)}
+.pair-log-reader-window[data-skin="diner"] .pair-log-reader-header{border-bottom:3px double var(--reader-accent)!important}
+.pair-log-reader-window[data-skin="diner"] .pair-log-reader-masthead:after{content:'DINER JOURNAL';margin-left:12px;font:8px Tahoma,Arial,sans-serif;letter-spacing:1.3px;opacity:.55}
+.pair-log-reader-window[data-skin="diner"] .pair-log-reader-title-row h2{font-family:Georgia,'Noto Serif KR',serif!important;font-weight:700!important;letter-spacing:.005em!important;text-transform:none!important}
+.pair-log-reader-window[data-skin="diner"] .pair-log-reader-title-row{border-bottom:3px double var(--reader-accent)}
+.pair-log-reader-window[data-skin="diner"] .pair-log-reader-content{font-family:Arial,'Malgun Gothic',sans-serif;line-height:1.95}
+.pair-log-reader-window[data-skin="letter"] .pair-log-reader-inner{background-image:linear-gradient(90deg,transparent 0 26px,color-mix(in srgb,var(--reader-accent) 17%,transparent) 26px 27px,transparent 27px)!important;background-repeat:repeat-y!important}
+.pair-log-reader-window[data-skin="letter"] .pair-log-reader-title-row h2{font-weight:400!important;font-style:italic}
+.pair-log-reader-window[data-skin="letter"] .pair-log-reader-content{font-family:Georgia,'Noto Serif KR',serif;line-height:2.2}
+.pair-log-reader-window[data-skin="windows"] .pair-log-reader-header{background:color-mix(in srgb,var(--reader-bg) 92%,var(--reader-accent))!important;border-bottom:1px solid color-mix(in srgb,var(--reader-accent) 30%,transparent)!important}
+.pair-log-reader-window[data-skin="windows"] .pair-log-reader-masthead small{font-family:Tahoma,Arial,sans-serif}
+.pair-log-reader-window[data-skin="windows"] .pair-log-reader-title-row h2{font-family:Tahoma,Arial,sans-serif!important;font-weight:600!important;letter-spacing:-.04em!important}
+.pair-log-reader-window[data-skin="windows"] .pair-log-reader-content{font-family:Tahoma,Arial,sans-serif;line-height:1.95}
+.pair-log-reader-window[data-skin="midnight"] .pair-log-reader-header{background:color-mix(in srgb,var(--reader-bg) 90%,transparent)!important;border-color:color-mix(in srgb,var(--reader-accent) 40%,transparent)!important}
+.pair-log-reader-window[data-skin="midnight"] .pair-log-reader-content blockquote{border-color:var(--reader-accent)}
+.pair-log-reader-window[data-skin="midnight"] .pair-log-reader-footer{opacity:.6}
+.pair-log-reader-window[data-skin="botanical"] .pair-log-reader-inner{background-image:radial-gradient(ellipse at 95% 8%,color-mix(in srgb,var(--reader-accent) 8%,transparent),transparent 36%)!important;background-repeat:no-repeat!important}
+.pair-log-reader-window[data-skin="botanical"] .pair-log-reader-masthead small:before{content:'❧ ';}
+.pair-log-reader-window[data-skin="botanical"] .pair-log-reader-title-row h2{font-style:italic;font-weight:400!important}
+@media(max-width:650px){.pair-log-reader-header{min-height:50px!important;padding:9px 14px!important}.pair-log-reader-masthead{gap:8px;flex-direction:column;align-items:flex-start}.pair-log-reader-masthead small{font-size:8px!important}.pair-log-reader-inner{padding:30px 20px 30px!important}.pair-log-reader-title-row h2{font-size:34px!important}.pair-log-reader-content{font-size:14px;line-height:1.95}.pair-log-reader-tools{gap:2px}.pair-log-reader-tools button{padding:4px 5px}}
+
+/* Per-log design preferences in the log editor. */
+.pair-log-style-settings{margin:10px 0 12px;padding:11px 12px;border-top:1px solid #ded8d3;border-bottom:1px solid #ded8d3;background:#f8f6f1;color:#57534b}
+.pair-log-style-settings summary{display:flex;align-items:baseline;gap:8px;cursor:pointer;color:#545a4a;font:700 9px Tahoma,Arial,sans-serif;letter-spacing:1px;list-style:none}
+.pair-log-style-settings summary::-webkit-details-marker{display:none}
+.pair-log-style-settings summary:after{content:'＋';margin-left:auto;font-size:14px;font-weight:400;opacity:.55}
+.pair-log-style-settings[open] summary:after{content:'−'}
+.pair-log-style-settings summary span{font-size:9px;font-weight:400;letter-spacing:0;opacity:.65}
+.pair-log-style-grid{display:grid;grid-template-columns:minmax(180px,1.5fr) repeat(3,minmax(65px,.55fr));gap:9px;align-items:end;margin-top:11px}
+.pair-log-style-grid label{display:flex;flex-direction:column;gap:5px;color:#716b61;font:8px Tahoma,Arial,sans-serif;letter-spacing:.55px}
+.pair-log-style-grid select{height:29px;min-width:0;padding:4px 7px;border:1px solid #d5cec4;background:#fff;color:#4c4a43;font:10px Tahoma,Arial,sans-serif}
+.pair-log-style-grid input[type=color]{width:100%;height:29px;padding:2px;border:1px solid #d5cec4;background:#fff}
+.pair-log-style-presets{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.pair-log-style-presets button{min-height:23px;padding:3px 8px;border:1px solid #d8d1c8;background:transparent;color:#625e55;font:8px Tahoma,Arial,sans-serif}
+.pair-log-style-presets button:hover{border-color:#919a82;background:#fff}
+.pair-log-style-note{margin:7px 0 0;color:#9a9288;font:9px/1.5 Tahoma,'Malgun Gothic',sans-serif}
+@media(max-width:600px){.pair-log-style-grid{grid-template-columns:1fr 1fr}.pair-log-style-select{grid-column:1/-1}}
+
+/* Pair banner and D-day: quiet typography, no oversized dashboard panels. */
+.pair-banner-editor,.pair-dday-editor{margin:12px 0;padding:11px 12px;border-top:1px solid #ddd5d0;border-bottom:1px solid #ddd5d0;background:#faf8f4}
+.pair-banner-editor-heading{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;color:#626957;font:700 9px Tahoma,Arial,sans-serif;letter-spacing:1px}
+.pair-banner-editor-heading small{color:#948d83;font:9px Tahoma,'Malgun Gothic',sans-serif;letter-spacing:0}
+.pair-banner-preview{position:relative;display:grid;place-items:center;width:100%;height:125px;margin-top:8px;overflow:hidden;background:#e8e5dc;color:#89857c;font:9px Tahoma,Arial,sans-serif;letter-spacing:1px}
+.pair-banner-preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:var(--banner-opacity,.35)}
+.pair-banner-preview[data-mode="gradient"] img{mask-image:linear-gradient(180deg,#000 0%,#0009 52%,transparent 100%)}
+.pair-banner-preview[data-mode="full"] img{opacity:calc(var(--banner-opacity,.35) + .12)}
+.pair-banner-options{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:8px;align-items:end;margin-top:8px}
+.pair-banner-options label{display:grid;gap:4px;color:#777165;font:8px Tahoma,Arial,sans-serif}
+.pair-banner-options select{min-width:0;width:100%;height:29px;padding:4px 6px;border:1px solid #d5cec4;background:#fff;color:#565247;font-size:9px}
+.pair-banner-options input{width:100%;accent-color:#68735c}
+.pair-banner-options output{float:right;text-align:right;color:#68735c}
+.pair-banner-options button{min-height:25px;padding:4px 8px;border:1px solid #d5cec4;background:transparent;color:#857a73;font:8px Tahoma,Arial,sans-serif}
+.pair-dday-inputs{display:grid;grid-template-columns:minmax(0,1fr) minmax(130px,.7fr);gap:7px}
+.pair-dday-inputs input{min-width:0;height:31px;padding:5px 8px;border:1px solid #d5cec4;background:#fff;color:#514e46;font-size:10px}
+.pair-dday-editor>small{display:block;margin-top:6px;color:#928b80;font:9px Tahoma,'Malgun Gothic',sans-serif}
+.pair-detail-heading{position:relative;isolation:isolate;overflow:hidden}
+.pair-detail-heading>*:not(.pair-detail-banner-image){position:relative;z-index:1}
+.pair-detail-banner-image{position:absolute;z-index:0;top:0;left:0;width:100%;height:235px;object-fit:cover;pointer-events:none}
+.pair-detail-banner-image.is-gradient{opacity:var(--pair-banner-opacity,.35);mask-image:linear-gradient(180deg,#000 0%,#000b 42%,transparent 100%)}
+.pair-detail-banner-image.is-full{height:100%;opacity:var(--pair-banner-opacity,.35);mask-image:linear-gradient(180deg,#000 0%,#000b 100%)}
+.pair-dday-badge{display:inline-flex;align-items:baseline;gap:8px;margin:9px 0 7px;padding:5px 0;border-top:1px solid color-mix(in srgb,currentColor 25%,transparent);border-bottom:1px solid color-mix(in srgb,currentColor 25%,transparent);color:#68735c}
+.pair-dday-badge span{font:9px Tahoma,'Malgun Gothic',sans-serif;letter-spacing:.08em}
+.pair-dday-badge strong{font:italic 20px Georgia,serif;font-weight:500}
+.pair-card-dday{display:inline-block;margin-left:8px;color:#758168;font:9px Georgia,serif}
+@media(max-width:600px){.pair-banner-options{grid-template-columns:1fr 1fr}.pair-banner-options button{grid-column:1/-1;justify-self:start}.pair-dday-inputs{grid-template-columns:1fr}.pair-detail-banner-image{height:185px}}
+
+/* Version navigation stays visible above the selected version content. */
+#backupDetailVersionTabs.v53-version-tabs-rail{position:sticky;top:0;z-index:8;display:flex!important;justify-content:flex-start!important;align-items:center;flex-wrap:nowrap!important;gap:6px;min-height:38px;margin:8px 0 12px;padding:5px 0;overflow-x:auto!important;overflow-y:hidden;background:rgba(255,253,250,.96);border-bottom:1px solid var(--bp-line);scrollbar-width:thin}
+#backupDetailVersionTabs.v53-version-tabs-rail button{display:inline-flex!important;visibility:visible!important;opacity:1!important;flex:0 0 auto!important;white-space:nowrap!important;min-height:27px;padding:5px 10px;border:1px solid var(--bp-line);background:#fff;color:var(--bp-ink);font-size:10px}
+#backupDetailVersionTabs.v53-version-tabs-rail button.active{background:var(--bp-accent);color:#fff;border-color:var(--bp-accent)}
+
 </style>
 </head>
 <body>
@@ -2370,6 +2516,7 @@ body::before{z-index:0!important;inset:0!important;background-color:var(--pt-wal
               <header class="pair-detail-heading">
                 <div class="pair-detail-kicker">PAIR ARCHIVE</div>
                 <h2 id="pairDetailTitle"></h2>
+                <div id="pairDdayBadge" class="pair-dday-badge hidden"></div>
                 <p id="pairDetailDescription"></p>
                 <div id="pairDetailTags" class="photo-archive-tags"></div>
               </header>
@@ -2397,6 +2544,21 @@ body::before{z-index:0!important;inset:0!important;background-color:var(--pt-wal
             <div class="backup-compose-card pair-form-card">
               <label class="field-label" for="pairNameInput">PAIR NAME <span class="backup-optional">OPTIONAL</span></label>
               <input class="backup-full" id="pairNameInput" type="text" maxlength="100" placeholder="페어 이름">
+              <section class="pair-banner-editor">
+                <div class="pair-banner-editor-heading"><span>PAIR BANNER</span><small>페어 배너 이미지</small></div>
+                <input class="backup-full" id="pairBannerFile" type="file" accept="image/*">
+                <div class="pair-banner-preview" id="pairBannerPreview"><span>NO BANNER · 배너 사진 없음</span></div>
+                <div class="pair-banner-options">
+                  <label>DISPLAY · 표시 방식<select id="pairBannerMode"><option value="gradient">Soft Gradient · 위쪽은 선명하고 아래는 자연스럽게 흐림</option><option value="full">Full Banner · 배너 전체에 사진</option></select></label>
+                  <label>OPACITY · 투명도 <output id="pairBannerOpacityOut">35%</output><input id="pairBannerOpacity" type="range" min="10" max="90" step="5" value="35"></label>
+                  <button type="button" id="pairBannerRemove">REMOVE BANNER</button>
+                </div>
+              </section>
+              <section class="pair-dday-editor">
+                <div class="pair-banner-editor-heading"><span>PAIR D-DAY</span><small>기념일 · 기준일</small></div>
+                <div class="pair-dday-inputs"><input id="pairDdayLabel" type="text" maxlength="40" placeholder="기념일 이름 · 예: 첫 만남"><input id="pairDdayDate" type="date" aria-label="D-day 날짜"></div>
+                <small>미래 날짜는 D-N, 지난 날짜는 D+N으로 표시돼.</small>
+              </section>
               <div class="pair-character-edit-grid">
                 <section class="pair-character-edit-card">
                   <div class="pair-character-edit-label">CHARACTER A</div>
@@ -2470,6 +2632,17 @@ body::before{z-index:0!important;inset:0!important;background-color:var(--pt-wal
                 <label class="field-label" for="pairLogCategoryInput">CATEGORY<input class="backup-full" id="pairLogCategoryInput" type="text" maxlength="80" placeholder="분류 · 선택"></label>
                 <label class="field-label" for="pairLogTagsInput">TAGS<input class="backup-full" id="pairLogTagsInput" type="text" placeholder="태그 · 쉼표로 구분"></label>
               </div>
+              <details class="pair-log-style-settings" open>
+                <summary>READER DESIGN <span>열람 화면 디자인</span></summary>
+                <div class="pair-log-style-grid">
+                  <label class="pair-log-style-select">SKIN · 스킨<select id="pairLogStyleSelect"><option value="editorial">Editorial Paper · 에디토리얼 종이</option><option value="diner">Diner Note · 다이너 노트</option><option value="letter">Old Letter · 오래된 편지</option><option value="windows">Soft Windows · 소프트 윈도우</option><option value="midnight">Midnight Ink · 미드나잇 잉크</option><option value="botanical">Botanical Index · 보태니컬 인덱스</option></select></label>
+                  <label>PAPER · 바탕색<input type="color" id="pairLogStyleBg" value="#f7f5ef"></label>
+                  <label>INK · 글자색<input type="color" id="pairLogStyleText" value="#34372f"></label>
+                  <label>ACCENT · 포인트<input type="color" id="pairLogStyleAccent" value="#68735c"></label>
+                </div>
+                <div class="pair-log-style-presets" aria-label="기본 색상 조합"><button type="button" data-log-style-preset="editorial">Sage</button><button type="button" data-log-style-preset="diner">Cherry</button><button type="button" data-log-style-preset="letter">Sepia</button><button type="button" data-log-style-preset="windows">Blue Grey</button><button type="button" data-log-style-preset="midnight">Night</button><button type="button" data-log-style-preset="botanical">Moss</button></div>
+                <p class="pair-log-style-note">저장한 디자인은 해당 로그에만 적용돼. 뷰어에서 바꾸지 않아도 돼.</p>
+              </details>
               <div class="pair-log-toolbar" id="pairLogToolbar">
                 <button type="button" data-pair-log-command="undo" id="pairLogUndo" title="실행 취소">↶</button>
                 <button type="button" data-pair-log-command="redo" id="pairLogRedo" title="다시 실행">↷</button>
@@ -2574,12 +2747,20 @@ body::before{z-index:0!important;inset:0!important;background-color:var(--pt-wal
 
 
       <div id="pairLogReaderModal" class="pair-log-reader-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pairLogReaderTitle">
-        <article class="pair-log-reader-window">
-          <header class="pair-log-reader-header"><div class="pair-log-reader-heading"><small>PAIR ARCHIVE / LOG VIEWER</small><h2 id="pairLogReaderTitle">RP LOG</h2><div id="pairLogReaderDate" class="pair-log-reader-date"></div><label class="pair-reader-skin-picker">VIEW STYLE · 열람 스킨 <select id="pairLogReaderSkin"><option value="diner">Retro Diner · 레트로 다이너</option><option value="letter">Letter Garden · 편지지</option><option value="win95">Classic Windows · 고전 윈도우</option><option value="editorial">Soft Editorial · 에디토리얼</option><option value="midnight">Midnight Archive · 미드나잇</option></select></label></div><button type="button" id="pairLogReaderClose" aria-label="닫기">×</button></header>
-          <div id="pairLogReaderMeta" class="pair-log-reader-meta"></div><div id="pairLogReaderTags" class="pair-chat-tags"></div>
-          <div id="pairLogReaderContent" class="pair-chat-rich pair-log-reader-content"></div>
-          <footer class="pair-log-reader-actions"><button type="button" id="pairLogReaderCopy">COPY TEXT</button><button type="button" id="pairLogReaderEdit">EDIT</button><button type="button" class="primary" id="pairLogReaderCloseBottom">CLOSE</button></footer>
-        </article>
+        <div class="pair-log-reader-window" data-skin="editorial">
+          <header class="pair-log-reader-header">
+            <div class="pair-log-reader-masthead"><small>PAIR ARCHIVE <span>／</span> PRIVATE JOURNAL</small><div class="pair-log-reader-edition">FIELD NOTES · <span id="pairLogReaderEdition">01</span></div></div>
+            <div class="pair-log-reader-tools"><button type="button" id="pairLogReaderCopy" aria-label="본문 복사">COPY</button><button type="button" id="pairLogReaderEdit" aria-label="로그 편집">EDIT</button><button type="button" id="pairLogReaderClose" aria-label="닫기">×</button></div>
+          </header>
+          <div class="pair-log-reader-inner">
+            <div id="pairLogReaderMeta" class="pair-log-reader-meta"></div>
+            <div class="pair-log-reader-title-row"><h2 id="pairLogReaderTitle">RP LOG</h2><time id="pairLogReaderDate" class="pair-log-reader-date"></time></div>
+            <div id="pairLogReaderTags" class="pair-log-reader-tags"></div>
+            <div id="pairLogReaderContent" class="pair-chat-rich pair-log-reader-content"></div>
+            <button type="button" id="pairLogReaderCloseBottom" hidden>CLOSE</button>
+            <footer class="pair-log-reader-footer"><span>END OF RECORD</span><span>PAIR ARCHIVE</span></footer>
+          </div>
+        </div>
       </div>
       <section class="tab-panel" id="converterPanel">
         <div class="prompt-editor-main">
@@ -5364,7 +5545,7 @@ function startPromptToolbox() {
             <option value="">— 랜덤 / 직접 선택 —</option>
             ${options}
           </select>
-          <button type="button" class="small reroll-button">개별 랜덤</button>
+          <button type="button" class="small reroll-button" title="개별 랜덤" aria-label="개별 랜덤">↻</button>
           <button type="button" class="small add-category-select" title="같은 항목을 하나 더 조합">＋</button>
         </div>
         <div class="category-extra-selects"></div>
@@ -7946,7 +8127,7 @@ function applyBackupTemplate(template) {
         grid.appendChild(empty); return;
       }
       items.forEach(pair => {
-        const card = document.createElement('article'); card.className='pair-gallery-card'; card.tabIndex=0; card.setAttribute('role','button');
+        const card = document.createElement('article'); card.className='pair-gallery-card'; card.dataset.pairId=pair.id; card.tabIndex=0; card.setAttribute('role','button');
         const members = document.createElement('div'); members.className='pair-card-members';
         (pair.members || []).slice(0,2).forEach((member,index)=>{
           const frame=document.createElement('div'); frame.className='pair-card-photo';
@@ -7986,7 +8167,7 @@ function applyBackupTemplate(template) {
     }
 
     function resetPairForm() {
-      pairEditingId=null; pairDraftImages=[null,null];
+      pairEditingId=null; pairDraftImages=[null,null]; pairDraftBannerV53=null;
       revokePairUrls(pairDraftObjectUrls);
       document.getElementById('pairNameInput').value='';
       document.getElementById('pairANameInput').value='';
@@ -7995,42 +8176,47 @@ function applyBackupTemplate(template) {
       document.getElementById('pairTagsInput').value='';
       document.getElementById('pairAImageInput').value='';
       document.getElementById('pairBImageInput').value='';
+      document.getElementById('pairBannerFile').value='';
+      document.getElementById('pairDdayLabel').value='';document.getElementById('pairDdayDate').value='';
+      document.getElementById('pairBannerMode').value='gradient';document.getElementById('pairBannerOpacity').value='35';document.getElementById('pairBannerOpacityOut').textContent='35%';
       document.getElementById('pairComposeHeading').textContent='NEW PAIR';
       document.getElementById('pairSaveButton').textContent='SAVE PAIR';
-      setPairDraftPhotoPreview(0); setPairDraftPhotoPreview(1);
+      pairRenderBannerPreviewV53();setPairDraftPhotoPreview(0);setPairDraftPhotoPreview(1);
     }
 
     function editPair(id) {
-      const pair=pairRecords().find(item=>item.id===id); if(!pair)return;
-      pairEditingId=id;
-      revokePairUrls(pairDraftObjectUrls);
+      const pair=pairRecords().find(item=>item.id===id);if(!pair)return;
+      pairEditingId=id;revokePairUrls(pairDraftObjectUrls);
       document.getElementById('pairNameInput').value=pair.title||'';
       document.getElementById('pairANameInput').value=pair.members?.[0]?.name||'';
       document.getElementById('pairBNameInput').value=pair.members?.[1]?.name||'';
       document.getElementById('pairDescriptionInput').value=pair.description||'';
       document.getElementById('pairTagsInput').value=(pair.tags||[]).join(', ');
       pairDraftImages=[pair.members?.[0]?.photo?{...pair.members[0].photo,crop:getBackupImageCrop(pair.members[0].photo),ratio:'3/4'}:null,pair.members?.[1]?.photo?{...pair.members[1].photo,crop:getBackupImageCrop(pair.members[1].photo),ratio:'3/4'}:null];
-      document.getElementById('pairAImageInput').value=''; document.getElementById('pairBImageInput').value='';
-      document.getElementById('pairComposeHeading').textContent='EDIT PAIR';
-      document.getElementById('pairSaveButton').textContent='SAVE CHANGES';
-      setPairDraftPhotoPreview(0); setPairDraftPhotoPreview(1); openPairView('compose');
+      pairDraftBannerV53=pair.banner?{...pair.banner}:null;
+      document.getElementById('pairBannerFile').value='';
+      document.getElementById('pairBannerMode').value=pair.banner?.mode||'gradient';
+      document.getElementById('pairBannerOpacity').value=String(pair.banner?.opacity??35);
+      document.getElementById('pairBannerOpacityOut').textContent=`${pair.banner?.opacity??35}%`;
+      document.getElementById('pairDdayLabel').value=pair.dday?.label||'';
+      document.getElementById('pairDdayDate').value=pair.dday?.date||'';
+      document.getElementById('pairAImageInput').value='';document.getElementById('pairBImageInput').value='';
+      document.getElementById('pairComposeHeading').textContent='EDIT PAIR';document.getElementById('pairSaveButton').textContent='SAVE CHANGES';
+      pairRenderBannerPreviewV53();setPairDraftPhotoPreview(0);setPairDraftPhotoPreview(1);openPairView('compose');
     }
 
     async function savePair() {
-      const nameA=document.getElementById('pairANameInput').value.trim();
-      const nameB=document.getElementById('pairBNameInput').value.trim();
+      const nameA=document.getElementById('pairANameInput').value.trim(),nameB=document.getElementById('pairBNameInput').value.trim();
       if(!nameA||!nameB){setStatus('캐릭터 A와 B의 이름을 모두 입력해주세요.');return;}
-      const existing=pairRecords().find(item=>item.id===pairEditingId);
-      const now=new Date().toISOString();
-      const record={
-        id:pairEditingId||makePairId(),kind:'pair',
-        title:document.getElementById('pairNameInput').value.trim()||`${nameA} × ${nameB}`,
+      const existing=pairRecords().find(item=>item.id===pairEditingId),now=new Date().toISOString();
+      const banner=pairDraftBannerV53?{...pairDraftBannerV53,mode:document.getElementById('pairBannerMode').value,opacity:Number(document.getElementById('pairBannerOpacity').value)||35}:null;
+      const ddayDate=document.getElementById('pairDdayDate').value;
+      const dday=ddayDate?{label:document.getElementById('pairDdayLabel').value.trim()||'D-DAY',date:ddayDate}:null;
+      const record={id:pairEditingId||makePairId(),kind:'pair',title:document.getElementById('pairNameInput').value.trim()||`${nameA} × ${nameB}`,
         members:[{name:nameA,photo:pairDraftImages[0]?{...pairDraftImages[0],crop:getBackupImageCrop(pairDraftImages[0]),ratio:'3/4'}:null},{name:nameB,photo:pairDraftImages[1]?{...pairDraftImages[1],crop:getBackupImageCrop(pairDraftImages[1]),ratio:'3/4'}:null}],
-        description:document.getElementById('pairDescriptionInput').value.trim(),
-        tags:document.getElementById('pairTagsInput').value.split(/[，,\n]/).map(v=>v.trim().replace(/^#/,'')).filter(Boolean),
-        createdAt:existing?.createdAt||now,updatedAt:now
-      };
-      try { await saveRoomRecord(record); currentPairId=record.id; renderPairCards(); renderPairDetail(); openPairView('detail'); setStatus('페어를 저장했습니다.'); }
+        description:document.getElementById('pairDescriptionInput').value.trim(),tags:document.getElementById('pairTagsInput').value.split(/[，,\n]/).map(v=>v.trim().replace(/^#/,'')).filter(Boolean),banner,dday,
+        createdAt:existing?.createdAt||now,updatedAt:now};
+      try{await saveRoomRecord(record);currentPairId=record.id;renderPairCards();renderPairDetail();openPairView('detail');setStatus('페어를 저장했습니다.');}
       catch(error){setStatus(`페어 저장 실패: ${error.message||'다시 시도해주세요.'}`);}
     }
 
@@ -8981,7 +9167,7 @@ function pairLogRecordTemplateMarkup(type){
       document.getElementById('pairLogDateInput').value=data?.date||new Date().toISOString().slice(0,10);
       document.getElementById('pairLogPlatformInput').value=data?.platform||'';
       document.getElementById('pairLogCategoryInput').value=data?.category||'';
-      document.getElementById('pairLogTagsInput').value=(data?.tags||[]).join(', ');
+      document.getElementById('pairLogTagsInput').value=(data?.tags||[]).join(', ');pairLogSetStyleControlsV53(data?.readerStyle||null);
       const editor=document.getElementById('pairLogRichEditor');
       if(data?.contentHtml) editor.innerHTML=sanitizePairLogHtml(data.contentHtml, true);
       else if(data?.content) editor.innerHTML=data.content.split(/\r?\n/).map(line=>`<p>${escapeHtml(line)||'<br>'}</p>`).join('');
@@ -9018,7 +9204,7 @@ function pairLogRecordTemplateMarkup(type){
         date:document.getElementById('pairLogDateInput').value||new Date().toISOString().slice(0,10),
         category:document.getElementById('pairLogCategoryInput').value.trim(),
         tags:[...new Set(document.getElementById('pairLogTagsInput').value.split(/[，,\n]/).map(value=>value.trim().replace(/^#/,'')).filter(Boolean))],
-        favorite:!!existing?.favorite,contentHtml,content,createdAt:existing?.createdAt||now,updatedAt:now
+        readerStyle:pairLogGetStyleDraftV53(),favorite:!!existing?.favorite,contentHtml,content,createdAt:existing?.createdAt||now,updatedAt:now
       };
       const protect=document.getElementById('pairLogSecretToggle').checked;
       let record=plain,clearSecretCacheAfterSave=false;
@@ -9030,14 +9216,14 @@ function pairLogRecordTemplateMarkup(type){
           if(password||confirmPassword){
             if(password!==confirmPassword){setStatus('비밀번호 확인이 일치하지 않습니다.');document.getElementById('pairLogSecretPasswordConfirm').focus();return;}
             if(password.length<1){setStatus('비밀번호를 입력해주세요.');return;}
-            encrypted=await pairLogEncryptSecret({title:plain.title,subtitle:plain.subtitle,platform:plain.platform,category:plain.category,tags:plain.tags,contentHtml:plain.contentHtml,content:plain.content},password);
+            encrypted=await pairLogEncryptSecret({title:plain.title,subtitle:plain.subtitle,platform:plain.platform,category:plain.category,tags:plain.tags,readerStyle:plain.readerStyle,contentHtml:plain.contentHtml,content:plain.content},password);
           } else {
             const cached=existing?.secret?pairLogSecretCache.get(existing.id):null;
             if(!cached?.key){setStatus('비밀글 비밀번호를 입력해주세요.');document.getElementById('pairLogSecretPassword').focus();return;}
-            encrypted=await pairLogEncryptSecret({title:plain.title,subtitle:plain.subtitle,platform:plain.platform,category:plain.category,tags:plain.tags,contentHtml:plain.contentHtml,content:plain.content},'',{key:cached.key,salt:cached.salt,iterations:cached.iterations});
+            encrypted=await pairLogEncryptSecret({title:plain.title,subtitle:plain.subtitle,platform:plain.platform,category:plain.category,tags:plain.tags,readerStyle:plain.readerStyle,contentHtml:plain.contentHtml,content:plain.content},'',{key:cached.key,salt:cached.salt,iterations:cached.iterations});
           }
           record={id:plain.id,kind:'pair-log',pairId:currentPairId,title:'비밀글',subtitle:'',platform:'',date:plain.date,category:'',tags:[],favorite:plain.favorite,contentHtml:'',content:'',createdAt:plain.createdAt,updatedAt:plain.updatedAt,secret:true,secretPayload:encrypted.record};
-          pairLogSecretCache.set(record.id,{payload:{title:plain.title,subtitle:plain.subtitle,platform:plain.platform,category:plain.category,tags:plain.tags,contentHtml:plain.contentHtml,content:plain.content},key:encrypted.key,salt:encrypted.salt,iterations:encrypted.iterations});
+          pairLogSecretCache.set(record.id,{payload:{title:plain.title,subtitle:plain.subtitle,platform:plain.platform,category:plain.category,tags:plain.tags,readerStyle:plain.readerStyle,contentHtml:plain.contentHtml,content:plain.content},key:encrypted.key,salt:encrypted.salt,iterations:encrypted.iterations});
         } catch(error) {setStatus(error?.message||'비밀글 암호화에 실패했습니다.');return;}
       } else if(existing?.secret) {
         if(!pairLogSecretCache.has(existing.id)){setStatus('비밀글을 먼저 잠금 해제해주세요.');return;}
@@ -9515,7 +9701,7 @@ function pairLogRecordTemplateMarkup(type){
       ['Powder Blue','#ccdbe0'],['Warm Grey','#cfcfc9'],['Butter','#e7dfb9'],['Plum Mist','#d7c8d3'],
       ['Olive','#cbd0b8'],['Charcoal','#777b78'],['Night','#555b65'],['Cream','#eee9d9']
     ];
-    const PT_THEME_DEFAULT={color:'#d7ddc8',pattern:'stripe',lineColor:'#73806a',gapColor:'#e9e7d7',titlebarColor:'#08049b',blur:1,opacity:36,saved:[]};
+    const PT_THEME_DEFAULT={color:'#d7ddc8',pattern:'stripe',lineColor:'#73806a',gapColor:'#e9e7d7',titlebarColor:'#08049b',frameColor:'#c0c0c0',blur:1,opacity:36,saved:[]};
     let ptThemeState={...PT_THEME_DEFAULT};
     const ptThemeEl=id=>document.getElementById(id);
     function ptThemeHex(value){const m=String(value||'').trim().match(/^#?([0-9a-f]{6})$/i);return m?'#'+m[1].toLowerCase():null;}
@@ -9554,7 +9740,7 @@ function pairLogRecordTemplateMarkup(type){
       ptThemeEl('ptThemeColor').value=ptThemeState.color;ptThemeEl('ptThemeHex').value=ptThemeState.color.toUpperCase();
       ptThemeEl('ptThemeLineColor').value=ptThemeState.lineColor;ptThemeEl('ptThemeLineHex').value=ptThemeState.lineColor.toUpperCase();
       ptThemeEl('ptThemeGapColor').value=ptThemeState.gapColor;ptThemeEl('ptThemeGapHex').value=ptThemeState.gapColor.toUpperCase();
-      ptThemeState.titlebarColor=ptThemeHex(ptThemeState.titlebarColor)||PT_THEME_DEFAULT.titlebarColor;ptThemeEl('ptThemeTitlebarColor').value=ptThemeState.titlebarColor;ptThemeEl('ptThemeTitlebarHex').value=ptThemeState.titlebarColor.toUpperCase();
+      ptThemeState.titlebarColor=ptThemeHex(ptThemeState.titlebarColor)||PT_THEME_DEFAULT.titlebarColor;ptThemeEl('ptThemeTitlebarColor').value=ptThemeState.titlebarColor;ptThemeEl('ptThemeTitlebarHex').value=ptThemeState.titlebarColor.toUpperCase();ptThemeState.frameColor=ptThemeHex(ptThemeState.frameColor)||PT_THEME_DEFAULT.frameColor;ptThemeEl('ptThemeFrameColor').value=ptThemeState.frameColor;ptThemeEl('ptThemeFrameHex').value=ptThemeState.frameColor.toUpperCase();
       ptThemeEl('ptThemePattern').value=ptThemeState.pattern;ptThemeEl('ptThemeBlur').value=ptThemeState.blur;ptThemeEl('ptThemeBlurOut').textContent=ptThemeState.blur+'px';
       ptThemeEl('ptThemeOpacity').value=ptThemeState.opacity;ptThemeEl('ptThemeOpacityOut').textContent=ptThemeState.opacity+'%';ptThemeRenderSaved();
     }
@@ -9570,12 +9756,12 @@ function pairLogRecordTemplateMarkup(type){
       ptThemeApply(ptThemeState);ptThemeRenderPresets();ptThemeFill();
       ptThemeEl('ptThemeOpen')?.addEventListener('click',()=>{ptThemeFill();ptThemeEl('ptThemeModal').classList.remove('hidden');});
       ptThemeEl('ptThemeClose')?.addEventListener('click',()=>ptThemeEl('ptThemeModal').classList.add('hidden'));
-      ptThemeBindColor('ptThemeColor','ptThemeHex','color');ptThemeBindColor('ptThemeLineColor','ptThemeLineHex','lineColor');ptThemeBindColor('ptThemeGapColor','ptThemeGapHex','gapColor');ptThemeBindColor('ptThemeTitlebarColor','ptThemeTitlebarHex','titlebarColor');
+      ptThemeBindColor('ptThemeColor','ptThemeHex','color');ptThemeBindColor('ptThemeLineColor','ptThemeLineHex','lineColor');ptThemeBindColor('ptThemeGapColor','ptThemeGapHex','gapColor');ptThemeBindColor('ptThemeTitlebarColor','ptThemeTitlebarHex','titlebarColor');ptThemeBindColor('ptThemeFrameColor','ptThemeFrameHex','frameColor');
       ptThemeEl('ptThemeAccentPresets')?.querySelectorAll('[data-titlebar-color]').forEach(button=>button.addEventListener('click',()=>{const c=ptThemeHex(button.dataset.titlebarColor);if(!c)return;ptThemeState.titlebarColor=c;ptThemeEl('ptThemeTitlebarColor').value=c;ptThemeEl('ptThemeTitlebarHex').value=c.toUpperCase();ptThemeApply(ptThemeState);}));
       ptThemeEl('ptThemePattern')?.addEventListener('change',e=>{ptThemeState.pattern=e.target.value;ptThemeApply(ptThemeState);});
       ptThemeEl('ptThemeBlur')?.addEventListener('input',e=>{ptThemeState.blur=Number(e.target.value);ptThemeEl('ptThemeBlurOut').textContent=e.target.value+'px';ptThemeApply(ptThemeState);});
       ptThemeEl('ptThemeOpacity')?.addEventListener('input',e=>{ptThemeState.opacity=Number(e.target.value);ptThemeEl('ptThemeOpacityOut').textContent=e.target.value+'%';ptThemeApply(ptThemeState);});
-      ptThemeEl('ptThemeSave')?.addEventListener('click',()=>{const c=ptThemeHex(ptThemeEl('ptThemeColor').value);if(!c)return;ptThemeState={...ptThemeState,color:c,lineColor:ptThemeHex(ptThemeEl('ptThemeLineColor').value)||PT_THEME_DEFAULT.lineColor,gapColor:ptThemeHex(ptThemeEl('ptThemeGapColor').value)||c,titlebarColor:ptThemeHex(ptThemeEl('ptThemeTitlebarColor').value)||PT_THEME_DEFAULT.titlebarColor,pattern:ptThemeEl('ptThemePattern').value,blur:Number(ptThemeEl('ptThemeBlur').value),opacity:Number(ptThemeEl('ptThemeOpacity').value),saved:ptThemeState.saved||[]};if(!ptThemeState.saved.includes(c)&&!PT_THEME_PRESETS.some(x=>x[1]===c))ptThemeState.saved.push(c);saveStorage('promptToolbox.desktopTheme',ptThemeState);ptThemeApply(ptThemeState);ptThemeRenderSaved();ptThemeEl('ptThemeModal').classList.add('hidden');setStatus('바탕 테마를 저장했습니다.');});
+      ptThemeEl('ptThemeSave')?.addEventListener('click',()=>{const c=ptThemeHex(ptThemeEl('ptThemeColor').value);if(!c)return;ptThemeState={...ptThemeState,color:c,lineColor:ptThemeHex(ptThemeEl('ptThemeLineColor').value)||PT_THEME_DEFAULT.lineColor,gapColor:ptThemeHex(ptThemeEl('ptThemeGapColor').value)||c,titlebarColor:ptThemeHex(ptThemeEl('ptThemeTitlebarColor').value)||PT_THEME_DEFAULT.titlebarColor,frameColor:ptThemeHex(ptThemeEl('ptThemeFrameColor').value)||PT_THEME_DEFAULT.frameColor,pattern:ptThemeEl('ptThemePattern').value,blur:Number(ptThemeEl('ptThemeBlur').value),opacity:Number(ptThemeEl('ptThemeOpacity').value),saved:ptThemeState.saved||[]};if(!ptThemeState.saved.includes(c)&&!PT_THEME_PRESETS.some(x=>x[1]===c))ptThemeState.saved.push(c);saveStorage('promptToolbox.desktopTheme',ptThemeState);ptThemeApply(ptThemeState);ptThemeRenderSaved();ptThemeEl('ptThemeModal').classList.add('hidden');setStatus('바탕 테마를 저장했습니다.');});
       ptThemeEl('ptThemeReset')?.addEventListener('click',()=>{ptThemeState={...PT_THEME_DEFAULT,saved:ptThemeState.saved||[]};ptThemeFill();ptThemeApply(ptThemeState);saveStorage('promptToolbox.desktopTheme',ptThemeState);});
       ptThemeEl('ptThemeModal')?.addEventListener('click',e=>{if(e.target===ptThemeEl('ptThemeModal'))ptThemeEl('ptThemeModal').classList.add('hidden');});
     }
@@ -9727,7 +9913,168 @@ function pairLogRecordTemplateMarkup(type){
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initV49Features,{once:true});
     else initV49Features();
 
-}
+    // v53: minimal reading skins, saved per-log design, pair D-day/banner, and persistent version tabs.
+    const PAIR_LOG_STYLE_PRESETS_V53={
+      editorial:{bg:'#f7f5ef',text:'#34372f',accent:'#68735c'},
+      diner:{bg:'#fff7ed',text:'#493b35',accent:'#a64f50'},
+      letter:{bg:'#f4eddf',text:'#51493f',accent:'#9b7554'},
+      windows:{bg:'#e8edf0',text:'#273541',accent:'#526f8a'},
+      midnight:{bg:'#1d2430',text:'#e8e6df',accent:'#c6ad83'},
+      botanical:{bg:'#eff2e8',text:'#3f4c3c',accent:'#77896a'}
+    };
+    let pairDraftBannerV53=null;
+    let pairDraftBannerPreviewUrlV53=null;
+
+    function pairLogNormalizeStyleV53(style){
+      const skin=PAIR_LOG_STYLE_PRESETS_V53[style?.skin]?style.skin:'editorial';
+      const base=PAIR_LOG_STYLE_PRESETS_V53[skin];
+      const safe=(value,fallback)=>/^#[0-9a-f]{6}$/i.test(String(value||''))?String(value).toLowerCase():fallback;
+      return {skin,bg:safe(style?.bg,base.bg),text:safe(style?.text,base.text),accent:safe(style?.accent,base.accent)};
+    }
+    function pairLogSetStyleControlsV53(style){
+      const normalized=pairLogNormalizeStyleV53(style||{});
+      const select=document.getElementById('pairLogStyleSelect');if(select)select.value=normalized.skin;
+      [['pairLogStyleBg','bg'],['pairLogStyleText','text'],['pairLogStyleAccent','accent']].forEach(([id,key])=>{const node=document.getElementById(id);if(node)node.value=normalized[key];});
+      pairLogUpdateStylePreviewV53();
+    }
+    function pairLogGetStyleDraftV53(){
+      return pairLogNormalizeStyleV53({skin:document.getElementById('pairLogStyleSelect')?.value,bg:document.getElementById('pairLogStyleBg')?.value,text:document.getElementById('pairLogStyleText')?.value,accent:document.getElementById('pairLogStyleAccent')?.value});
+    }
+    function pairLogUpdateStylePreviewV53(){
+      const host=document.querySelector('.pair-log-style-settings');if(!host)return;const style=pairLogGetStyleDraftV53();
+      host.style.setProperty('--log-style-bg',style.bg);host.style.setProperty('--log-style-text',style.text);host.style.setProperty('--log-style-accent',style.accent);
+      host.dataset.skin=style.skin;
+    }
+    function pairLogReaderOpen(log,data){
+      const modal=document.getElementById('pairLogReaderModal'),win=modal?.querySelector('.pair-log-reader-window');if(!modal||!win)return;
+      pairLogReaderContext={log,data};
+      const title=document.getElementById('pairLogReaderTitle'),date=document.getElementById('pairLogReaderDate'),meta=document.getElementById('pairLogReaderMeta'),tags=document.getElementById('pairLogReaderTags'),content=document.getElementById('pairLogReaderContent');
+      title.textContent=data?.title||log?.title||'RP LOG';date.textContent=data?.date||log?.date||'';
+      meta.replaceChildren();[data?.subtitle,data?.platform,data?.category].filter(Boolean).forEach(value=>{const span=document.createElement('span');span.textContent=value;meta.appendChild(span);});
+      tags.replaceChildren();(data?.tags||[]).slice(0,12).forEach(value=>{const span=document.createElement('span');span.textContent='#'+value;tags.appendChild(span);});
+      const titleRow=modal.querySelector('.pair-log-reader-title-row');if(titleRow&&tags.parentElement===titleRow.parentElement)titleRow.before(tags);
+      content.replaceChildren();if(data?.contentHtml)content.innerHTML=sanitizePairLogHtml(data.contentHtml);else content.textContent=data?.content||'';
+      const style=pairLogNormalizeStyleV53(data?.readerStyle);win.dataset.skin=style.skin;
+      modal.style.setProperty('--reader-bg',style.bg);modal.style.setProperty('--reader-text',style.text);modal.style.setProperty('--reader-accent',style.accent);
+      const edition=document.getElementById('pairLogReaderEdition');if(edition)edition.textContent=(data?.date||log?.date||'').replace(/-/g,'／')||'01';
+      modal.classList.remove('hidden');document.body.style.overflow='hidden';
+      const close=document.getElementById('pairLogReaderClose');close?.focus({preventScroll:true});
+    }
+    function pairLogReaderClose(){document.getElementById('pairLogReaderModal')?.classList.add('hidden');document.body.style.overflow='';pairLogReaderContext=null;}
+
+    // Re-rendering the detail view must never remove or collapse the version navigation rail.
+    function backupRenderDetailVersionTabs(entry){
+      const wrap=document.getElementById('backupDetailVersionTabs');if(!wrap)return null;
+      const versions=backupGetEntryVersions(entry);
+      if(!backupDetailVersionId||!versions.some(v=>v.id===backupDetailVersionId))backupDetailVersionId=entry.activeVersionId&&versions.some(v=>v.id===entry.activeVersionId)?entry.activeVersionId:versions[0].id;
+      wrap.replaceChildren();wrap.classList.add('v53-version-tabs-rail');
+      versions.forEach((version,index)=>{
+        const button=document.createElement('button');button.type='button';button.dataset.versionId=version.id;button.className=version.id===backupDetailVersionId?'active':'';
+        button.setAttribute('role','tab');button.setAttribute('aria-selected',String(version.id===backupDetailVersionId));button.textContent=version.name||`버전 ${index+1}`;
+        button.addEventListener('click',()=>{backupDetailVersionId=version.id;backupCurrentImageIndex=0;renderBackupDetail();});wrap.appendChild(button);
+      });
+      return versions.find(v=>v.id===backupDetailVersionId)||versions[0];
+    }
+
+    // Grid, stripes and dots are transparent line layers over an independently selected base color.
+    function ptThemePatternCss(pattern,lineColor,gapColor){
+      const line=ptThemeHex(lineColor)||'#73806a',gap=ptThemeHex(gapColor)||'#e9e7d7';
+      if(pattern==='stripe')return `repeating-linear-gradient(90deg, ${line} 0 2px, ${gap} 2px 22px)`;
+      if(pattern==='grid')return `linear-gradient(90deg, ${line} 1px, transparent 1px), linear-gradient(${line} 1px, transparent 1px), linear-gradient(${gap}, ${gap})`;
+      if(pattern==='grain')return `repeating-linear-gradient(135deg, ${line} 0 1px, ${gap} 1px 10px)`;
+      if(pattern==='dots')return `radial-gradient(circle at 1px 1px, ${line} 1.15px, ${gap} 1.5px)`;
+      return 'none';
+    }
+    function ptThemeApply(value){
+      const color=ptThemeHex(value.color)||PT_THEME_DEFAULT.color,line=ptThemeHex(value.lineColor)||PT_THEME_DEFAULT.lineColor;
+      const gap=ptThemeHex(value.gapColor)||color,frame=ptThemeHex(value.frameColor)||PT_THEME_DEFAULT.frameColor;
+      const pattern=ptThemePatternCss(value.pattern,line,gap),sizes={grid:'24px 24px, 24px 24px, auto',dots:'14px 14px',stripe:'22px 22px',grain:'10px 10px'};
+      document.documentElement.style.setProperty('--pt-wallpaper-color',color);
+      document.documentElement.style.setProperty('--pt-wallpaper-pattern',pattern);
+      document.documentElement.style.setProperty('--pt-wallpaper-pattern-size',sizes[value.pattern]||'auto');
+      document.documentElement.style.setProperty('--pt-wallpaper-blur',Math.max(0,Math.min(12,Number(value.blur)||0))+'px');
+      document.documentElement.style.setProperty('--pt-wallpaper-opacity',String(Math.max(0,Math.min(100,Number(value.opacity)||0))/100));
+      document.documentElement.style.setProperty('--pt-wallpaper-line',line);document.documentElement.style.setProperty('--pt-wallpaper-gap',gap);
+      document.documentElement.style.setProperty('--pt-window-frame-color',frame);document.documentElement.style.setProperty('--pt-titlebar-color',ptThemeHex(value.titlebarColor)||'#08049b');
+      document.documentElement.style.setProperty('--desktop',color);document.documentElement.style.setProperty('--surface',frame);
+      document.body.style.backgroundColor=color;
+    }
+    function ptThemeFill(){
+      ptThemeEl('ptThemeColor').value=ptThemeState.color;ptThemeEl('ptThemeHex').value=ptThemeState.color.toUpperCase();
+      ptThemeEl('ptThemeLineColor').value=ptThemeState.lineColor;ptThemeEl('ptThemeLineHex').value=ptThemeState.lineColor.toUpperCase();
+      ptThemeEl('ptThemeGapColor').value=ptThemeState.gapColor;ptThemeEl('ptThemeGapHex').value=ptThemeState.gapColor.toUpperCase();
+      ptThemeState.titlebarColor=ptThemeHex(ptThemeState.titlebarColor)||PT_THEME_DEFAULT.titlebarColor;ptThemeEl('ptThemeTitlebarColor').value=ptThemeState.titlebarColor;ptThemeEl('ptThemeTitlebarHex').value=ptThemeState.titlebarColor.toUpperCase();
+      ptThemeState.frameColor=ptThemeHex(ptThemeState.frameColor)||PT_THEME_DEFAULT.frameColor;ptThemeEl('ptThemeFrameColor').value=ptThemeState.frameColor;ptThemeEl('ptThemeFrameHex').value=ptThemeState.frameColor.toUpperCase();
+      ptThemeEl('ptThemePattern').value=ptThemeState.pattern;ptThemeEl('ptThemeBlur').value=ptThemeState.blur;ptThemeEl('ptThemeBlurOut').textContent=ptThemeState.blur+'px';
+      ptThemeEl('ptThemeOpacity').value=ptThemeState.opacity;ptThemeEl('ptThemeOpacityOut').textContent=ptThemeState.opacity+'%';ptThemeRenderSaved();
+    }
+
+    function pairDdayTextV53(dday){
+      if(!dday?.date)return '';
+      const [y,m,d]=String(dday.date).split('-').map(Number);if(!y||!m||!d)return '';
+      const target=new Date(y,m-1,d),today=new Date();today.setHours(0,0,0,0);target.setHours(0,0,0,0);
+      const days=Math.round((target-today)/86400000);
+      return days>0?`D-${days}`:days<0?`D+${Math.abs(days)}`:'D-DAY';
+    }
+    function pairRenderBannerPreviewV53(){
+      const host=document.getElementById('pairBannerPreview');if(!host)return;
+      if(pairDraftBannerPreviewUrlV53){URL.revokeObjectURL(pairDraftBannerPreviewUrlV53);pairDraftBannerPreviewUrlV53=null;}
+      host.replaceChildren();host.dataset.mode=document.getElementById('pairBannerMode')?.value||'gradient';
+      const banner=pairDraftBannerV53;
+      if(banner&&(banner.blob||banner.dataUrl)){
+        const source=banner.blob?URL.createObjectURL(banner.blob):banner.dataUrl;if(banner.blob)pairDraftBannerPreviewUrlV53=source;
+        const img=document.createElement('img');img.src=source;img.alt='페어 배너 미리보기';host.appendChild(img);
+        host.style.setProperty('--banner-opacity',String((Number(document.getElementById('pairBannerOpacity')?.value??banner.opacity??35))/100));
+      }else{const span=document.createElement('span');span.textContent='NO BANNER · 배너 사진 없음';host.appendChild(span);host.style.removeProperty('--banner-opacity');}
+    }
+    function pairRenderDetailDecorationV53(){
+      const pair=pairRecords().find(item=>item.id===currentPairId);if(!pair)return;
+      const header=document.querySelector('#pairDetailView .pair-detail-heading');if(!header)return;
+      header.querySelectorAll('.pair-detail-banner-image').forEach(node=>node.remove());
+      if(pair.banner&&(pair.banner.blob||pair.banner.dataUrl)){
+        const img=document.createElement('img');img.className='pair-detail-banner-image '+(pair.banner.mode==='full'?'is-full':'is-gradient');img.alt='';img.src=backupImageSource(pair.banner,pairDetailObjectUrls);
+        img.style.setProperty('--pair-banner-opacity',String(Math.max(0.1,Math.min(.9,Number(pair.banner.opacity??35)/100))));header.prepend(img);
+      }
+      const badge=document.getElementById('pairDdayBadge');badge.replaceChildren();const count=pairDdayTextV53(pair.dday);
+      if(count){badge.classList.remove('hidden');const label=document.createElement('span');label.textContent=pair.dday.label||'D-DAY';const value=document.createElement('strong');value.textContent=count;badge.append(label,value);}else badge.classList.add('hidden');
+    }
+    function pairRenderCardDecorationV53(){
+      document.querySelectorAll('#pairCards .pair-gallery-card').forEach(card=>{
+        const pair=pairRecords().find(item=>item.id===card.dataset.pairId);
+        if(!pair?.dday?.date)return;
+        const note=card.querySelector('.pair-card-note');if(note){const badge=document.createElement('span');badge.className='pair-card-dday';badge.textContent=`${pair.dday.label||'D-DAY'} · ${pairDdayTextV53(pair.dday)}`;note.appendChild(badge);}
+      });
+    }
+
+    function ptV53InitAfterFeatures(){
+      if(window.__ptV53Initialized)return;window.__ptV53Initialized=true;
+      // Save the style in the log editor, never from the reader.
+      pairLogSetStyleControlsV53(null);
+      document.getElementById('pairLogStyleSelect')?.addEventListener('change',event=>pairLogSetStyleControlsV53({skin:event.target.value}));
+      ['pairLogStyleBg','pairLogStyleText','pairLogStyleAccent'].forEach(id=>document.getElementById(id)?.addEventListener('input',pairLogUpdateStylePreviewV53));
+      document.querySelectorAll('[data-log-style-preset]').forEach(button=>button.addEventListener('click',()=>pairLogSetStyleControlsV53({skin:button.dataset.logStylePreset})));
+
+      document.getElementById('pairBannerFile')?.addEventListener('change',event=>{
+        const file=event.target.files?.[0];if(!file)return;
+        if(file.size>8*1024*1024){setStatus('배너 이미지는 8MB 이하 파일을 권장해.');event.target.value='';return;}
+        pairDraftBannerV53={name:file.name,blob:file,mode:document.getElementById('pairBannerMode').value,opacity:Number(document.getElementById('pairBannerOpacity').value)||35};pairRenderBannerPreviewV53();
+      });
+      document.getElementById('pairBannerMode')?.addEventListener('change',pairRenderBannerPreviewV53);
+      document.getElementById('pairBannerOpacity')?.addEventListener('input',event=>{document.getElementById('pairBannerOpacityOut').textContent=event.target.value+'%';pairRenderBannerPreviewV53();});
+      document.getElementById('pairBannerRemove')?.addEventListener('click',()=>{pairDraftBannerV53=null;document.getElementById('pairBannerFile').value='';pairRenderBannerPreviewV53();});
+      const baseRenderPairDetail=renderPairDetail;
+      renderPairDetail=function(){baseRenderPairDetail();pairRenderDetailDecorationV53();};
+      const baseRenderPairCards=renderPairCards;
+      renderPairCards=function(){baseRenderPairCards();pairRenderCardDecorationV53();};
+      // Capture phase replaces the original click callback so all new pair fields are saved together.
+      document.getElementById('pairSaveButton')?.addEventListener('click',event=>{event.preventDefault();event.stopImmediatePropagation();savePair();},true);
+      // Re-render tabs after any version detail render. Buttons remain in the rail, including the selected one.
+      const versionRail=document.getElementById('backupDetailVersionTabs');
+      if(versionRail){const observer=new MutationObserver(()=>{versionRail.style.display='flex';versionRail.querySelectorAll('button').forEach(button=>button.style.display='inline-flex');});observer.observe(versionRail,{childList:true});}
+    }
+    ptV53InitAfterFeatures();
+
+} 
 </script>
 <script>
 // Independent navigation layer: remains active even if a toolbox module throws during startup.
@@ -9823,6 +10170,7 @@ function pairLogRecordTemplateMarkup(type){
     <div class="pt-theme-presets" id="ptThemePresets"></div>
     <div class="pt-theme-row"><label for="ptThemeColor">CUSTOM COLOR <small>바탕색</small></label><input type="color" id="ptThemeColor" value="#d9d6c8"><input type="text" id="ptThemeHex" value="#D9D6C8" maxlength="7" aria-label="HEX 색상"></div>
     <div class="pt-theme-row"><label for="ptThemeTitlebarColor">WINDOW TITLE BAR <small>상단 창 포인트 색</small></label><input type="color" id="ptThemeTitlebarColor" value="#08049b"><input type="text" id="ptThemeTitlebarHex" value="#08049B" maxlength="7" aria-label="타이틀 바 HEX 색상"></div>
+    <div class="pt-theme-row"><label for="ptThemeFrameColor">WINDOW FRAME <small>창 테두리 회색 바탕</small></label><input type="color" id="ptThemeFrameColor" value="#c0c0c0"><input type="text" id="ptThemeFrameHex" value="#C0C0C0" maxlength="7" aria-label="창 프레임 HEX 색상"></div>
     <div class="pt-theme-accent-presets" id="ptThemeAccentPresets" aria-label="타이틀 바 기본 색상"><span>기본 포인트 색</span><button type="button" data-titlebar-color="#08049b" style="--swatch:#08049b">Classic Blue</button><button type="button" data-titlebar-color="#76596d" style="--swatch:#76596d">Vintage Wine</button><button type="button" data-titlebar-color="#596b53" style="--swatch:#596b53">Sage</button><button type="button" data-titlebar-color="#a45d63" style="--swatch:#a45d63">Dusty Rose</button><button type="button" data-titlebar-color="#4e596d" style="--swatch:#4e596d">Midnight</button><button type="button" data-titlebar-color="#8a7454" style="--swatch:#8a7454">Oat Brown</button><button type="button" data-titlebar-color="#766b91" style="--swatch:#766b91">Lavender</button><button type="button" data-titlebar-color="#357f87" style="--swatch:#357f87">Petrol</button></div>
     <div class="pt-theme-row"><label for="ptThemePattern">BACKGROUND PATTERN <small>배경 패턴</small></label><select id="ptThemePattern"><option value="solid">Solid · 단색</option><option value="stripe">Vertical Stripes · 세로 줄무늬</option><option value="grid">Fine Grid · 격자</option><option value="grain">Diagonal Grain · 대각선 결</option><option value="dots">Soft Dots · 점무늬</option></select></div>
     <div class="pt-theme-row"><label for="ptThemeLineColor">PATTERN LINE <small>패턴 선 색</small></label><input type="color" id="ptThemeLineColor" value="#68745f"><input type="text" id="ptThemeLineHex" value="#68745F" maxlength="7" aria-label="패턴 선 HEX 색상"></div>
