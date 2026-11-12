@@ -1,4 +1,4 @@
-const CACHE_NAME = 'p-toolbox-shell-v57';
+const CACHE_NAME = 'p-toolbox-shell-v66';
 const SHELL_FILES = [
   './',
   './index.html',
